@@ -25,7 +25,13 @@ class Jurusan extends CI_Controller {
 			'ketua_jurusan'=>$this->input->post('ketua_jurusan',true),
 		];
 		$this->db->insert('db_jurusan', $data);
-		$this->session->set_flashdata('message', 'Anda berhasil menginput data');
+		$this->session->set_flashdata('message', 'Data berhasil di input !');
+		redirect(site_url('jurusan'));
+	}
+	public function delete($id)
+	{
+		$this->db->delete('db_jurusan',['id_jur'=>$id]);
+		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('jurusan'));
 	}
 	public function getAll()
@@ -48,5 +54,22 @@ class Jurusan extends CI_Controller {
 		header('Content-Type: application/json');
 		echo json_encode($callback); // Convert array $callback ke json
 
+	}
+	public function getEdit($id)
+	{
+		$data['jurusan']=$this->db->get_where('db_jurusan',['id_jur'=>$id])->row_array();
+		$this->load->view('jurusan/edit',$data);
+	}
+	public function update()
+	{
+		$data=[
+			'kd_jurusan'=>$this->input->post('kd_jurusan',true),
+			'nama_jurusan'=>$this->input->post('nama_jurusan',true),
+			'ketua_jurusan'=>$this->input->post('ketua_jurusan',true),
+		];
+		$this->db->where('id_jur',$this->input->post('id_jur',true));
+		$this->db->update('db_jurusan', $data);
+		$this->session->set_flashdata('message', 'Data berhasil di update !');
+		redirect(site_url('jurusan'));
 	}
 }

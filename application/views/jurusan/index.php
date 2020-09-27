@@ -1,16 +1,18 @@
 <?php $this->load->view('template/header') ?>
-<div <?php if ($this->session->flashdata('message')!=null):?> style="display: block;" <?php else: ?> style="display: none;" <?php endif ?>  id="toastsContainerTopRight" class="toasts-top-right fixed">
-	<div class="toast bg-success fade show" role="alert" aria-live="assertive" aria-atomic="true">
-		<div class="toast-header">
-			<strong class="mr-auto">Sukses</strong>
-			<small></small>
-			<button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close">
-				<span aria-hidden="true">×</span>
-			</button>
+<?php if ($this->session->flashdata('message')!=null):?>
+	<div id="toastsContainerTopRight" class="toasts-top-right fixed">
+		<div class="toast bg-success fade show" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<strong class="mr-auto">Sukses</strong>
+				<small></small>
+				<button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="toast-body"><?php echo $this->session->flashdata('message'); ?></div>
 		</div>
-		<div class="toast-body"><?php echo $this->session->flashdata('message'); ?></div>
 	</div>
-</div>
+<?php endif ?>
 
 <section class="content">
 
@@ -41,7 +43,7 @@
 							<input required="" name="kd_jurusan" type="text" class="form-control" id="kd_jurusan" placeholder="Kode Jurusan">
 						</div>
 
-						<div class="form-group">
+						<div class="form-group">	
 							<label for="nama_jurusan">Nama Jurusan</label>
 							<input required="" name="nama_jurusan" type="text" class="form-control" id="nama_jurusan" placeholder="Nama Jurusan">
 						</div>
@@ -109,6 +111,33 @@
 
 </section>
 
+<!-- modal -->
+
+<div class="modal fade" id="modal-edit-jur">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Data</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="modalData">
+				<!-- <p>One fine body&hellip;</p> -->
+			</div>
+			<div class="modal-footer justify-content-between">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- endmodal -->
+
 
 <script>
 	var tabel = null;
@@ -132,7 +161,8 @@
 				{ "render": function ( data, type, row )
 					{ // Tampilkan kolom aksi
 						var id=row.id_jur;
-						var html  = "<a href=''>EDIT</a> | <button class='btn btn-danger' onclick=hapusJurusan('"+id+"')>Delete</button>";
+						var idi=row.id_jur;
+						var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Edit</button> | <button class='btn btn-danger' onclick=hapusJurusan('"+id+"')>Delete</button>";
 						return html;
 					}
 				},
@@ -142,7 +172,18 @@
 </script>
 <script type="text/javascript">
 	function hapusJurusan(a){
-		console.log(a);
+		var confirm=window.confirm('Yakin ?');
+		if (confirm) {
+			window.location.href='<?php echo site_url('jurusan/delete/') ?>'+a;
+		};
+	}
+	function edit(id){
+		$.ajax({
+			url: "<?php echo site_url('jurusan/getEdit/') ?>"+id,
+			success: function(result){
+				$("#modalData").html(result);
+			}
+		});
 	}
 </script>
 <?php $this->load->view('template/footer') ?>
