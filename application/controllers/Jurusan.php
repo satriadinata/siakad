@@ -17,6 +17,17 @@ class Jurusan extends CI_Controller {
 		$data['title']='Jurusan';
 		$this->load->view('jurusan/index',$data);
 	}
+	public function tambahJurusan()
+	{
+		$data=[
+			'kd_jurusan'=>$this->input->post('kd_jurusan',true),
+			'nama_jurusan'=>$this->input->post('nama_jurusan',true),
+			'ketua_jurusan'=>$this->input->post('ketua_jurusan',true),
+		];
+		$this->db->insert('db_jurusan', $data);
+		$this->session->set_flashdata('message', 'Anda berhasil menginput data');
+		redirect(site_url('jurusan'));
+	}
 	public function getAll()
 	{
 		$search = $_POST['search']['value']; // Ambil data yang di ketik user pada textbox pencarian

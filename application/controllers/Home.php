@@ -20,6 +20,8 @@ class Home extends CI_Controller {
 	{
 		$data['user']= $this->session->userdata('user_logged');
 		$data['title']="Home";
-		$this->load->view('home', $data);
+		if ($data['user']['level']=='admin') {
+			$this->load->view('home', $data);
+		};
 	}
 }

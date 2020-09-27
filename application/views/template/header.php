@@ -7,8 +7,8 @@
 
   <title>AdminLTE 3 | Dashboard 2</title>
   <script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery.js"></script>
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/DataTables/datatables.css"/>
   <script type="text/javascript" src="<?php echo base_url() ?>assets/DataTables/datatables.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/DataTables/datatables.css"/>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
