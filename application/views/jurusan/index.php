@@ -131,8 +131,8 @@
 				{ "data": "ketua_jurusan" }, // Tampilkan alamat
 				{ "render": function ( data, type, row )
 					{ // Tampilkan kolom aksi
-						var id=row.kd_jurusan;
-						var html  = "<a href=''>EDIT</a> | <button class='btn btn-danger' onclick='hapusJurusan("+id+")' >Delete</button>";
+						var id=row.id_jur;
+						var html  = "<a href=''>EDIT</a> | <button class='btn btn-danger' onclick=hapusJurusan('"+id+"')>Delete</button>";
 						return html;
 					}
 				},
