@@ -22,6 +22,8 @@ class Home extends CI_Controller {
 		$data['title']="Home";
 		if ($data['user']['level']=='admin') {
 			$this->load->view('home', $data);
+		}else{
+			echo $data['user']['level'];
 		};
 	}
 }

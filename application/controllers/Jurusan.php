@@ -15,7 +15,11 @@ class Jurusan extends CI_Controller {
 	{
 		$data['user']= $this->session->userdata('user_logged');
 		$data['title']='Jurusan';
-		$this->load->view('jurusan/index',$data);
+		if ($data['user']['level']=='admin') {
+			$this->load->view('jurusan/index',$data);
+		}else{
+			echo 'retrsicted for '.$data['user']['level'];
+		};
 	}
 	public function tambahJurusan()
 	{

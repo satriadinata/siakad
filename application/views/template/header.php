@@ -189,7 +189,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('home') ?>" class="nav-link">
+            <a href="<?php echo site_url('ta') ?>" class="nav-link">
               <i class="fas fa-vote-yea mr-2"></i>
               <p>
                 Tahun Ajaran
