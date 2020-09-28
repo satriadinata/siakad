@@ -179,7 +179,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('home') ?>" class="nav-link">
+            <a href="<?php echo site_url('matkul') ?>" class="nav-link">
               <i class="fas fa-book mr-2"></i>
               <p>
                 Mata Kuliah
