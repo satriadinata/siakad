@@ -34,7 +34,7 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form role="form" action="<?php echo site_url('matkul/tambah') ?>" method="post" >
+				<form role="form" action="<?php echo site_url('matkul/store') ?>" method="post" >
 					<div class="card-body">
 
 						<div class="form-group">
@@ -49,7 +49,7 @@
 
 						<div class="form-group">
 							<label for="sks">SKS</label>
-							<input required="" name="sks" type="text" class="form-control" id="sks" placeholder="SKS">
+							<input required="" name="sks" type="number" min="1" class="form-control" id="sks" placeholder="SKS">
 						</div>
 
 						<div class="form-group">
@@ -190,12 +190,12 @@
 	function hapusTa(id){
 		var confirm=window.confirm('Yakin ?');
 		if (confirm) {
-			window.location.href='<?php echo site_url('matkul/hapus/') ?>'+id;
+			window.location.href='<?php echo site_url('matkul/delete/') ?>'+id;
 		}
 	}
 	function edit(id){
 		$.ajax({
-			url: "<?php echo site_url('matkul/getEdit/') ?>"+id,
+			url: "<?php echo site_url('matkul/edit/') ?>"+id,
 			success: function(result){
 				$("#modalData").html(result);
 			}

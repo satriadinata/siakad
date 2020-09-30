@@ -9,13 +9,8 @@ class Home extends CI_Controller {
 		if ($this->session->userdata('user_logged')===null) {
 			redirect(site_url('auth'));
 		};
-		// if (!$session) {
-		// 	redirect('auth');
-		// }
-		// echo "<pre>";
-		// print_r($session);
-		// echo "</pre>";
 	}
+	
 	public function index()
 	{
 		$data['user']= $this->session->userdata('user_logged');

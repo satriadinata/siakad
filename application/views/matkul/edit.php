@@ -22,7 +22,7 @@
 
 				<div class="form-group">
 					<label for="sks">SKS</label>
-					<input required="" value="<?php echo $makul['sks'] ?>" name="sks" type="text" class="form-control" id="sks" placeholder="SKS">
+					<input required="" value="<?php echo $makul['sks'] ?>" name="sks" type="number" min="1" class="form-control" id="sks" placeholder="SKS">
 				</div>
 
 				<div class="form-group">

@@ -15,6 +15,7 @@ class Auth extends CI_Controller {
 		};
 		$this->load->view('auth/login');
 	}
+	
 	public function login()
 	{
 		if ($this->input->post()) {
@@ -23,6 +24,7 @@ class Auth extends CI_Controller {
 			}
 		}
 	}
+
 	public function logout()
 	{
 		$this->session->sess_destroy();

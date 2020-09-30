@@ -35,7 +35,7 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form role="form" action="<?php echo site_url('jurusan/tambahJurusan') ?>" method="post" >
+				<form role="form" action="<?php echo site_url('jurusan/store') ?>" method="post" >
 					<div class="card-body">
 
 						<div class="form-group">
@@ -178,7 +178,7 @@
 	}
 	function edit(id){
 		$.ajax({
-			url: "<?php echo site_url('jurusan/getEdit/') ?>"+id,
+			url: "<?php echo site_url('jurusan/edit/') ?>"+id,
 			success: function(result){
 				$("#modalData").html(result);
 			}

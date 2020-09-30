@@ -18,41 +18,14 @@
 	<!-- Default box -->
 	<div class="card collapsed-card">
 		<div class="card-header">
-			<h3 class="card-title">Tambah Tahun Ajar</h3>
+			<h3 class="card-title">Tambah Mahasiswa</h3>
 
 			<div class="card-tools">
-				<button type="button" class="btn btn-primary" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+				<a href="<?php echo site_url('mahasiswa/create') ?>" class="btn btn-primary">
 					<i class="fas fa-plus"></i>
-				</button>
+				</a>
 			</div>
 		</div>
-		<div class="card-body">
-
-			<div class="card card-primary">
-				<div class="card-header">
-					<h3 class="card-title">Input Data</h3>
-				</div>
-				<!-- /.card-header -->
-				<!-- form start -->
-				<form role="form" action="<?php echo site_url('ta/store') ?>" method="post" >
-					<div class="card-body">
-
-						<div class="form-group">
-							<label for="ta">Tahun Ajar</label>
-							<input required="" name="ta" type="text" class="form-control" id="ta" placeholder="Tahun Ajar">
-						</div>
-
-					</div>
-					<!-- /.card-body -->
-
-					<div class="card-footer">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
-				</form>
-			</div>
-
-		</div>
-		<!-- /.card-body -->
 		<div class="card-footer">
 			
 		</div>
@@ -63,24 +36,23 @@
 	<!-- Default box -->
 	<div class="card">
 		<div class="card-header">
-			<h3 class="card-title">Data Tahun Ajar</h3>
+			<h3 class="card-title">Data Mahasiswa</h3>
 
 			<div class="card-tools">
 				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
 					<i class="fas fa-minus"></i>
 				</button>
-
-				<!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-					<i class="fas fa-times"></i>
-				</button> -->
 			</div>
 		</div>
 		<div class="card-body">
-			<table id="tableTa" class="table table-bordered table-striped">
+			<table id="tableMhs" class="table table-bordered table-striped">
 				<thead>
 					<tr>
 						<th>No</th>
-						<th>Tahun Ajar</th>
+						<th>NIM</th>
+						<th>KD Jurusan</th>
+						<th>Nama</th>
+						<th>Foto</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -98,7 +70,7 @@
 	<!-- /.card -->
 	<!-- modal -->
 
-	<div class="modal fade" id="modal-edit-jur">
+	<div class="modal fade" id="modal-edit-mhs">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -127,45 +99,46 @@
 	var tabel = null;
 	$(document).ready(function() {
 		var no=1;
-		tabel = $('#tableTa').DataTable({
+		tabel = $('#tableMhs').DataTable({
 			"processing": true,
 			"serverSide": true,
-			"ordering": true, // Set true agar bisa di sorting
-			"order": [[ 0, 'asc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+			"ordering": true,
+			"order": [[ 0, 'asc' ]],
 			"ajax":
 			{
-				"url": "<?php echo site_url('ta/getAll') ?>", // URL file untuk proses select datanya
+				"url": "<?php echo site_url('mahasiswa/getAll') ?>",
 				"type": "POST"
 			},
 			"deferRender": true,
-			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]], // Combobox Limit
+			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]],
 			"columns": [
-				 // Tampilkan nama
-				 {"render":function(data,type,row){
-					// var no=1;
-					return no++
-				}},
-				{ "data": "ta" }, // Tampilkan alamat
-				{ "render": function ( data, type, row )
-					{ // Tampilkan kolom aksi
-						var id=row.id_ta;
-						var idi=row.id_ta;
-						var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Edit</button> | <button class='btn btn-danger' onclick=hapusTa('"+id+"')>Delete</button>";
-						return html;
-					}
-				},
-				],
-			});
+			{"render":function(data,type,row){
+				return no++
+			}},
+			{ "data": "nim" },
+			{ "data": "kd_jurusan" },
+			{ "data": "nama_mhs" },
+			{ "data": "foto_mhs" },
+			{ "render": function ( data, type, row )
+			{
+				var id=row.id_ta;
+				var idi=row.id_ta;
+				var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-mhs'>Edit</button> | <button class='btn btn-danger' onclick=hapusMhs('"+id+"')>Delete</button>";
+				return html;
+			}
+		},
+		],
 	});
-	function hapusTa(id){
+	});
+	function hapusMhs(id){
 		var confirm=window.confirm('Yakin ?');
 		if (confirm) {
-			window.location.href='<?php echo site_url('ta/delete/') ?>'+id;
+			window.location.href='<?php echo site_url('mahasiswa/delete/') ?>'+id;
 		}
 	}
 	function edit(id){
 		$.ajax({
-			url: "<?php echo site_url('ta/edit/') ?>"+id,
+			url: "<?php echo site_url('mahasiswa/edit/') ?>"+id,
 			success: function(result){
 				$("#modalData").html(result);
 			}

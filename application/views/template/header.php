@@ -115,8 +115,8 @@
             </a>
           </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?php echo ($this->uri->segment(1)=="mahasiswa") ? 'menu-open' : '' ;?>">
+            <a href="#" class="nav-link <?php echo ($this->uri->segment(1)=="mahasiswa") ? 'active' : '' ;?>">
               <i class="fas fa-users mr-2"></i>
               <p>
                 Mahasiswa
@@ -126,14 +126,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="<?php echo site_url('mahasiswa') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="mahasiswa" && $this->uri->segment(2) != 'create') ? 'active' : '' ;?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Semua Mahasiswa</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="<?php echo site_url('mahasiswa/create') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="mahasiswa" && $this->uri->segment(2) == 'create') ? 'active' : '' ;?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tambah Mahasiswa</p>
                 </a>
@@ -152,14 +152,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="<?php echo site_url('dosen') ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Semua Dosen</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="<?php echo site_url('dosen/create') ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tambah Dosen</p>
                 </a>
@@ -169,7 +169,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('jurusan') ?>" class="nav-link">
+            <a href="<?php echo site_url('jurusan') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="jurusan") ? 'active' : '' ;?>">
               <i class="fas fa-rainbow mr-2"></i>
               <p>
                 Jurusan
@@ -179,7 +179,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('matkul') ?>" class="nav-link">
+            <a href="<?php echo site_url('matkul') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="matkul") ? 'active' : '' ;?>">
               <i class="fas fa-book mr-2"></i>
               <p>
                 Mata Kuliah
@@ -189,7 +189,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('ta') ?>" class="nav-link">
+            <a href="<?php echo site_url('ta') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="ta") ? 'active' : '' ;?>">
               <i class="fas fa-vote-yea mr-2"></i>
               <p>
                 Tahun Ajaran

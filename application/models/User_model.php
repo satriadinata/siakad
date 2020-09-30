@@ -7,7 +7,7 @@ class User_model extends CI_Model
     public function doLogin() {
         $password=$this->input->post('password');
         $username=$this->input->post('username');
-        $user=$this->db->get_where('db_user', ['username'=>$username])->row_array();
+        $user=$this->db->get_where($this->_table, ['username'=>$username])->row_array();
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
