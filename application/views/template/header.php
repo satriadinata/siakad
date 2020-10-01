@@ -142,8 +142,8 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?php echo ($this->uri->segment(1)=="dosen") ? 'menu-open' : '' ;?>">
+            <a href="#" class="nav-link <?php echo ($this->uri->segment(1)=="dosen") ? 'active' : '' ;?>">
               <i class="fas fa-user-graduate mr-2"></i>
               <p>
                 Dosen
@@ -152,14 +152,14 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo site_url('dosen') ?>" class="nav-link">
+                <a href="<?php echo site_url('dosen') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="dosen" && $this->uri->segment(2) != 'create') ? 'active' : '' ;?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Semua Dosen</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="<?php echo site_url('dosen/create') ?>" class="nav-link">
+                <a href="<?php echo site_url('dosen/create') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="dosen" && $this->uri->segment(2) == 'create') ? 'active' : '' ;?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tambah Dosen</p>
                 </a>
