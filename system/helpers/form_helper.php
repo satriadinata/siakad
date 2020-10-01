@@ -71,70 +71,70 @@ if ( ! function_exists('form_open'))
 			$action = $CI->config->site_url($CI->uri->uri_string());
 		}
 		// If an action is not a full URL then turn it into one
-		elseif (strpos($action, '://') === FALSE)
+	elseif (strpos($action, '://') === FALSE)
+	{
+		$action = $CI->config->site_url($action);
+	}
+
+	$attributes = _attributes_to_string($attributes);
+
+	if (stripos($attributes, 'method=') === FALSE)
+	{
+		$attributes .= ' method="post"';
+	}
+
+	if (stripos($attributes, 'accept-charset=') === FALSE)
+	{
+		$attributes .= ' accept-charset="'.strtolower(config_item('charset')).'"';
+	}
+
+	$form = '<form action="'.$action.'"'.$attributes.">\n";
+
+	if (is_array($hidden))
+	{
+		foreach ($hidden as $name => $value)
 		{
-			$action = $CI->config->site_url($action);
+			$form .= '<input type="hidden" name="'.$name.'" value="'.html_escape($value).'" />'."\n";
 		}
-
-		$attributes = _attributes_to_string($attributes);
-
-		if (stripos($attributes, 'method=') === FALSE)
-		{
-			$attributes .= ' method="post"';
-		}
-
-		if (stripos($attributes, 'accept-charset=') === FALSE)
-		{
-			$attributes .= ' accept-charset="'.strtolower(config_item('charset')).'"';
-		}
-
-		$form = '<form action="'.$action.'"'.$attributes.">\n";
-
-		if (is_array($hidden))
-		{
-			foreach ($hidden as $name => $value)
-			{
-				$form .= '<input type="hidden" name="'.$name.'" value="'.html_escape($value).'" />'."\n";
-			}
-		}
+	}
 
 		// Add CSRF field if enabled, but leave it out for GET requests and requests to external websites
-		if ($CI->config->item('csrf_protection') === TRUE && strpos($action, $CI->config->base_url()) !== FALSE && ! stripos($form, 'method="get"'))
-		{
+	if ($CI->config->item('csrf_protection') === TRUE && strpos($action, $CI->config->base_url()) !== FALSE && ! stripos($form, 'method="get"'))
+	{
 			// Prepend/append random-length "white noise" around the CSRF
 			// token input, as a form of protection against BREACH attacks
-			if (FALSE !== ($noise = $CI->security->get_random_bytes(1)))
-			{
-				list(, $noise) = unpack('c', $noise);
-			}
-			else
-			{
-				$noise = mt_rand(-128, 127);
-			}
-
-			// Prepend if $noise has a negative value, append if positive, do nothing for zero
-			$prepend = $append = '';
-			if ($noise < 0)
-			{
-				$prepend = str_repeat(" ", abs($noise));
-			}
-			elseif ($noise > 0)
-			{
-				$append  = str_repeat(" ", $noise);
-			}
-
-			$form .= sprintf(
-				'%s<input type="hidden" name="%s" value="%s" />%s%s',
-				$prepend,
-				$CI->security->get_csrf_token_name(),
-				$CI->security->get_csrf_hash(),
-				$append,
-				"\n"
-			);
+		if (FALSE !== ($noise = $CI->security->get_random_bytes(1)))
+		{
+			list(, $noise) = unpack('c', $noise);
+		}
+		else
+		{
+			$noise = mt_rand(-128, 127);
 		}
 
-		return $form;
+			// Prepend if $noise has a negative value, append if positive, do nothing for zero
+		$prepend = $append = '';
+		if ($noise < 0)
+		{
+			$prepend = str_repeat(" ", abs($noise));
+		}
+		elseif ($noise > 0)
+		{
+			$append  = str_repeat(" ", $noise);
+		}
+
+		$form .= sprintf(
+			'%s<input type="hidden" name="%s" value="%s" />%s%s',
+			$prepend,
+			$CI->security->get_csrf_token_name(),
+			$CI->security->get_csrf_hash(),
+			$append,
+			"\n"
+		);
 	}
+
+	return $form;
+}
 }
 
 // ------------------------------------------------------------------------
@@ -318,8 +318,8 @@ if ( ! function_exists('form_textarea'))
 		}
 
 		return '<textarea '._parse_form_attributes($data, $defaults)._attributes_to_string($extra).'>'
-			.html_escape($val)
-			."</textarea>\n";
+		.html_escape($val)
+		."</textarea>\n";
 	}
 }
 
@@ -426,7 +426,7 @@ if ( ! function_exists('form_dropdown'))
 				{
 					$sel = in_array($optgroup_key, $selected) ? ' selected="selected"' : '';
 					$form .= '<option value="'.html_escape($optgroup_key).'"'.$sel.'>'
-						.(string) $optgroup_val."</option>\n";
+					.(string) $optgroup_val."</option>\n";
 				}
 
 				$form .= "</optgroup>\n";
@@ -434,8 +434,8 @@ if ( ! function_exists('form_dropdown'))
 			else
 			{
 				$form .= '<option value="'.html_escape($key).'"'
-					.(in_array($key, $selected) ? ' selected="selected"' : '').'>'
-					.(string) $val."</option>\n";
+				.(in_array($key, $selected) ? ' selected="selected"' : '').'>'
+				.(string) $val."</option>\n";
 			}
 		}
 
@@ -583,8 +583,8 @@ if ( ! function_exists('form_button'))
 		}
 
 		return '<button '._parse_form_attributes($data, $defaults)._attributes_to_string($extra).'>'
-			.$content
-			."</button>\n";
+		.$content
+		."</button>\n";
 	}
 }
 
@@ -693,6 +693,27 @@ if ( ! function_exists('form_prep'))
 	}
 }
 
+if ( ! function_exists('old'))
+{
+	/**
+	 * Form Prep
+	 *
+	 * Formats text so that it can be safely placed in a form field in the event it has HTML tags.
+	 *
+	 * @deprecated	3.0.0	An alias for html_escape()
+	 * @param	string|string[]	$str		Value to escape
+	 * @return	string|string[]	Escaped values
+	 */
+	function old($key, $default = "")
+	{
+		if (isset($_SESSION['input']) && $_SESSION['input'] != null){
+			return (isset($_SESSION['input'][$key]) && $_SESSION['input'][$key] != null) ? $_SESSION['input'][$key] : $default;
+		}
+
+		return $default;
+	}
+}
+
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('set_value'))
@@ -714,8 +735,8 @@ if ( ! function_exists('set_value'))
 		$CI =& get_instance();
 
 		$value = (isset($CI->form_validation) && is_object($CI->form_validation) && $CI->form_validation->has_rule($field))
-			? $CI->form_validation->set_value($field, $default)
-			: $CI->input->post($field, FALSE);
+		? $CI->form_validation->set_value($field, $default)
+		: $CI->input->post($field, FALSE);
 
 		isset($value) OR $value = $default;
 		return ($html_escape) ? html_escape($value) : $value;

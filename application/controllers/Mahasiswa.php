@@ -16,6 +16,7 @@ class Mahasiswa extends CI_Controller {
 	{
 		$data['user']= $this->session->userdata('user_logged');
 		$data['title']='Mahasiswa';
+
 		if ($data['user']['level']=='admin') {
 			$this->load->view('mahasiswa/index',$data);
 		}else{
@@ -49,6 +50,14 @@ class Mahasiswa extends CI_Controller {
 	{
 		$data['user']= $this->session->userdata('user_logged');
 		$data['title']='Tambah Data Mahasiswa';
+		$data['jurusan']=$this->db->get('db_jurusan')->result();
+		$data['agama'] = [
+			'Islam',
+			'Kristen',
+			'Buddha',
+			'Hindu',
+		];
+
 		if ($data['user']['level']=='admin') {
 			$this->load->view('mahasiswa/create',$data);
 		}else{
@@ -58,19 +67,39 @@ class Mahasiswa extends CI_Controller {
 
 	public function store()
 	{
-		$data=[
-			'kd_jurusan'=>$this->input->post('kd_jurusan',true),
-			'nama_jurusan'=>$this->input->post('nama_jurusan',true),
-			'ketua_jurusan'=>$this->input->post('ketua_jurusan',true),
-		];
-		$this->db->insert('db_mahasiswa', $data);
-		$this->session->set_flashdata('message', 'Data berhasil di input !');
-		redirect(site_url('mahasiswa'));
+		$data = $this->input->post();
+
+		$config['upload_path']          = './uploads/foto_mhs/';
+		$config['file_name']            = 'mhs_'.date('YmdHis').'_'.uniqid();
+		$config['allowed_types']        = 'jpg|png';
+		$config['max_size']             = 1024;
+		$this->load->library('upload', $config);
+
+		if ($this->upload->do_upload('foto')) {
+			$data['foto_mhs'] = 'foto_mhs/'.$this->upload->data("file_name");
+			$this->db->insert('db_mahasiswa', $data);
+			$this->session->set_flashdata('message', 'Data berhasil di input !');
+			redirect(site_url('mahasiswa'));
+		}else{
+			$this->session->set_flashdata('error', $this->upload->display_errors());
+			$this->session->set_flashdata('input', $data);
+			redirect(site_url('mahasiswa/create'));
+		}
 	}
 
 	public function edit($id)
 	{
-		$data['mahasiswa']=$this->db->get_where('db_mahasiswa',['id_jur'=>$id])->row_array();
+		$data['user']= $this->session->userdata('user_logged');
+		$data['title']='Tambah Data Mahasiswa';
+		$data['jurusan']=$this->db->get('db_jurusan')->result();
+		$data['agama'] = [
+			'Islam',
+			'Kristen',
+			'Buddha',
+			'Hindu',
+		];
+		$data['mahasiswa']=$this->db->get_where('db_mahasiswa',['id_mhs'=>$id])->row_array();
+
 		$this->load->view('mahasiswa/edit',$data);
 	}
 

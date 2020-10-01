@@ -118,17 +118,22 @@
 			{ "data": "nim" },
 			{ "data": "kd_jurusan" },
 			{ "data": "nama_mhs" },
-			{ "data": "foto_mhs" },
 			{ "render": function ( data, type, row )
 			{
-				var id=row.id_ta;
-				var idi=row.id_ta;
-				var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-mhs'>Edit</button> | <button class='btn btn-danger' onclick=hapusMhs('"+id+"')>Delete</button>";
+				var html  = "<img src='<?= site_url('uploads/');?>/"+row.foto_mhs+"' width='50'/>";
 				return html;
 			}
 		},
-		],
-	});
+		{ "render": function ( data, type, row )
+		{
+			var id=row.id_mhs;
+			var idi=row.id_mhs;
+			var html  = "<a class='btn btn-primary' href='<?= site_url('mahasiswa/edit') ;?>/"+idi+"'>Edit</a> | <button class='btn btn-danger' onclick=hapusMhs('"+id+"')>Delete</button>";
+			return html;
+		}
+	},
+	],
+});
 	});
 	function hapusMhs(id){
 		var confirm=window.confirm('Yakin ?');
