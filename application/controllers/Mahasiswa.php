@@ -69,47 +69,35 @@ class Mahasiswa extends CI_Controller {
 
 	public function store()
 	{
+		$data = $this->input->post();
 		$this->form_validation->set_rules('nim','NIM','required|is_unique[db_mahasiswa.nim]');
-		// echo "<pre>";
-		// print_r($this->input->post());
-		// print_r($_FILES['foto']);
-		// echo "</pre>";
-		// die();
-		if($this->form_validation->run() != false){
-			$data = $this->input->post();
+		$data['foto_mhs'] = 'default/male.png';
 
-			if (array($_FILES['foto'])!=null) {
+		if($this->form_validation->run() != false){
+
+			if (isset($_FILES['foto']) && $_FILES['foto']['name'] != null) {
 				$config['upload_path']          = './uploads/foto_mhs/';
 				$config['file_name']            = 'mhs_'.date('YmdHis').'_'.uniqid();
 				$config['allowed_types']        = 'jpg|png';
 				$config['max_size']             = 1024;
 				$this->load->library('upload', $config);
 				if ( ! $this->upload->do_upload('foto')){
+					$this->session->set_flashdata('input', $data);
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 					redirect(site_url('mahasiswa/create'));
 				}else{
 					$data['foto_mhs'] = 'foto_mhs/'.$this->upload->data("file_name");
-					$this->db->insert('db_mahasiswa', $data);
-					$this->session->set_flashdata('message', 'Data dan foto berhasil di input !');
-					// $this->session->set_flashdata('message', $this->upload->display_errors());
-					redirect(site_url('mahasiswa'));
-					echo "berhasil";
 				}
-			}else{
-
-				$this->db->insert('db_mahasiswa', $data);
-				$this->session->set_flashdata('message', 'Data berhasil di input !');
-				redirect(site_url('mahasiswa'));
 			}
 		}else{
+			$this->session->set_flashdata('input', $data);
 			$this->session->set_flashdata('error', validation_errors());
 			redirect(site_url('mahasiswa/create'));
 		}
-		
 
-			// $this->session->set_flashdata('error', $this->upload->display_errors());
-			// $this->session->set_flashdata('input', $data);
-			// redirect(site_url('mahasiswa/create'));
+		$this->db->insert('db_mahasiswa', $data);
+		$this->session->set_flashdata('message', 'Data dan foto berhasil di input !');
+		redirect(site_url('mahasiswa'));
 	}
 
 	public function import()
@@ -172,82 +160,40 @@ class Mahasiswa extends CI_Controller {
 	public function update()
 	{
 		$data = $this->input->post();
-		$data['p']=$this->db->get_where('db_mahasiswa',['id_mhs'=>$data['id_mhs']])->row_array();
-		// echo $data['p']['nim'];
-		// echo $data['nim'];
-		// die();
-		if ($data['nim']!=$data['p']['nim']) {
-			$this->form_validation->set_rules('nim','NIM','is_unique[db_mahasiswa.nim]');
-			echo "ehe";
-			die();
-		};
-		// echo "<pre>";
-		// print_r($this->input->post());
-		// print_r($_FILES['foto']);
-		// echo "</pre>";
-		// die();
-		if($this->form_validation->run() != false){
+		$this->form_validation->set_rules('nim','NIM','required');
+		$mahasiswa = $this->db->get_where('db_mahasiswa',['id_mhs'=>$data['id_mhs']])->row_array();
 
-			if (!empty($_FILES['foto'])) {
+		if ($data['nim'] != $mahasiswa['nim']) {
+			$this->form_validation->set_rules('nim','NIM','is_unique[db_mahasiswa.nim]');
+		}
+
+		if($this->form_validation->run() != false){
+			if (isset($_FILES['foto']) && $_FILES['foto']['name'] != null) {
 				$config['upload_path']          = './uploads/foto_mhs/';
 				$config['file_name']            = 'mhs_'.date('YmdHis').'_'.uniqid();
 				$config['allowed_types']        = 'jpg|png';
 				$config['max_size']             = 1024;
 				$this->load->library('upload', $config);
 				if ( ! $this->upload->do_upload('foto')){
+					$this->session->set_flashdata('input', $data);
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					echo "string";
-					die();
-					redirect(site_url('mahasiswa/edit/'.$this->input->post('id_mhs')));
+					redirect(site_url('mahasiswa/edit/'.$data->id_mhs));
 				}else{
-					$this->db->where('id_mhs',$this->input->post('id_mhs',true));
-					$this->db->update('db_mahasiswa', [
-						'nim'=>$this->input->post('nim',true),
-						'nik_mhs'=>$this->input->post('nik_mhs',true),
-						'kd_jurusan'=>$this->input->post('kd_jurusan',true),
-						'nama_mhs'=>$this->input->post('nama_mhs',true),
-						'alamat'=>$this->input->post('alamat',true),
-						'telp'=>$this->input->post('telp',true),
-						'tempat_lahir'=>$this->input->post('tempat_lahir',true),
-						'tgl_lahir'=>$this->input->post('tgl_lahir',true),
-						'agama_mhs'=>$this->input->post('agama_mhs',true),
-						'kewarganegaraan'=>$this->input->post('kewarganegaraan',true),
-						'nama_ortu'=>$this->input->post('nama_ortu',true),
-						'alamat_ortu'=>$this->input->post('alamat_ortu',true),
-						'telp_ortu'=>$this->input->post('telp_ortu',true),
-						'foto_mhs'=>'foto_mhs/'.$this->upload->data("file_name"),
-					]);
-					$this->session->set_flashdata('message', 'Data dan foto berhasil di Update !');
-					redirect(site_url('mahasiswa'));
+					$data['foto_mhs'] = 'foto_mhs/'.$this->upload->data("file_name");
 				}
-			}else{
-
-				// $this->db->insert('db_mahasiswa', $data);
-				echo "mbuh";
-				die();
-				$this->db->where('id_mhs',$this->input->post('id_mhs',true));
-				$this->db->update('db_mahasiswa', [
-					'nim'=>$this->input->post('nim',true),
-					'nik_mhs'=>$this->input->post('nik_mhs',true),
-					'kd_jurusan'=>$this->input->post('kd_jurusan',true),
-					'nama_mhs'=>$this->input->post('nama_mhs',true),
-					'alamat'=>$this->input->post('alamat',true),
-					'telp'=>$this->input->post('telp',true),
-					'tempat_lahir'=>$this->input->post('tempat_lahir',true),
-					'tgl_lahir'=>$this->input->post('tgl_lahir',true),
-					'agama_mhs'=>$this->input->post('agama_mhs',true),
-					'kewarganegaraan'=>$this->input->post('kewarganegaraan',true),
-					'nama_ortu'=>$this->input->post('nama_ortu',true),
-					'alamat_ortu'=>$this->input->post('alamat_ortu',true),
-					'telp_ortu'=>$this->input->post('telp_ortu',true),
-				]);
-				$this->session->set_flashdata('message', 'Data berhasil di Update !');
-				redirect(site_url('mahasiswa'));
 			}
+
 		}else{
+			$this->session->set_flashdata('input', $data);
 			$this->session->set_flashdata('error', validation_errors());
 			redirect(site_url('mahasiswa/edit/'.$this->input->post('id_mhs')));
 		}
+
+		$this->db->where('id_mhs', $data['id_mhs']);
+		$this->db->update('db_mahasiswa', $data);
+
+		$this->session->set_flashdata('message', 'Data berhasil diedit !');
+		redirect(site_url('mahasiswa'));
 	}
 
 	public function delete($id)

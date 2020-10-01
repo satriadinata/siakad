@@ -714,6 +714,28 @@ if ( ! function_exists('old'))
 	}
 }
 
+if ( ! function_exists('dd'))
+{
+	/**
+	 * Form Prep
+	 *
+	 * Formats text so that it can be safely placed in a form field in the event it has HTML tags.
+	 *
+	 * @deprecated	3.0.0	An alias for html_escape()
+	 * @param	string|string[]	$str		Value to escape
+	 * @return	string|string[]	Escaped values
+	 */
+	function dd($value, $die = true)
+	{
+		echo "<pre>";
+		print_r($value);
+		echo "</pre>";
+		if($die){
+			die();
+		}
+	}
+}
+
 // ------------------------------------------------------------------------
 
 if ( ! function_exists('set_value'))
