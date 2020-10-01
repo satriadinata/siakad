@@ -122,7 +122,7 @@
 			{ "data": "nama_dosen" },
 			{ "render": function ( data, type, row )
 			{
-				var html  = "<img src='<?= site_url('uploads/');?>/"+row.foto_dosen+"' width='50'/>";
+				var html  = "<img src='<?= site_url('uploads');?>/"+row.foto_dosen+"' width='50'/>";
 				return html;
 			}
 		},

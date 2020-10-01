@@ -87,6 +87,47 @@ class Mahasiswa extends CI_Controller {
 		}
 	}
 
+	public function import()
+	{
+		$this->load->library('excel');
+
+		try{
+			$path = $_FILES["file"]["tmp_name"];
+			$object = PHPExcel_IOFactory::load($path);
+			$data = [];
+			foreach($object->getWorksheetIterator() as $worksheet)
+			{
+				$highestRow = $worksheet->getHighestRow();
+				$highestColumn = $worksheet->getHighestColumn();
+				for($row=2; $row <= $highestRow; $row++)
+				{
+					$data[$row]['nim'] = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+					$data[$row]['nik_mhs'] = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+					$data[$row]['kd_jurusan'] = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+					$data[$row]['nama_mhs'] = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+					$data[$row]['alamat'] = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+					$data[$row]['telp'] = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+					$data[$row]['tempat_lahir'] = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+					$data[$row]['tgl_lahir'] = gmdate("d-m-Y", ($worksheet->getCellByColumnAndRow(8, $row)->getValue() - 25569) * 86400);
+					$data[$row]['agama_mhs'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+					$data[$row]['kewarganegaraan'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+					$data[$row]['nama_ortu'] = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+					$data[$row]['alamat_ortu'] = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+					$data[$row]['telp_ortu'] = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+					$data[$row]['foto_mhs'] = 'default/male.png';
+				}
+			}
+
+			$this->db->insert_batch('db_mahasiswa', $data);
+			$this->session->set_flashdata('message', 'Data berhasil di import !');
+			redirect(site_url('mahasiswa'));
+		}catch (Exception $e)
+		{
+			var_dump($e->getMessage());
+			exit();
+		}
+	}
+
 	public function edit($id)
 	{
 		$data['user']= $this->session->userdata('user_logged');

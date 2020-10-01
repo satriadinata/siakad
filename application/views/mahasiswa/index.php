@@ -24,6 +24,9 @@
 				<a href="<?php echo site_url('mahasiswa/create') ?>" class="btn btn-primary">
 					<i class="fas fa-plus"></i>
 				</a>
+				<button class="btn btn-success" data-toggle="modal" data-target="#modalImport">
+					<i class="fas fa-upload"></i>
+				</button>
 			</div>
 		</div>
 		<div class="card-footer">
@@ -70,29 +73,36 @@
 	<!-- /.card -->
 	<!-- modal -->
 
-	<div class="modal fade" id="modal-edit-mhs">
+	<div class="modal fade" id="modalImport">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Edit Data</h4>
+					<h4 class="modal-title">Import Mahasiswa</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body" id="modalData">
-					<!-- <p>One fine body&hellip;</p> -->
+				<div class="modal-body">
+					<form enctype="multipart/form-data" method="post" action="<?= site_url('mahasiswa/import') ;?>">
+						
+						<div class="form-group">
+							<label>Pilih File</label>
+							<input type="file" name="file" required="" class="form-control">
+						</div>
+
+						<hr>
+						<div class="text-right">
+						<button class="btn btn-success">Import</button>
+						</div>
+
+					</form>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
-			<!-- /.modal-content -->
 		</div>
-		<!-- /.modal-dialog -->
 	</div>
-	<!-- /.modal -->
-
-	<!-- endmodal -->
 
 </section>
 <script>
