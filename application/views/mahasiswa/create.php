@@ -112,8 +112,18 @@
 
 						<div class="form-group">
 							<label for="foto">Foto Mahasiswa</label>
-							<input required="" name="foto" type="file" class="form-control" id="foto" placeholder="Foto Mahasiswa">
+							<input name="foto" type="file" class="form-control" id="foto" placeholder="Foto Mahasiswa">
 						</div>
+
+						<!-- <div class="form-group">
+							<label for="foto">Foto Mahasiswa</label>
+							<div class="input-group">
+								<div class="custom-file">
+									<input type="file" name="foto" class="custom-file-input" id="foto">
+									<label class="custom-file-label" for="foto">Choose file</label>
+								</div>
+							</div>
+						</div> -->
 
 					</div>
 					<!-- /.card-body -->

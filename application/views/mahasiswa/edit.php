@@ -28,7 +28,7 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form role="form" enctype="multipart/form-data" action="<?php echo site_url('mahasiswa/store') ?>" method="post" >
+				<form role="form" enctype="multipart/form-data" action="<?php echo site_url('mahasiswa/update') ?>" method="post" >
 					<div class="card-body">
 
 						<?php if ($this->session->flashdata('error')!=null):?>
@@ -37,14 +37,16 @@
 							</div>
 						<?php endif; ?>
 
+						<input type="hidden" name="id_mhs" value="<?php echo $mahasiswa['id_mhs'] ?>">
+
 						<div class="form-group">
 							<label for="nim">NIM</label>
-							<input required="" name="nim" type="number" class="form-control" id="nim" placeholder="NIM" value="<?= old('nim') ;?>">
+							<input required="" name="nim" type="number" class="form-control" id="nim" placeholder="NIM" value="<?= $mahasiswa['nim'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label for="nik_mhs">NIK</label>
-							<input required="" name="nik_mhs" type="number" class="form-control" id="nik_mhs" placeholder="NIK" value="<?= old('nik_mhs') ;?>">
+							<input required="" name="nik_mhs" type="number" class="form-control" id="nik_mhs" placeholder="NIK" value="<?= $mahasiswa['nik_mhs'] ;?>">
 						</div>
 
 						<div class="form-group">
@@ -58,27 +60,27 @@
 
 						<div class="form-group">
 							<label for="nama_mhs">Nama Lengkap</label>
-							<input required="" name="nama_mhs" type="text" class="form-control" id="nama_mhs" placeholder="Nama Lengkap" value="<?= old('nama_mhs') ;?>">
+							<input required="" name="nama_mhs" type="text" class="form-control" id="nama_mhs" placeholder="Nama Lengkap" value="<?= $mahasiswa['nama_mhs'];?>">
 						</div>
 
 						<div class="form-group">
 							<label for="alamat">Alamat</label>
-							<textarea required="" name="alamat" type="text" class="form-control" id="alamat" placeholder="Alamat"><?= old('alamat') ;?></textarea>
+							<textarea required="" name="alamat" type="text" class="form-control" id="alamat" placeholder="Alamat"><?= $mahasiswa['alamat'];?></textarea>
 						</div>
 
 						<div class="form-group">
 							<label for="telp">No Telpon</label>
-							<input required="" name="telp" type="number" class="form-control" id="telp" placeholder="No Telpon" value="<?= old('telp') ;?>">
+							<input required="" name="telp" type="number" class="form-control" id="telp" placeholder="No Telpon" value="<?= $mahasiswa['telp'];?>">
 						</div>
 
 						<div class="form-group">
 							<label for="tempat_lahir">Tempat Lahir</label>
-							<input required="" name="tempat_lahir" type="text" class="form-control" id="tempat_lahir" placeholder="Tempat Lahir" value="<?= old('tempat_lahir') ;?>">
+							<input required="" name="tempat_lahir" type="text" class="form-control" id="tempat_lahir" placeholder="Tempat Lahir" value="<?= $mahasiswa['tempat_lahir'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label for="tgl_lahir">Tanggal Lahir</label>
-							<input required="" name="tgl_lahir" type="date" class="form-control" id="tgl_lahir" placeholder="Tanggal Lahir" value="<?= old('tgl_lahir') ;?>">
+							<input required="" name="tgl_lahir" type="date" class="form-control" id="tgl_lahir" placeholder="Tanggal Lahir" value="<?= $mahasiswa['tgl_lahir'] ;?>">
 						</div>
 
 						<div class="form-group">
@@ -92,27 +94,41 @@
 
 						<div class="form-group">
 							<label for="kewarganegaraan">Kewarganegaraan</label>
-							<input required="" name="kewarganegaraan" type="text" class="form-control" id="kewarganegaraan" placeholder="Kewarganegaraan" value="<?= old('kewarganegaraan') ;?>">
+							<input required="" name="kewarganegaraan" type="text" class="form-control" id="kewarganegaraan" placeholder="Kewarganegaraan" value="<?= $mahasiswa['kewarganegaraan'];?>">
 						</div>
 
 						<div class="form-group">
 							<label for="nama_ortu">Nama Ortu</label>
-							<input required="" name="nama_ortu" type="text" class="form-control" id="nama_ortu" placeholder="Nama Ortu" value="<?= old('nama_ortu') ;?>">
+							<input required="" name="nama_ortu" type="text" class="form-control" id="nama_ortu" placeholder="Nama Ortu" value="<?= $mahasiswa['nama_ortu'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label for="alamat_ortu">Alamat Ortu</label>
-							<textarea required="" name="alamat_ortu" type="text" class="form-control" id="alamat_ortu" placeholder="Alamat Ortu"><?= old('alamat_ortu') ;?></textarea>
+							<textarea required="" name="alamat_ortu" type="text" class="form-control" id="alamat_ortu" placeholder="Alamat Ortu"><?= $mahasiswa['alamat_ortu'] ;?></textarea>
 						</div>
 
 						<div class="form-group">
 							<label for="telp_ortu">Telp Ortu</label>
-							<input required="" name="telp_ortu" type="number" class="form-control" id="telp_ortu" placeholder="Telp Ortu" value="<?= old('telp_ortu') ;?>">
+							<input required="" name="telp_ortu" type="number" class="form-control" id="telp_ortu" placeholder="Telp Ortu" value="<?= $mahasiswa['telp_ortu'] ;?>">
 						</div>
 
+<!-- 						<div class="form-group">
+							<label for="foto">Foto Mahasiswa</label>
+							<div class="input-group-prepend">
+								<input required="" name="foto" type="file" class="form-control" id="foto" placeholder="Foto Mahasiswa">
+								<a href="" class="btn btn-primary">View File</a>
+							</div>
+						</div> -->
 						<div class="form-group">
 							<label for="foto">Foto Mahasiswa</label>
-							<input required="" name="foto" type="file" class="form-control" id="foto" placeholder="Foto Mahasiswa">
+							<div class="input-group mb-3">
+								<input name="foto" type="file" class="form-control" id="foto" placeholder="Foto Mahasiswa">
+								<div class="input-group-prepend">
+									<?php if ($mahasiswa['foto_mhs']==true):?>
+										<a href="<?= site_url('uploads/').$mahasiswa['foto_mhs'];?>" target="_blank" class="btn btn-outline-secondary" type="button">View</a>
+									<?php endif ?>
+								</div>
+							</div>
 						</div>
 
 					</div>
