@@ -53,8 +53,9 @@
 					<tr>
 						<th>No</th>
 						<th>NIM</th>
-						<th>KD Jurusan</th>
 						<th>Nama</th>
+						<th>KD Jurusan</th>
+						<th>Agama</th>
 						<th>Foto</th>
 						<th>Action</th>
 					</tr>
@@ -126,11 +127,15 @@
 				return no++
 			}},
 			{ "data": "nim" },
-			{ "data": "kd_jurusan" },
 			{ "data": "nama_mhs" },
+			{ "render":function  (data, type, row){
+				var b=row.kd_jurusan+' - '+row.nama_jurusan;
+				return b;
+			}},
+			{ "data": "agama_mhs" },
 			{ "render": function ( data, type, row )
 			{
-				var html  = "<img src='<?= site_url('uploads/');?>/"+row.foto_mhs+"' width='50'/>";
+				var html  = "<img src='<?= site_url('uploads/');?>/"+row.foto_mhs+"' width='100'/>";
 				return html;
 			}
 		},

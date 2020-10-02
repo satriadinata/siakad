@@ -198,8 +198,8 @@ class Mahasiswa extends CI_Controller {
 
 	public function delete($id)
 	{
-		$this->db->delete('db_jurusan',['id_jur'=>$id]);
+		$this->db->delete('db_mahasiswa',['id_mhs'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
-		redirect(site_url('jurusan'));
+		redirect(site_url('mahasiswa'));
 	}
 }
