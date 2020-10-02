@@ -118,7 +118,10 @@
 			}},
 			{ "data": "kd_dosen" },
 			{ "data": "nidn" },
-			{ "data": "kd_jurusan" },
+			{ "render": function(data, type, row){
+				var b=row.kd_jurusan+' - '+row.nama_jurusan;
+				return b;
+			} },
 			{ "data": "nama_dosen" },
 			{ "render": function ( data, type, row )
 			{

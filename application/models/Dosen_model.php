@@ -6,9 +6,10 @@ class Dosen_model extends CI_Model
 
   public function filter($search, $limit, $start, $order_field, $order_ascdesc){
 
+    $this->db->join('db_jurusan','db_jurusan.kd_jurusan = db_dosen.kd_jurusan');
     $this->db->like('kd_dosen', $search);
     $this->db->or_like('nidn', $search);
-    $this->db->or_like('kd_jurusan', $search);
+    // $this->db->or_like('kd_jurusan', $search);
     $this->db->or_like('nama_dosen', $search);
     $this->db->order_by($order_field, $order_ascdesc);
     $this->db->limit($limit, $start);
@@ -19,9 +20,10 @@ class Dosen_model extends CI_Model
   }
 
   public function count_filter($search){
+    $this->db->join('db_jurusan','db_jurusan.kd_jurusan = db_dosen.kd_jurusan');
     $this->db->like('kd_dosen', $search);
     $this->db->or_like('nidn', $search);
-    $this->db->or_like('kd_jurusan', $search);
+    // $this->db->or_like('kd_jurusan', $search);
     $this->db->or_like('nama_dosen', $search);
     return $this->db->get($this->_table)->num_rows();
   }

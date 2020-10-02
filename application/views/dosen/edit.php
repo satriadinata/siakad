@@ -28,7 +28,7 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form role="form" enctype="multipart/form-data" action="<?php echo site_url('dosen/store') ?>" method="post" >
+				<form role="form" enctype="multipart/form-data" action="<?php echo site_url('dosen/update') ?>" method="post" >
 					<div class="card-body">
 
 						<?php if ($this->session->flashdata('error')!=null):?>
@@ -36,49 +36,57 @@
 								<?php print_r($this->session->flashdata('error')); ?>
 							</div>
 						<?php endif; ?>
+						<input type="hidden" name="id_dosen" value="<?php echo $dosen['id_dosen'] ?>">
 
 						<div class="form-group">
 							<label for="kd_dosen">Kode Dosen</label>
-							<input required="" name="kd_dosen" type="text" class="form-control" id="kd_dosen" placeholder="Kode Dosen" value="<?= old('kd_dosen') ;?>">
+							<input required="" name="kd_dosen" type="text" class="form-control" id="kd_dosen" placeholder="Kode Dosen" value="<?= $dosen['kd_dosen'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label for="nidn">NIDN</label>
-							<input required="" name="nidn" type="number" class="form-control" id="nidn" placeholder="NIDN" value="<?= old('nidn') ;?>">
+							<input required="" name="nidn" type="number" class="form-control" id="nidn" placeholder="NIDN" value="<?= $dosen['nidn'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label for="nik_dosen">NIK</label>
-							<input required="" name="nik_dosen" type="number" class="form-control" id="nik_dosen" placeholder="NIK" value="<?= old('nik_dosen') ;?>">
+							<input required="" name="nik_dosen" type="number" class="form-control" id="nik_dosen" placeholder="NIK" value="<?= $dosen['nik_dosen'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label>Kode Jurusan</label>
 							<select name="kd_jurusan" class="custom-select" value="<?= old('kd_jurusan') ;?>">
 								<?php foreach ($jurusan as $value):?>
-									<option value="<?php echo $value->kd_jurusan ?>" ><?php echo $value->kd_jurusan.' - '.$value->nama_jurusan; ?></option>
+									<option <?php if ($dosen['kd_jurusan']==$value->kd_jurusan):?> selected <?php endif ?> value="<?php echo $value->kd_jurusan ?>" ><?php echo $value->kd_jurusan.' - '.$value->nama_jurusan; ?></option>
 								<?php endforeach ?>
 							</select>
 						</div>
 
 						<div class="form-group">
 							<label for="nama_dosen">Nama Dosen</label>
-							<input required="" name="nama_dosen" type="text" class="form-control" id="nama_dosen" placeholder="Nama Lengkap" value="<?= old('nama_dosen') ;?>">
+							<input required="" name="nama_dosen" type="text" class="form-control" id="nama_dosen" placeholder="Nama Lengkap" value="<?= $dosen['nama_dosen'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label for="telp_dosen">No Telpon</label>
-							<input required="" name="telp_dosen" type="number" class="form-control" id="telp_dosen" placeholder="No Telpon" value="<?= old('telp_dosen') ;?>">
+							<input required="" name="telp_dosen" type="number" class="form-control" id="telp_dosen" placeholder="No Telpon" value="<?= $dosen['telp_dosen'] ;?>">
 						</div>
 
 						<div class="form-group">
 							<label for="alamat_dosen">Alamat</label>
-							<textarea required="" name="alamat_dosen" type="text" class="form-control" id="alamat_dosen" placeholder="Alamat"><?= old('alamat_dosen') ;?></textarea>
+							<textarea required="" name="alamat_dosen" type="text" class="form-control" id="alamat_dosen" placeholder="Alamat"><?= $dosen['alamat_dosen'] ;?></textarea>
 						</div>
 
 						<div class="form-group">
 							<label for="foto">Foto Dosen</label>
-							<input required="" name="foto" type="file" class="form-control" id="foto" placeholder="Foto Dosen">
+							<div class="input-group mb-3">
+								<input name="foto" type="file" class="form-control" id="foto" placeholder="Foto Mahasiswa">
+								<div class="input-group-prepend">
+									<?php if ($dosen['foto_dosen']==true):?>
+										<a href="<?= site_url('uploads/').$dosen['foto_dosen'];?>" target="_blank" class="btn btn-outline-secondary" type="button">View</a>
+									<?php endif ?>
+								</div>
+							</div>
 						</div>
 
 					</div>

@@ -78,7 +78,7 @@
 
 						<div class="form-group">
 							<label for="foto">Foto Dosen</label>
-							<input required="" name="foto" type="file" class="form-control" id="foto" placeholder="Foto Dosen">
+							<input name="foto" type="file" class="form-control" id="foto" placeholder="Foto Dosen">
 						</div>
 
 					</div>

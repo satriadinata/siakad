@@ -53,7 +53,7 @@
 							<label>Kode Jurusan</label>
 							<select name="kd_jurusan" class="custom-select" value="<?= old('kd_jurusan') ;?>">
 								<?php foreach ($jurusan as $value):?>
-									<option value="<?php echo $value->kd_jurusan ?>" ><?php echo $value->kd_jurusan.' - '.$value->nama_jurusan; ?></option>
+									<option <?php if ($mahasiswa['kd_jurusan']==$value->kd_jurusan):?> selected <?php endif ?> value="<?php echo $value->kd_jurusan ?>" ><?php echo $value->kd_jurusan.' - '.$value->nama_jurusan; ?></option>
 								<?php endforeach ?>
 							</select>
 						</div>

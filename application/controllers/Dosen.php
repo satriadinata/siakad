@@ -61,24 +61,51 @@ class Dosen extends CI_Controller {
 
 	public function store()
 	{
+		// $data = $this->input->post();
+
+		// $config['upload_path']          = './uploads/foto_dosen/';
+		// $config['file_name']            = 'dosen_'.date('YmdHis').'_'.uniqid();
+		// $config['allowed_types']        = 'jpg|png';
+		// $config['max_size']             = 1024;
+		// $this->load->library('upload', $config);
+
+		// if ($this->upload->do_upload('foto')) {
+		// 	$data['foto_dosen'] = 'foto_dosen/'.$this->upload->data("file_name");
+		// 	$this->db->insert('db_dosen', $data);
+		// 	$this->session->set_flashdata('message', 'Data berhasil di input !');
+		// 	redirect(site_url('dosen'));
+		// }else{
+		// 	$this->session->set_flashdata('error', $this->upload->display_errors());
+		// 	$this->session->set_flashdata('input', $data);
+		// 	redirect(site_url('dosen/create'));
+		// }
+
 		$data = $this->input->post();
+		// $this->form_validation->set_rules('nim','NIM','required|is_unique[db_mahasiswa.nim]');
+		$data['foto_dosen'] = 'default/male.png';
 
-		$config['upload_path']          = './uploads/foto_dosen/';
-		$config['file_name']            = 'dosen_'.date('YmdHis').'_'.uniqid();
-		$config['allowed_types']        = 'jpg|png';
-		$config['max_size']             = 1024;
-		$this->load->library('upload', $config);
+		
 
-		if ($this->upload->do_upload('foto')) {
-			$data['foto_dosen'] = 'foto_dosen/'.$this->upload->data("file_name");
-			$this->db->insert('db_dosen', $data);
-			$this->session->set_flashdata('message', 'Data berhasil di input !');
-			redirect(site_url('dosen'));
-		}else{
-			$this->session->set_flashdata('error', $this->upload->display_errors());
-			$this->session->set_flashdata('input', $data);
-			redirect(site_url('dosen/create'));
+		if (isset($_FILES['foto']) && $_FILES['foto']['name'] != null) {
+			$config['upload_path']          = './uploads/foto_dosen/';
+			$config['file_name']            = 'dosen_'.date('YmdHis').'_'.uniqid();
+			$config['allowed_types']        = 'jpg|png';
+			$config['max_size']             = 1024;
+			$this->load->library('upload', $config);
+			if ( ! $this->upload->do_upload('foto')){
+				$this->session->set_flashdata('input', $data);
+				$this->session->set_flashdata('error', $this->upload->display_errors());
+				redirect(site_url('dosen/create'));
+			}else{
+				$data['foto_dosen'] = 'foto_dosen/'.$this->upload->data("file_name");
+				$this->db->insert('db_dosen', $data);
+				$this->session->set_flashdata('message', 'Data dan foto berhasil di input !');
+				redirect(site_url('dosen'));
+			}
 		}
+		$this->db->insert('db_dosen', $data);
+		$this->session->set_flashdata('message', 'Data berhasil di input !');
+		redirect(site_url('dosen'));
 	}
 
 	public function edit($id)
@@ -89,31 +116,58 @@ class Dosen extends CI_Controller {
 		$data['agama'] = [
 			'Islam',
 			'Kristen',
+			'Katholik',
 			'Buddha',
 			'Hindu',
 		];
-		$data['dosen']=$this->db->get_where('db_dosen',['id_mhs'=>$id])->row_array();
+		$data['dosen']=$this->db->get_where('db_dosen',['id_dosen'=>$id])->row_array();
 
 		$this->load->view('dosen/edit',$data);
 	}
 
 	public function update()
 	{
-		$data=[
-			'kd_jurusan'=>$this->input->post('kd_jurusan',true),
-			'nama_jurusan'=>$this->input->post('nama_jurusan',true),
-			'ketua_jurusan'=>$this->input->post('ketua_jurusan',true),
-		];
-		$this->db->where('id_jur',$this->input->post('id_jur',true));
-		$this->db->update('db_jurusan', $data);
-		$this->session->set_flashdata('message', 'Data berhasil di update !');
-		redirect(site_url('jurusan'));
+		$data = $this->input->post();
+		$this->form_validation->set_rules('kd_dosen','kd_dosen','required');
+		$dosen = $this->db->get_where('db_dosen',['id_dosen'=>$data['id_dosen']])->row_array();
+
+		if ($data['kd_dosen'] != $dosen['kd_dosen']) {
+			$this->form_validation->set_rules('kd_dosen','kd_dosen','is_unique[db_dosen.kd_dosen]');
+		}
+
+		if($this->form_validation->run() != false){
+			if (isset($_FILES['foto']) && $_FILES['foto']['name'] != null) {
+				$config['upload_path']          = './uploads/foto_dosen/';
+				$config['file_name']            = 'mhs_'.date('YmdHis').'_'.uniqid();
+				$config['allowed_types']        = 'jpg|png';
+				$config['max_size']             = 1024;
+				$this->load->library('upload', $config);
+				if ( ! $this->upload->do_upload('foto')){
+					$this->session->set_flashdata('input', $data);
+					$this->session->set_flashdata('error', $this->upload->display_errors());
+					redirect(site_url('dosen/edit/'.$data->id_dosen));
+				}else{
+					$data['foto_dosen'] = 'foto_dosen/'.$this->upload->data("file_name");
+				}
+			}
+
+		}else{
+			$this->session->set_flashdata('input', $data);
+			$this->session->set_flashdata('error', validation_errors());
+			redirect(site_url('dosen/edit/'.$this->input->post('id_dosen')));
+		}
+
+		$this->db->where('id_dosen', $data['id_dosen']);
+		$this->db->update('db_dosen', $data);
+
+		$this->session->set_flashdata('message', 'Data berhasil diedit !');
+		redirect(site_url('dosen'));
 	}
 
 	public function delete($id)
 	{
-		$this->db->delete('db_jurusan',['id_jur'=>$id]);
+		$this->db->delete('db_dosen',['id_dosen'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
-		redirect(site_url('jurusan'));
+		redirect(site_url('dosen'));
 	}
 }
