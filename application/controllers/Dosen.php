@@ -145,7 +145,7 @@ class Dosen extends CI_Controller {
 				if ( ! $this->upload->do_upload('foto')){
 					$this->session->set_flashdata('input', $data);
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(site_url('dosen/edit/'.$data->id_dosen));
+					redirect(site_url('dosen/edit/'.$data['id_dosen']));
 				}else{
 					$data['foto_dosen'] = 'foto_dosen/'.$this->upload->data("file_name");
 				}

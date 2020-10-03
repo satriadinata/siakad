@@ -177,7 +177,7 @@ class Mahasiswa extends CI_Controller {
 				if ( ! $this->upload->do_upload('foto')){
 					$this->session->set_flashdata('input', $data);
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(site_url('mahasiswa/edit/'.$data->id_mhs));
+					redirect(site_url('mahasiswa/edit/'.$data['id_mhs']));
 				}else{
 					$data['foto_mhs'] = 'foto_mhs/'.$this->upload->data("file_name");
 				}
