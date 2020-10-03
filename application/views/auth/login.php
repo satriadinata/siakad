@@ -748,7 +748,7 @@
 <!--begin::Content-->
 <!--begin::Aside-->
 <div class="login-aside order-1 order-lg-2 bgi-no-repeat bgi-position-x-right">
-  <div class="login-conteiner bgi-no-repeat bgi-position-x-right bgi-position-y-bottom" style="background-image: url(http://skeleton.test/media/svg/illustrations/login-visual-4.svg);">
+  <div class="login-conteiner bgi-no-repeat bgi-position-x-right bgi-position-y-bottom" style="background-image: url(<?php echo base_url(); ?>assets/auth/login-visual-4.svg);">
    <!--begin::Aside title-->
    <h3 class="pt-lg-40 pl-lg-20 pb-lg-0 pl-10 py-20 m-0 d-flex justify-content-lg-start font-weight-boldest display5 display1-lg text-white">Sistem
     <br>Informasi
