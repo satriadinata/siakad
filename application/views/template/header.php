@@ -199,7 +199,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('ta') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="ta") ? 'active' : '' ;?>">
+            <a href="<?php echo site_url('krs') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="krs") ? 'active' : '' ;?>">
               <i class="fas fa-vote-yea mr-2"></i>
               <p>
                 KRS

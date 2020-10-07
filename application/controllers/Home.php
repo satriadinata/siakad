@@ -22,7 +22,7 @@ class Home extends CI_Controller {
 		if ($data['user']['level']=='admin') {
 			$this->load->view('home', $data);
 		}else{
-			echo $data['user']['level'];
+			echo 'Wellcome '.$data['user']['level'].' '.$data['user']['username'];
 		};
 	}
 }

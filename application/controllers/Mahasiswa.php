@@ -94,8 +94,12 @@ class Mahasiswa extends CI_Controller {
 			$this->session->set_flashdata('error', validation_errors());
 			redirect(site_url('mahasiswa/create'));
 		}
-
 		$this->db->insert('db_mahasiswa', $data);
+		$this->db->insert('db_user', [
+			'username'=>$data['nim'],
+			'password'=>password_hash(date("dmY",strtotime($data['tgl_lahir'])), PASSWORD_DEFAULT),
+			'level'=>'mhs'
+		]);
 		$this->session->set_flashdata('message', 'Data dan foto berhasil di input !');
 		redirect(site_url('mahasiswa'));
 	}
@@ -198,6 +202,8 @@ class Mahasiswa extends CI_Controller {
 
 	public function delete($id)
 	{
+		$user=$this->db->get_where('db_mahasiswa',['id_mhs'=>$id])->row_array();
+		$this->db->delete('db_user',['username'=>$user['nim']]);
 		$this->db->delete('db_mahasiswa',['id_mhs'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('mahasiswa'));
