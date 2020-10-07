@@ -7,9 +7,11 @@ class Mahasiswa extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Mahasiswa_model');
 		$this->load->library('form_validation');
-		$session = $this->session->userdata();
-		if ($this->session->userdata('user_logged')===null) {
+		$user = $this->session->userdata('user_logged');
+		if ($user==null) {
 			redirect(site_url('auth'));
+		}elseif ($user['level']!='admin') {
+			$this->load->view('error/error_404');
 		};
 	}
 	
@@ -20,9 +22,7 @@ class Mahasiswa extends CI_Controller {
 
 		if ($data['user']['level']=='admin') {
 			$this->load->view('mahasiswa/index',$data);
-		}else{
-			echo 'retrsicted for '.$data['user']['level'];
-		};
+		}
 	}
 
 	public function getAll()

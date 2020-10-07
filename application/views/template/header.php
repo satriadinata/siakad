@@ -197,6 +197,16 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="<?php echo site_url('ta') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="ta") ? 'active' : '' ;?>">
+              <i class="fas fa-vote-yea mr-2"></i>
+              <p>
+                KRS
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
           
         </ul>
       </nav>

@@ -6,9 +6,11 @@ class Dosen extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('Dosen_model');
-		$session = $this->session->userdata();
-		if ($this->session->userdata('user_logged')===null) {
+		$user = $this->session->userdata('user_logged');
+		if ($user==null) {
 			redirect(site_url('auth'));
+		}elseif ($user['level']!='admin') {
+			$this->load->view('error/error_404');
 		};
 	}
 	

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2020 at 01:06 PM
+-- Generation Time: Oct 05, 2020 at 10:01 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -39,6 +39,14 @@ CREATE TABLE `db_dosen` (
   `foto_dosen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `db_dosen`
+--
+
+INSERT INTO `db_dosen` (`id_dosen`, `kd_dosen`, `nidn`, `nik_dosen`, `kd_jurusan`, `nama_dosen`, `telp_dosen`, `alamat_dosen`, `foto_dosen`) VALUES
+(1, '24412731', 2147483647, 2147483647, 'B123', 'Nama Dosen', 2402398, 'Kjsdkas', 'foto_dosen/mhs_20201003190726_5f78afce0fd2a.jpg'),
+(2, 'AAA1257165', 2147483647, 34593475, 'A675', 'Hadi W', 658766678, 'asdajsdhkajsh', 'default/male.png');
+
 -- --------------------------------------------------------
 
 --
@@ -71,8 +79,10 @@ CREATE TABLE `db_jurusan` (
 --
 
 INSERT INTO `db_jurusan` (`id_jur`, `kd_jurusan`, `nama_jurusan`, `ketua_jurusan`) VALUES
-(1, 'A123', 'Informatika', 'Jaelani'),
-(2, 'B123', 'Manajemen', 'Syukur');
+(2, 'B123', 'Manajemen', 'Duwi'),
+(4, 'B312', 'Elektro', 'Poco Santoso'),
+(6, 'B111', 'Akutansi', 'Dwi'),
+(8, 'A675', 'Informatika', 'Gloria');
 
 -- --------------------------------------------------------
 
@@ -95,8 +105,17 @@ CREATE TABLE `db_mahasiswa` (
   `nama_ortu` varchar(255) NOT NULL,
   `alamat_ortu` varchar(255) NOT NULL,
   `telp_ortu` int(15) NOT NULL,
-  `foto_mhs` varchar(255) NOT NULL
+  `foto_mhs` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `db_mahasiswa`
+--
+
+INSERT INTO `db_mahasiswa` (`id_mhs`, `nim`, `nik_mhs`, `kd_jurusan`, `nama_mhs`, `alamat`, `telp`, `tempat_lahir`, `tgl_lahir`, `agama_mhs`, `kewarganegaraan`, `nama_ortu`, `alamat_ortu`, `telp_ortu`, `foto_mhs`) VALUES
+(1, 71200626, 2147483647, 'B123', 'Joni J', 'asdaksflas asdjasdasjda', 987654321, 'Pati', '2008-08-21', 'Islam', 'WNI', 'Juono', 'asdasjkdkasjd', 98765432, 'foto_mhs/mhs_20201001135321_5f75c33112fb5.jpg'),
+(9, 112334455, 212312312, 'B123', 'Doni', 'asdasfsdfasfas', 2147483647, 'asdadsfaf', '2020-09-29', 'Islam', 'sdfasfsafsdf', 'sdfasdfasdfas', 'asdfsafsafsa', 2147483647, 'foto_mhs/mhs_20201002163608_5f773ad817657.jpg'),
+(10, 32648236, 2147483647, 'B111', 'afhjsjahfka', 'sjdhddkahk', 2147483647, 'jsdfkahsasf', '2020-10-05', 'Islam', 'sdfsfsdf', 'sdfsdfsdfds', 'dsfsdfsfsd', 2135678912, 'foto_mhs/mhs_20201001185513_5f7609f125a15.jpg');
 
 -- --------------------------------------------------------
 
@@ -112,6 +131,14 @@ CREATE TABLE `db_makul` (
   `semester` varchar(255) NOT NULL,
   `kd_jurusan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `db_makul`
+--
+
+INSERT INTO `db_makul` (`id_mk`, `kode_mk`, `nama_mk`, `sks`, `semester`, `kd_jurusan`) VALUES
+(1, 'AA125', 'Matematika Log', 7, '2', 'B123'),
+(2, 'AB156', 'Logika Matematika', 3, '1', 'B123');
 
 -- --------------------------------------------------------
 
@@ -138,6 +165,13 @@ CREATE TABLE `db_ta` (
   `ta` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `db_ta`
+--
+
+INSERT INTO `db_ta` (`id_ta`, `ta`) VALUES
+(3, '2020/2021');
+
 -- --------------------------------------------------------
 
 --
@@ -158,7 +192,8 @@ CREATE TABLE `db_user` (
 --
 
 INSERT INTO `db_user` (`id`, `username`, `password`, `email`, `level`, `blokir`) VALUES
-(1, 'admin', '$2y$10$DznkqMSucbCb3JCbCr3P6ejac2qaGst0/oeAjyYLCzlYYcKbxOl5u', 'admin@gmail.com', 'admin', 'n');
+(1, 'admin', '$2y$10$DznkqMSucbCb3JCbCr3P6ejac2qaGst0/oeAjyYLCzlYYcKbxOl5u', 'admin@gmail.com', 'admin', 'n'),
+(2, 'mhs', '$2y$10$V61fkrAgepN/cmnxefoTgepP/gGgywUX42OoPQkmzNgQ0Bo3gOAW6', 'mhs@gmail.com', 'mhs', 'n');
 
 --
 -- Indexes for dumped tables
@@ -200,7 +235,8 @@ ALTER TABLE `db_mahasiswa`
 --
 ALTER TABLE `db_makul`
   ADD PRIMARY KEY (`id_mk`),
-  ADD UNIQUE KEY `kode_mk` (`kode_mk`);
+  ADD UNIQUE KEY `kode_mk` (`kode_mk`),
+  ADD KEY `makul-kd_jur` (`kd_jurusan`);
 
 --
 -- Indexes for table `db_nilai`
@@ -232,7 +268,7 @@ ALTER TABLE `db_user`
 -- AUTO_INCREMENT for table `db_dosen`
 --
 ALTER TABLE `db_dosen`
-  MODIFY `id_dosen` int(22) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dosen` int(22) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `db_jadwal`
@@ -244,19 +280,19 @@ ALTER TABLE `db_jadwal`
 -- AUTO_INCREMENT for table `db_jurusan`
 --
 ALTER TABLE `db_jurusan`
-  MODIFY `id_jur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_jur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `db_mahasiswa`
 --
 ALTER TABLE `db_mahasiswa`
-  MODIFY `id_mhs` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mhs` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `db_makul`
 --
 ALTER TABLE `db_makul`
-  MODIFY `id_mk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `db_nilai`
@@ -268,13 +304,13 @@ ALTER TABLE `db_nilai`
 -- AUTO_INCREMENT for table `db_ta`
 --
 ALTER TABLE `db_ta`
-  MODIFY `id_ta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `db_user`
 --
 ALTER TABLE `db_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -298,6 +334,12 @@ ALTER TABLE `db_jadwal`
 --
 ALTER TABLE `db_mahasiswa`
   ADD CONSTRAINT `kd_jurusan` FOREIGN KEY (`kd_jurusan`) REFERENCES `db_jurusan` (`kd_jurusan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `db_makul`
+--
+ALTER TABLE `db_makul`
+  ADD CONSTRAINT `makul-kd_jur` FOREIGN KEY (`kd_jurusan`) REFERENCES `db_jurusan` (`kd_jurusan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `db_nilai`
