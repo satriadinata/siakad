@@ -21,6 +21,7 @@ class Krs extends CI_Controller {
 		$data['ta']=$this->db->get('db_ta')->result();
 		$data['jurusan']=$this->db->get('db_jurusan')->result();
 		$data['dosen']=$this->db->get('db_dosen')->result();
+		$data['makul']=$this->db->get('db_makul')->result();
 		if ($data['user']['level']=='admin') {
 			$this->load->view('krs/index',$data);
 		}else{
@@ -52,6 +53,20 @@ class Krs extends CI_Controller {
 
 	public function store()
 	{
+		print_r($this->input->post());
+		die();
+		$data=[
+			'ta'=>$this->input->post('ta'),
+			'semester'=>$this->input->post('semester'),
+			'id_jur'=>$this->input->post('id_jur'),
+			'pa'=>$this->input->post('pa'),
+			'matkul'=>[
+				''
+			]
+		];
+		echo "<pre>";
+		print_r($this->input->post());
+		echo "</pre>";
 		$data=[
 			'kd_jurusan'=>$this->input->post('kd_jurusan',true),
 			'nama_jurusan'=>$this->input->post('nama_jurusan',true),

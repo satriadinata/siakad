@@ -17,13 +17,13 @@
 <section class="content">
 
 	<!-- Default box -->
-	<div class="card collapsed-card">
+	<div class="card">
 		<div class="card-header">
 			<h3 class="card-title">Tambah KRS</h3>
 
 			<div class="card-tools">
-				<button type="button" class="btn btn-primary" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-					<i class="fas fa-plus"></i>
+				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+					<i class="fas fa-minus"></i>
 				</button>
 			</div>
 		</div>
@@ -35,12 +35,13 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form role="form" action="<?php echo site_url('jurusan/store') ?>" method="post" >
+				<!-- <form role="form" action="<?php echo site_url('krs/store') ?>" method="post" > -->
 					<div class="card-body">
+						<input type="hidden" id="jmlhKrs" name="jmlhKrs" value="" >
 
 						<div class="form-group">
-							<label for="agama_mhs">Tahun Ajar</label>
-							<select name="agama_mhs" class="custom-select" value="<?= old('agama_mhs') ;?>">
+							<label for="ta">Tahun Ajar</label>
+							<select id="ta" name="ta" class="custom-select" value="<?= old('ta') ;?>">
 								<?php foreach ($ta as $value):?>
 									<option value="<?php echo $value->id_ta ?>" ><?php echo $value->ta; ?></option>
 								<?php endforeach ?>
@@ -48,13 +49,13 @@
 						</div>
 
 						<div class="form-group">	
-							<label for="nama_jurusan">Semester</label>
-							<input required="" name="nama_jurusan" type="text" class="form-control" id="nama_jurusan" placeholder="Semester">
+							<label for="semester">Semester</label>
+							<input id="semester" required="" name="semester" type="text" class="form-control" id="semester" placeholder="Semester">
 						</div>
 
 						<div class="form-group">
-							<label for="ketua_jurusan">Jurusan</label>
-							<select name="agama_mhs" class="custom-select" value="<?= old('agama_mhs') ;?>">
+							<label for="id_jur">Jurusan</label>
+							<select id="id_jur" name="id_jur" class="custom-select" value="<?= old('id_jur') ;?>">
 								<?php foreach ($jurusan as $value):?>
 									<option value="<?php echo $value->id_jur ?>" ><?php echo $value->nama_jurusan; ?></option>
 								<?php endforeach ?>
@@ -62,8 +63,8 @@
 						</div>
 
 						<div class="form-group">
-							<label for="ketua_jurusan">Pembimbing Akademik</label>
-							<select name="agama_mhs" class="custom-select" value="<?= old('agama_mhs') ;?>">
+							<label for="pa">Pembimbing Akademik</label>
+							<select id="pa" name="pa" class="custom-select" value="<?= old('pa') ;?>">
 								<?php foreach ($dosen as $value):?>
 									<option value="<?php echo $value->id_dosen ?>" ><?php echo $value->nama_dosen; ?></option>
 								<?php endforeach ?>
@@ -72,16 +73,14 @@
 
 						<div class="form-group">
 							<label>Mata Kuliah</label><br>
-							<button class="btn btn-primary" >Tambah Makul</button><br><br>
+							<a style="color: white;" class="btn btn-primary" onclick="tambahInput()" >Tambah Makul</a><br><br>
 							<table class="table table-bordered table-striped" >
 								<thead>
-									<th>Kode MK</th>
-									<th>Nama Makul</th>
-									<th>SKS</th>
+									<th>Kode MK-Nama Makul-SKS</th>
 									<th>Dosen Pengampu</th>
+									<th>Aksi</th>
 								</thead>
-								<tbody>
-									
+								<tbody id="addInput" >
 								</tbody>
 							</table>
 						</div>
@@ -90,29 +89,29 @@
 					<!-- /.card-body -->
 
 					<div class="card-footer">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button onclick="simpan()" class="btn btn-primary">Submit</button>
 					</div>
-				</form>
+					<!-- </form> -->
+				</div>
+
 			</div>
+			<!-- /.card-body -->
+			<div class="card-footer">
 
+			</div>
+			<!-- /.card-footer-->
 		</div>
-		<!-- /.card-body -->
-		<div class="card-footer">
-			
-		</div>
-		<!-- /.card-footer-->
-	</div>
-	<!-- /.card -->
+		<!-- /.card -->
 
-	<!-- Default box -->
-	<div class="card">
-		<div class="card-header">
-			<h3 class="card-title">Data Jurusan</h3>
+		<!-- Default box -->
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Data Jurusan</h3>
 
-			<div class="card-tools">
-				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-					<i class="fas fa-minus"></i>
-				</button>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+						<i class="fas fa-minus"></i>
+					</button>
 
 				<!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
 					<i class="fas fa-times"></i>
@@ -214,6 +213,43 @@
 			url: "<?php echo site_url('jurusan/edit/') ?>"+id,
 			success: function(result){
 				$("#modalData").html(result);
+			}
+		});
+	}
+	var idName=0;
+	function tambahInput(){
+		idName++;
+		// console.log(idName);
+		var html="<tr id='baris"+idName+"' ><td><select id='kode_mk"+idName+"' name='kode_mk-"+idName+"' class='custom-select' value='<?= old('kode_mk') ;?>'><?php foreach ($makul as $value):?><option value='<?php echo $value->kode_mk ?>' ><?php echo $value->kode_mk.'-'.$value->nama_mk.'-'.$value->sks; ?></option><?php endforeach ?></select></td><td><select id='id_dosen"+idName+"' name='id_dosen-"+idName+"' class='custom-select' value='<?= old('dosen') ;?>'><?php foreach ($dosen as $value):?><option value='<?php echo $value->id_dosen ?>' ><?php echo $value->nama_dosen; ?></option><?php endforeach ?></select></td><td><button class='btn btn-danger' onclick='removeList("+idName+")' >Remove</button></td></tr>";
+		$("#addInput").append(html);
+		$("#jmlhKrs").val(idName);
+	}
+	function removeList(id){
+		idName--;
+		$('#baris'+id).remove();
+		console.log(idName);
+	}
+	function simpan(){
+		var krs=[];
+		for (var i = idName; i > 0; i--) {
+			var a=$('#kode_mk'+i).val()+'|'+$('#id_dosen'+i).val();
+			krs.push(a);
+		};
+		var postData={
+			jmlhKrs:$('#jmlhKrs').val(),
+			ta:$('#ta').val(),
+			semester:$('#semester').val(),
+			id_jur:$('#id_jur').val(),
+			pa:$('#pa').val(),
+			krs:krs,
+		};
+		// console.log(postData);
+		$.ajax({
+			url:'<?php echo site_url('krs/store') ?>',
+			type:'post',
+			data:postData,
+			success: function(data){
+				console.log(data);
 			}
 		});
 	}
