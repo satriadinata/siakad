@@ -22,7 +22,19 @@ class Home extends CI_Controller {
 		if ($data['user']['level']=='admin') {
 			$this->load->view('home', $data);
 		}else{
-			echo 'Wellcome '.$data['user']['level'].' '.$data['user']['username'];
+			// echo 'Wellcome '.$data['user']['level'].' '.$data['user']['username'];
+			$paketKrs=$this->db->get('db_paket_krs')->result();
+			$krs=[];
+			foreach ($paketKrs as $value) {
+				$krs[$value->id_krs]=[
+										'ta'=>$value->ta,
+										'semester'=>$value->semester,
+										'jurusan'=>$this->db->get_where('db_jurusan',['id_jur'=>$value->id_jurusan])
+										];
+			};
+			echo "<pre>";
+			print_r($krs);
+			echo "</pre>";
 		};
 	}
 }

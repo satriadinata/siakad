@@ -5,7 +5,7 @@ class Krs extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		// $this->load->model('Jurusan_model');
+		$this->load->model('Krs_model');
 		$user = $this->session->userdata('user_logged');
 		if ($user==null) {
 			redirect(site_url('auth'));
@@ -53,17 +53,27 @@ class Krs extends CI_Controller {
 
 	public function store()
 	{
-		print_r($this->input->post());
-		die();
+		$ta=$this->db->get_where('db_ta',['id_ta'=>$this->input->post('ta')])->row_array();
 		$data=[
-			'ta'=>$this->input->post('ta'),
+			'id_ta'=>$this->input->post('ta'),
+			'ta'=>$ta['ta'],
 			'semester'=>$this->input->post('semester'),
-			'id_jur'=>$this->input->post('id_jur'),
-			'pa'=>$this->input->post('pa'),
-			'matkul'=>[
-				''
-			]
+			'id_jurusan'=>$this->input->post('id_jur'),
+			'id_pa'=>$this->input->post('pa'),
 		];
+		$this->db->insert('db_paket_krs', $data);
+		$insert_id=$this->db->insert_id();
+		$item=$this->input->post('krs');
+		foreach ($item as $value) {
+			$v=explode('|',$value);
+			$itemInput=[
+				'id_krs'=>$insert_id,
+				'kode_mk'=>$v[0],
+				'kode_dosen'=>$v[1],
+			];
+			$this->db->insert('db_item_krs', $itemInput);
+		}
+		die();
 		echo "<pre>";
 		print_r($this->input->post());
 		echo "</pre>";
