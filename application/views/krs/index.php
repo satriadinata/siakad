@@ -227,7 +227,7 @@
 	function removeList(id){
 		idName--;
 		$('#baris'+id).remove();
-		console.log(idName);
+		// console.log(idName);
 	}
 	function simpan(){
 		var krs=[];
