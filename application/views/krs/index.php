@@ -249,7 +249,7 @@
 			type:'post',
 			data:postData,
 			success: function(data){
-				console.log(data);
+				alert('Data berhasil di input');
 			}
 		});
 	}

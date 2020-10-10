@@ -23,18 +23,23 @@ class Home extends CI_Controller {
 			$this->load->view('home', $data);
 		}else{
 			// echo 'Wellcome '.$data['user']['level'].' '.$data['user']['username'];
-			$paketKrs=$this->db->get('db_paket_krs')->result();
-			$krs=[];
+			$mhs=$this->db->get_where('db_mahasiswa',['nim'=>$data['user']['username']])->row_array();
+			$tKey=count($data['ta'])-1;
+			$paketKrs=$this->db->get_where('db_paket_krs')->result();
+			$data['krs']=[];
 			foreach ($paketKrs as $value) {
-				$krs[$value->id_krs]=[
-										'ta'=>$value->ta,
-										'semester'=>$value->semester,
-										'jurusan'=>$this->db->get_where('db_jurusan',['id_jur'=>$value->id_jurusan])
-										];
+				$data['krs'][$value->id_krs]=[
+					'ta'=>$value->ta,
+					'semester'=>$value->semester,
+					'jurusan'=>$this->db->get_where('db_jurusan',['id_jur'=>$value->id_jurusan])->row_array()['nama_jurusan'],
+					'pa'=>$this->db->get_where('db_dosen',['id_dosen'=>$value->id_pa])->row_array()['nama_dosen'],
+					'item-krs'=>$this->db->get_where('db_item_krs',['id_krs'=>$value->id_krs])->result(),
+				];
 			};
 			echo "<pre>";
-			print_r($krs);
+			print_r($data['krs']);
 			echo "</pre>";
+			$this->load->view('client/krs',$data);
 		};
 	}
 }

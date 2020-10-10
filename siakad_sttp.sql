@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2020 at 10:01 AM
+-- Generation Time: Oct 10, 2020 at 07:21 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -44,8 +44,31 @@ CREATE TABLE `db_dosen` (
 --
 
 INSERT INTO `db_dosen` (`id_dosen`, `kd_dosen`, `nidn`, `nik_dosen`, `kd_jurusan`, `nama_dosen`, `telp_dosen`, `alamat_dosen`, `foto_dosen`) VALUES
-(1, '24412731', 2147483647, 2147483647, 'B123', 'Nama Dosen', 2402398, 'Kjsdkas', 'foto_dosen/mhs_20201003190726_5f78afce0fd2a.jpg'),
-(2, 'AAA1257165', 2147483647, 34593475, 'A675', 'Hadi W', 658766678, 'asdajsdhkajsh', 'default/male.png');
+(4, 'A001', 2147483647, 2147483647, '0001', 'Dosen 1', 387923522, 'fjsjksjflksjfklsjfkssdf', 'default/male.png'),
+(5, 'A002', 2147483647, 2147483647, '0001', 'Dosen 2', 2147483647, 'sdfsdgsdfgdsf', 'default/male.png'),
+(6, 'B001', 2147483647, 2147483647, '002', 'Dosen 3', 2147483647, 'sadflasjkflajsdfsda', 'default/male.png'),
+(7, 'B002', 2147483647, 2147483647, '002', 'Dosen 4', 2147483647, 'alsfjlajsfkas', 'default/male.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `db_item_krs`
+--
+
+CREATE TABLE `db_item_krs` (
+  `id_item_krs` int(22) NOT NULL,
+  `id_krs` int(22) NOT NULL,
+  `kode_mk` varchar(255) NOT NULL,
+  `kode_dosen` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `db_item_krs`
+--
+
+INSERT INTO `db_item_krs` (`id_item_krs`, `id_krs`, `kode_mk`, `kode_dosen`) VALUES
+(7, 14, 'A002', '5'),
+(8, 14, 'A001', '4');
 
 -- --------------------------------------------------------
 
@@ -79,10 +102,8 @@ CREATE TABLE `db_jurusan` (
 --
 
 INSERT INTO `db_jurusan` (`id_jur`, `kd_jurusan`, `nama_jurusan`, `ketua_jurusan`) VALUES
-(2, 'B123', 'Manajemen', 'Duwi'),
-(4, 'B312', 'Elektro', 'Poco Santoso'),
-(6, 'B111', 'Akutansi', 'Dwi'),
-(8, 'A675', 'Informatika', 'Gloria');
+(9, '0001', 'Teknik Informatika', 'Joni'),
+(10, '002', 'Teknik Elektro', 'Jono');
 
 -- --------------------------------------------------------
 
@@ -113,9 +134,15 @@ CREATE TABLE `db_mahasiswa` (
 --
 
 INSERT INTO `db_mahasiswa` (`id_mhs`, `nim`, `nik_mhs`, `kd_jurusan`, `nama_mhs`, `alamat`, `telp`, `tempat_lahir`, `tgl_lahir`, `agama_mhs`, `kewarganegaraan`, `nama_ortu`, `alamat_ortu`, `telp_ortu`, `foto_mhs`) VALUES
-(1, 71200626, 2147483647, 'B123', 'Joni J', 'asdaksflas asdjasdasjda', 987654321, 'Pati', '2008-08-21', 'Islam', 'WNI', 'Juono', 'asdasjkdkasjd', 98765432, 'foto_mhs/mhs_20201001135321_5f75c33112fb5.jpg'),
-(9, 112334455, 212312312, 'B123', 'Doni', 'asdasfsdfasfas', 2147483647, 'asdadsfaf', '2020-09-29', 'Islam', 'sdfasfsafsdf', 'sdfasdfasdfas', 'asdfsafsafsa', 2147483647, 'foto_mhs/mhs_20201002163608_5f773ad817657.jpg'),
-(10, 32648236, 2147483647, 'B111', 'afhjsjahfka', 'sjdhddkahk', 2147483647, 'jsdfkahsasf', '2020-10-05', 'Islam', 'sdfsfsdf', 'sdfsdfsdfds', 'dsfsdfsfsd', 2135678912, 'foto_mhs/mhs_20201001185513_5f7609f125a15.jpg');
+(19, 71200626, 2147483647, '0001', 'awokwkwk', 'asdkjasdjlas', 213791268, 'adkajdl', '2020-10-07', 'Islam', 'asdasjh', 'sajdhaks', 'asdaskjdasl', 879798779, 'foto_mhs/mhs_20201009121806_5f8038de84ac1.jpg'),
+(20, 201811001, 728472387, '0001', 'ANINDITO SATYA RAMAHDHAN', 'asdjsadj', 374298329, 'PATI', '2020-10-10', 'Islam', 'WNI', 'SDJALDJ', 'KDDFJSLKFJ', 2147483647, 'default/male.png'),
+(21, 201811002, 2147483647, '0001', 'ARY AKHYAR', 'SIDJKSDFJLK', 342349238, 'PATI', '2020-10-10', 'Islam', 'WNI', 'ASJDSJH', 'SAJHFSDHDJS', 2147483647, 'default/male.png'),
+(22, 201812009, 2147483647, '002', 'TAUFIK HIDAYAT', 'DAJDLADJ', 2147483647, 'SKLFJLSKAJKF', '2020-10-10', 'Islam', 'WNI', 'FKLASJDFKLASDF', 'ADSFASDFADSF', 569748324, 'default/male.png'),
+(23, 201911001, 2147483647, '0001', ' ADITYA HERA PRATAMA', 'SDJSLKDASKJ', 2147483647, 'JKSDFHSDJ', '2020-10-10', 'Islam', 'WNI', 'ASDJLKASJ', 'LKASJDASJ', 2147483647, 'default/male.png'),
+(24, 201911002, 247238479, '0001', 'AYU NOVITA SARI', 'ADSSDJKADJALKJ', 83472937, 'SFJSFSD', '2020-10-10', 'Islam', 'ASFSAFSAD', 'SAFASFSAD', 'SADFASDFASDF', 234324324, 'default/male.png'),
+(25, 201911003, 2839137, '0001', 'BINTANG TRI YOGA', 'SKJDALJDASKLJ', 2147483647, 'LSKDJSAKJ', '2020-10-10', 'Islam', 'WNI', 'SKJDLAKSJD', 'ASDJKKALSJD', 874923793, 'default/male.png'),
+(26, 201911004, 2147483647, '0001', 'FATIH LUTH FITRIYAH', 'SADKJASDJASKLDJ', 2147483647, 'PATI', '2020-10-10', 'Islam', 'WNI', 'SADLKDJ', 'SKAJDAL', 2147483647, 'default/male.png'),
+(27, 201911005, 2147483647, '0001', 'FEBBY PUTRI MARSHANDA', 'SAHDJASHDJKASH', 2147483647, 'SJDALJDLAJ', '2020-10-10', 'Islam', 'WNI', 'SADJJKLJASD', 'ASFSDFAS', 2147483647, 'default/male.png');
 
 -- --------------------------------------------------------
 
@@ -137,8 +164,10 @@ CREATE TABLE `db_makul` (
 --
 
 INSERT INTO `db_makul` (`id_mk`, `kode_mk`, `nama_mk`, `sks`, `semester`, `kd_jurusan`) VALUES
-(1, 'AA125', 'Matematika Log', 7, '2', 'B123'),
-(2, 'AB156', 'Logika Matematika', 3, '1', 'B123');
+(4, 'A001', 'Matematika Teknik', 3, '1', '0001'),
+(5, 'A002', 'Matematika Logika', 2, '1', '0001'),
+(6, 'B001', 'Matematika Dasar', 3, '1', '002'),
+(7, 'B002', 'Matematika Diskrit', 3, '1', '002');
 
 -- --------------------------------------------------------
 
@@ -147,12 +176,36 @@ INSERT INTO `db_makul` (`id_mk`, `kode_mk`, `nama_mk`, `sks`, `semester`, `kd_ju
 --
 
 CREATE TABLE `db_nilai` (
+  `id_nilai` int(22) NOT NULL,
   `id_krs` int(22) NOT NULL,
-  `id_ta` int(11) NOT NULL,
+  `ta` varchar(255) NOT NULL,
   `nim` int(22) NOT NULL,
   `kd_mk` varchar(255) NOT NULL,
-  `kd_dosen` varchar(255) NOT NULL
+  `kd_dosen` varchar(255) NOT NULL,
+  `nilai` varchar(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `db_paket_krs`
+--
+
+CREATE TABLE `db_paket_krs` (
+  `id_krs` int(11) NOT NULL,
+  `id_ta` int(11) NOT NULL,
+  `ta` varchar(255) NOT NULL,
+  `semester` int(3) NOT NULL,
+  `id_jurusan` int(11) NOT NULL,
+  `id_pa` int(22) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `db_paket_krs`
+--
+
+INSERT INTO `db_paket_krs` (`id_krs`, `id_ta`, `ta`, `semester`, `id_jurusan`, `id_pa`) VALUES
+(14, 8, '2020/2021', 1, 9, 4);
 
 -- --------------------------------------------------------
 
@@ -170,7 +223,9 @@ CREATE TABLE `db_ta` (
 --
 
 INSERT INTO `db_ta` (`id_ta`, `ta`) VALUES
-(3, '2020/2021');
+(6, '2018/2019'),
+(7, '2019/2020'),
+(8, '2020/2021');
 
 -- --------------------------------------------------------
 
@@ -182,7 +237,7 @@ CREATE TABLE `db_user` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `level` enum('mhs','dosen','admin') NOT NULL,
   `blokir` enum('y','n') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -193,7 +248,16 @@ CREATE TABLE `db_user` (
 
 INSERT INTO `db_user` (`id`, `username`, `password`, `email`, `level`, `blokir`) VALUES
 (1, 'admin', '$2y$10$DznkqMSucbCb3JCbCr3P6ejac2qaGst0/oeAjyYLCzlYYcKbxOl5u', 'admin@gmail.com', 'admin', 'n'),
-(2, 'mhs', '$2y$10$V61fkrAgepN/cmnxefoTgepP/gGgywUX42OoPQkmzNgQ0Bo3gOAW6', 'mhs@gmail.com', 'mhs', 'n');
+(2, 'mhs', '$2y$10$V61fkrAgepN/cmnxefoTgepP/gGgywUX42OoPQkmzNgQ0Bo3gOAW6', 'mhs@gmail.com', 'mhs', 'n'),
+(6, '71200626', '$2y$10$OY2ypTGDwoC2Z.LwL3wOienpH8VkxX7cwyHPHa1nQt0Vb7oZxhggS', NULL, 'mhs', 'y'),
+(7, '201811001', '$2y$10$YG8KLx16V99.OFAbcGe8PeS0SigBMmv7kUprguBwvOeYnlfjef09u', NULL, 'mhs', 'y'),
+(8, '201811002', '$2y$10$AyEja1uq0qc9Q0fvkFTfKeZBTWg6LKhcnKJoKWmLAjKgE8YS3mz/y', NULL, 'mhs', 'y'),
+(9, '201812009', '$2y$10$udlBaRbFwdB5pvEQMeyF1.ZW1NvuqMzM0gRWd5Ag7jkda/jkpae96', NULL, 'mhs', 'y'),
+(10, '201911001', '$2y$10$ZjQU6Kvvb5Xi4iY2czkUgO4.5S8vF4vzRnxWvWG6/lsImB28o2tXS', NULL, 'mhs', 'y'),
+(11, '201911002', '$2y$10$wwfrxXvtc68enfxgoYvVp.qSV7tlphvRBBygc.E2kQIviLzKwzSP2', NULL, 'mhs', 'y'),
+(12, '201911003', '$2y$10$98xLFaDvvmAV4cRCULjIc.urThAG8xhVrcbCOuBcM9Tmtq5x.dLa.', NULL, 'mhs', 'y'),
+(13, '201911004', '$2y$10$DOWk2eH4Hyv0qhzDuQjPAuYZ.lt4fN4tWQnXLcAHDoS.4TMTs1pZK', NULL, 'mhs', 'y'),
+(14, '201911005', '$2y$10$/7VA6eLiiWuPxpLFK.JPgeHI0y/ylWDMbDSlYqYPh58Hy6aou8Pmu', NULL, 'mhs', 'y');
 
 --
 -- Indexes for dumped tables
@@ -206,6 +270,13 @@ ALTER TABLE `db_dosen`
   ADD PRIMARY KEY (`id_dosen`),
   ADD UNIQUE KEY `kd_dosen` (`kd_dosen`),
   ADD KEY `jurusan` (`kd_jurusan`);
+
+--
+-- Indexes for table `db_item_krs`
+--
+ALTER TABLE `db_item_krs`
+  ADD PRIMARY KEY (`id_item_krs`),
+  ADD KEY `item-id_krs` (`id_krs`);
 
 --
 -- Indexes for table `db_jadwal`
@@ -242,11 +313,17 @@ ALTER TABLE `db_makul`
 -- Indexes for table `db_nilai`
 --
 ALTER TABLE `db_nilai`
-  ADD PRIMARY KEY (`id_krs`),
-  ADD KEY `nilai-id_ta` (`id_ta`),
+  ADD PRIMARY KEY (`id_nilai`),
   ADD KEY `nilai-nim` (`nim`),
   ADD KEY `nilai-kd_mk` (`kd_mk`),
-  ADD KEY `nilai-kd_dosen` (`kd_dosen`);
+  ADD KEY `nilai-kd_dosen` (`kd_dosen`),
+  ADD KEY `nilai-id_krs` (`id_krs`);
+
+--
+-- Indexes for table `db_paket_krs`
+--
+ALTER TABLE `db_paket_krs`
+  ADD PRIMARY KEY (`id_krs`);
 
 --
 -- Indexes for table `db_ta`
@@ -268,7 +345,13 @@ ALTER TABLE `db_user`
 -- AUTO_INCREMENT for table `db_dosen`
 --
 ALTER TABLE `db_dosen`
-  MODIFY `id_dosen` int(22) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_dosen` int(22) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `db_item_krs`
+--
+ALTER TABLE `db_item_krs`
+  MODIFY `id_item_krs` int(22) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `db_jadwal`
@@ -280,37 +363,43 @@ ALTER TABLE `db_jadwal`
 -- AUTO_INCREMENT for table `db_jurusan`
 --
 ALTER TABLE `db_jurusan`
-  MODIFY `id_jur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_jur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `db_mahasiswa`
 --
 ALTER TABLE `db_mahasiswa`
-  MODIFY `id_mhs` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_mhs` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `db_makul`
 --
 ALTER TABLE `db_makul`
-  MODIFY `id_mk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_mk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `db_nilai`
 --
 ALTER TABLE `db_nilai`
-  MODIFY `id_krs` int(22) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nilai` int(22) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `db_paket_krs`
+--
+ALTER TABLE `db_paket_krs`
+  MODIFY `id_krs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `db_ta`
 --
 ALTER TABLE `db_ta`
-  MODIFY `id_ta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `db_user`
 --
 ALTER TABLE `db_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -321,6 +410,12 @@ ALTER TABLE `db_user`
 --
 ALTER TABLE `db_dosen`
   ADD CONSTRAINT `jurusan` FOREIGN KEY (`kd_jurusan`) REFERENCES `db_jurusan` (`kd_jurusan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `db_item_krs`
+--
+ALTER TABLE `db_item_krs`
+  ADD CONSTRAINT `item-id_krs` FOREIGN KEY (`id_krs`) REFERENCES `db_paket_krs` (`id_krs`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `db_jadwal`
@@ -345,7 +440,7 @@ ALTER TABLE `db_makul`
 -- Constraints for table `db_nilai`
 --
 ALTER TABLE `db_nilai`
-  ADD CONSTRAINT `nilai-id_ta` FOREIGN KEY (`id_ta`) REFERENCES `db_ta` (`id_ta`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `nilai-id_krs` FOREIGN KEY (`id_krs`) REFERENCES `db_paket_krs` (`id_krs`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `nilai-kd_dosen` FOREIGN KEY (`kd_dosen`) REFERENCES `db_dosen` (`kd_dosen`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `nilai-kd_mk` FOREIGN KEY (`kd_mk`) REFERENCES `db_makul` (`kode_mk`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `nilai-nim` FOREIGN KEY (`nim`) REFERENCES `db_mahasiswa` (`nim`) ON DELETE CASCADE ON UPDATE CASCADE;
