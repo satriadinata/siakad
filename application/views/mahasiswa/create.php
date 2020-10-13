@@ -36,6 +36,7 @@
 								<?php print_r($this->session->flashdata('error')); ?>
 							</div>
 						<?php endif; ?>
+						<input type="hidden" name="semester" value="1">
 
 						<div class="form-group">
 							<label for="nim">NIM</label>

@@ -9,6 +9,7 @@ class Mahasiswa_model extends CI_Model
     $this->db->join('db_jurusan','db_jurusan.kd_jurusan = db_mahasiswa.kd_jurusan');
     $this->db->like('nim', $search);
     $this->db->or_like('nama_mhs', $search);
+    $this->db->or_like('semester', $search);
     $this->db->or_like('agama_mhs', $search);
     // $this->db->or_like('kd_jurusan', $search);
     $this->db->order_by($order_field, $order_ascdesc);
@@ -23,6 +24,7 @@ class Mahasiswa_model extends CI_Model
     $this->db->join('db_jurusan','db_jurusan.kd_jurusan = db_mahasiswa.kd_jurusan');
     $this->db->like('nim', $search);
     $this->db->or_like('nama_mhs', $search);
+    $this->db->or_like('semester', $search);
     $this->db->or_like('agama_mhs', $search);
     // $this->db->or_like('kd_jurusan', $search);
     return $this->db->get($this->_table)->num_rows();

@@ -55,8 +55,7 @@
 						<th>NIM</th>
 						<th>Nama</th>
 						<th>KD Jurusan</th>
-						<th>Agama</th>
-						<th>Foto</th>
+						<th>Semester</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -65,10 +64,9 @@
 				</tbody>
 			</table>
 		</div>
-		<button class="btn btn-primary" id="updateSemester" >Update ke Semester Berikutnya</button>
 		<!-- /.card-body -->
 		<div class="card-footer">
-			
+			<button class="btn btn-primary" id="updateSemester" >Update ke Semester Berikutnya</button>
 		</div>
 		<!-- /.card-footer-->
 	</div>
@@ -78,35 +76,25 @@
 	<!-- /.card -->
 	<!-- modal -->
 
-	<div class="modal fade" id="modalImport">
+	<div class="modal fade" id="modal-edit-jur">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Import Mahasiswa</h4>
+					<h4 class="modal-title">Edit Data</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<form enctype="multipart/form-data" method="post" action="<?= site_url('mahasiswa/import') ;?>">
-						
-						<div class="form-group">
-							<label>Pilih File</label>
-							<input type="file" name="file" required="" class="form-control">
-						</div>
-
-						<hr>
-						<div class="text-right">
-							<button class="btn btn-success">Import</button>
-						</div>
-
-					</form>
+				<div class="modal-body" id="modalData">
+					<!-- <p>One fine body&hellip;</p> -->
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
+			<!-- /.modal-content -->
 		</div>
+		<!-- /.modal-dialog -->
 	</div>
 
 </section>
@@ -148,21 +136,16 @@
 				var b=row.kd_jurusan+' - '+row.nama_jurusan;
 				return b;
 			}},
-			{ "data": "agama_mhs" },
+			{"data":"semester"},
 			{ "render": function ( data, type, row ){
-				var html  = "<img src='<?= site_url('uploads/');?>/"+row.foto_mhs+"' width='100'/>";
+				var id=row.id_mhs;
+				var idi=row.id_mhs;
+				var html  = "<a class='btn btn-primary' style='color:white' onclick='edit("+id+")' data-toggle='modal' data-target='#modal-edit-jur' >Edit</a>";
 				return html;
 			}
 		},
-		{ "render": function ( data, type, row ){
-			var id=row.id_mhs;
-			var idi=row.id_mhs;
-			var html  = "<a class='btn btn-primary' href='<?= site_url('mahasiswa/edit') ;?>/"+idi+"'>Edit</a> | <button class='btn btn-danger' onclick=hapusMhs('"+id+"')>Delete</button>";
-			return html;
-		}
-	},
-	],
-});
+		],
+	});
 	});
 	$('#updateSemester').on('click', function(e){
 		e.preventDefault();
@@ -170,15 +153,17 @@
 		var length = tabel.rows('.selected').data().length;
 		var fix=[];
 		for (var i = data.length - 1; i >= 0; i--) {
-			fix[i]=(data[i]['id_mhs']);
+			fix.push(Number(data[i]['id_mhs']));
 		};
 		console.log(fix);
 		$.ajax({
 			url: '<?php echo site_url('semester/update') ?>',
 			type: "POST",
-			data: fix,
+			data: {fix},
 			success: function(response){
-				console.log(response);
+				// console.log(response);
+				alert('Success');
+				tabel.ajax.reload();
 			},
 		});
 		
@@ -192,7 +177,7 @@
 	}
 	function edit(id){
 		$.ajax({
-			url: "<?php echo site_url('mahasiswa/edit/') ?>"+id,
+			url: "<?php echo site_url('semester/edit/') ?>"+id,
 			success: function(result){
 				$("#modalData").html(result);
 			}

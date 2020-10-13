@@ -16,6 +16,7 @@ class Semester extends CI_Controller {
 
 	public function index()
 	{
+		$this->db->order_by('id','desc');
 		$data['user']= $this->session->userdata('user_logged');
 		$data['title']="Semester";
 		if ($data['user']['level']=='admin') {
@@ -27,8 +28,26 @@ class Semester extends CI_Controller {
 
 	public function update()
 	{
+		// $all=$this->db->get('db_mahasiswa')->result();
+		// foreach ($all as $key) {
+		// 	$this->db->update('semester',[
+		// 		'id_mhs'=>$key->id_mhs,
+		// 		'nim'=>$key->nim,
+		// 		'semester'=>1,
+		// 		'created_at'=>date("Y-m-d H:i:s"),
+		// 	]);
+		// };
+		// die();
 		$data=$this->input->post();
-		return print_r($data);
+			// $getSemester=$this->db->get_where('')
+		foreach ($data['fix'] as $val) {
+			$mhs=$this->db->get_where('db_mahasiswa',['id_mhs'=>$val])->row_array();
+			$up=[
+				'semester'=>$mhs['semester']+1,
+			];
+			$this->db->where('id_mhs',$val);
+			$this->db->update('db_mahasiswa', $up);
+		};
 	}
 
 	public function getAll()
@@ -64,8 +83,19 @@ class Semester extends CI_Controller {
 
 	public function edit($id)
 	{
-		$data['ta']=$this->db->get_where('db_ta',['id_ta'=>$id])->row_array();
-		$this->load->view('ta/edit',$data);
+		$data['semester']=$this->db->get_where('db_mahasiswa',['id_mhs'=>$id])->row_array();
+		$this->load->view('semester/edit',$data);
+	}
+	public function det()
+	{
+		// $mhs=$this->db->get_where('db_mahasiswa',['id_mhs'=>$val])->row_array();
+		$up=[
+			'semester'=>$this->input->post()['semester'],
+		];
+		$this->db->where('id_mhs',$this->input->post()['id_mhs']);
+		$this->db->update('db_mahasiswa', $up);
+		$this->session->set_flashdata('message', 'Data berhasil di update !');
+		redirect(site_url('semester'));
 	}
 
 	// public function update()

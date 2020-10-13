@@ -54,6 +54,7 @@
 						<th>NIM</th>
 						<th>Nama</th>
 						<th>KD Jurusan</th>
+						<th>Semester</th>
 						<th>Agama</th>
 						<th>Foto</th>
 						<th>Action</th>
@@ -128,6 +129,7 @@
 				var b=row.kd_jurusan+' - '+row.nama_jurusan;
 				return b;
 			}},
+			{ "data": "semester" },
 			{ "data": "agama_mhs" },
 			{ "render": function ( data, type, row )
 			{
