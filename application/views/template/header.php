@@ -7,8 +7,9 @@
 
   <title>Siakad</title>
   <script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery.js"></script>
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/DataTables/datatables.js"></script>
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/DataTables/datatables.css"/>
+  <link rel="stylesheet" type="text/css" href=" <?php echo base_url() ?>assets/DataTables/datatables.min.css"/>
+
+  <script type="text/javascript" src=" <?php echo base_url() ?>assets/DataTables/datatables.min.js"></script>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
@@ -25,9 +26,9 @@
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <!-- Left navbar links -->
       <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
       <!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="index3.html" class="nav-link">Home</a>
       </li>
@@ -193,6 +194,16 @@
               <i class="fas fa-vote-yea mr-2"></i>
               <p>
                 Tahun Ajaran
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?php echo site_url('semester') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="semester") ? 'active' : '' ;?>">
+              <i class="fas fa-vote-yea mr-2"></i>
+              <p>
+                Semester
                 <span class="right badge badge-danger"></span>
               </p>
             </a>

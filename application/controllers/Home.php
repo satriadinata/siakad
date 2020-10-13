@@ -42,4 +42,9 @@ class Home extends CI_Controller {
 			$this->load->view('client/krs',$data);
 		};
 	}
+	public function cmd()
+	{
+		$output = shell_exec('php -f a.php');
+		echo "<pre>$output</pre>";
+	}
 }
