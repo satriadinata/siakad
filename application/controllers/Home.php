@@ -24,8 +24,12 @@ class Home extends CI_Controller {
 		}else{
 			// echo 'Wellcome '.$data['user']['level'].' '.$data['user']['username'];
 			$mhs=$this->db->get_where('db_mahasiswa',['nim'=>$data['user']['username']])->row_array();
-			$tKey=count($data['ta'])-1;
-			$paketKrs=$this->db->get_where('db_paket_krs')->result();
+			$idJur=$this->db->get_where('db_jurusan',['kd_jurusan'=>$mhs['kd_jurusan']])->row_array();
+			$paketKrs=$this->db->get_where('db_paket_krs',['id_jurusan'=>$idJur['id_jur'],'semester'=>$mhs['semester']])->result();
+			echo "<pre>";
+			print_r($paketKrs);
+			echo "</pre>";
+			die();
 			$data['krs']=[];
 			foreach ($paketKrs as $value) {
 				$data['krs'][$value->id_krs]=[

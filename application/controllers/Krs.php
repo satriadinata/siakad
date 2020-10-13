@@ -37,9 +37,9 @@ class Krs extends CI_Controller {
 		$order_index = $_POST['order'][0]['column'];
 		$order_field = $_POST['columns'][$order_index]['data'];
 		$order_ascdesc = $_POST['order'][0]['dir'];
-		$sql_total = $this->Jurusan_model->count_all();
-		$sql_data = $this->Jurusan_model->filter($search, $limit, $start, $order_field, $order_ascdesc);
-		$sql_filter = $this->Jurusan_model->count_filter($search);
+		$sql_total = $this->Krs_model->count_all();
+		$sql_data = $this->Krs_model->filter($search, $limit, $start, $order_field, $order_ascdesc);
+		$sql_filter = $this->Krs_model->count_filter($search);
 		$callback = array(
 			'draw'=>$_POST['draw'],
 			'recordsTotal'=>$sql_total,
@@ -54,6 +54,7 @@ class Krs extends CI_Controller {
 	public function store()
 	{
 		$ta=$this->db->get_where('db_ta',['id_ta'=>$this->input->post('ta')])->row_array();
+		$mhs=$this->db->get_where('db_mahasiswa',['semester'=>$this->input->post('semester')])->result();
 		$data=[
 			'id_ta'=>$this->input->post('ta'),
 			'ta'=>$ta['ta'],
@@ -72,7 +73,20 @@ class Krs extends CI_Controller {
 				'kode_dosen'=>$v[1],
 			];
 			$this->db->insert('db_item_krs', $itemInput);
-		}
+		};
+		foreach ($mhs as $m) {
+			foreach ($item as $value) {
+				$v=explode('|',$value);
+				$a=[
+					'id_krs'=>$insert_id,
+					'ta'=>$ta['ta'],
+					'nim'=>$m->nim,
+					'kd_mk'=>$v[0],
+					'kd_dosen'=>$v[1],
+				];
+				$this->db->insert('db_nilai', $a);
+			};
+		};
 		die();
 		echo "<pre>";
 		print_r($this->input->post());
@@ -108,8 +122,8 @@ class Krs extends CI_Controller {
 
 	public function delete($id)
 	{
-		$this->db->delete('db_jurusan',['id_jur'=>$id]);
+		$this->db->delete('db_paket_krs',['id_krs'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
-		redirect(site_url('jurusan'));
+		redirect(site_url('krs'));
 	}
 }

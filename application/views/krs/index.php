@@ -17,13 +17,13 @@
 <section class="content">
 
 	<!-- Default box -->
-	<div class="card">
+	<div class="card collapsed-card">
 		<div class="card-header">
 			<h3 class="card-title">Tambah KRS</h3>
 
 			<div class="card-tools">
-				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-					<i class="fas fa-minus"></i>
+				<button type="button" class="btn btn-primary" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+					<i class="fas fa-plus"></i>
 				</button>
 			</div>
 		</div>
@@ -106,7 +106,7 @@
 		<!-- Default box -->
 		<div class="card">
 			<div class="card-header">
-				<h3 class="card-title">Data Jurusan</h3>
+				<h3 class="card-title">KRS List</h3>
 
 				<div class="card-tools">
 					<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -122,9 +122,10 @@
 			<table id="tableJurusan" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Kode Jurusan</th>
-						<th>Nama Jurusan</th>
-						<th>Ketua Jurusan</th>
+						<th>Tahun Ajar</th>
+						<th>Semester</th>
+						<th>Jurusan</th>
+						<th>PA</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -180,20 +181,21 @@
 			"order": [[ 0, 'asc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
 			"ajax":
 			{
-				"url": "<?php echo base_url('jurusan/getAll') ?>", // URL file untuk proses select datanya
+				"url": "<?php echo base_url('krs/getAll') ?>", // URL file untuk proses select datanya
 				"type": "POST"
 			},
 			"deferRender": true,
 			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]], // Combobox Limit
 			"columns": [
-				{ "data": "kd_jurusan" }, // Tampilkan nis
-				{ "data": "nama_jurusan" },  // Tampilkan nama
-				{ "data": "ketua_jurusan" }, // Tampilkan alamat
+				{ "data": "ta" }, // Tampilkan nis
+				{ "data": "semester" },  // Tampilkan nama
+				{ "data": "nama_jurusan" }, // Tampilkan alamat
+				{ "data": "nama_dosen" }, // Tampilkan alamat
 				{ "render": function ( data, type, row )
 					{ // Tampilkan kolom aksi
-						var id=row.id_jur;
-						var idi=row.id_jur;
-						var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Edit</button> | <button class='btn btn-danger' onclick=hapusJurusan('"+id+"')>Delete</button>";
+						var id=row.id_krs;
+						var idi=row.id_krs;
+						var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Detail</button> | <button class='btn btn-danger' onclick=hapusJurusan('"+id+"')>Delete</button>";
 						return html;
 					}
 				},
@@ -205,7 +207,7 @@
 	function hapusJurusan(a){
 		var confirm=window.confirm('Yakin ?');
 		if (confirm) {
-			window.location.href='<?php echo site_url('jurusan/delete/') ?>'+a;
+			window.location.href='<?php echo site_url('krs/delete/') ?>'+a;
 		};
 	}
 	function edit(id){
@@ -250,6 +252,7 @@
 			data:postData,
 			success: function(data){
 				alert('Data berhasil di input');
+				tabel.ajax.reload();
 			}
 		});
 	}
