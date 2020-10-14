@@ -87,18 +87,6 @@ class Krs extends CI_Controller {
 				$this->db->insert('db_nilai', $a);
 			};
 		};
-		die();
-		echo "<pre>";
-		print_r($this->input->post());
-		echo "</pre>";
-		$data=[
-			'kd_jurusan'=>$this->input->post('kd_jurusan',true),
-			'nama_jurusan'=>$this->input->post('nama_jurusan',true),
-			'ketua_jurusan'=>$this->input->post('ketua_jurusan',true),
-		];
-		$this->db->insert('db_jurusan', $data);
-		$this->session->set_flashdata('message', 'Data berhasil di input !');
-		redirect(site_url('jurusan'));
 	}
 
 	public function edit($id)
