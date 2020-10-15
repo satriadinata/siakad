@@ -74,19 +74,19 @@ class Krs extends CI_Controller {
 			];
 			$this->db->insert('db_item_krs', $itemInput);
 		};
-		foreach ($mhs as $m) {
-			foreach ($item as $value) {
-				$v=explode('|',$value);
-				$a=[
-					'id_krs'=>$insert_id,
-					'ta'=>$ta['ta'],
-					'nim'=>$m->nim,
-					'kd_mk'=>$v[0],
-					'kd_dosen'=>$v[1],
-				];
-				$this->db->insert('db_nilai', $a);
-			};
-		};
+		// foreach ($mhs as $m) {
+		// 	foreach ($item as $value) {
+		// 		$v=explode('|',$value);
+		// 		$a=[
+		// 			'id_krs'=>$insert_id,
+		// 			'ta'=>$ta['ta'],
+		// 			'nim'=>$m->nim,
+		// 			'kd_mk'=>$v[0],
+		// 			'kd_dosen'=>$v[1],
+		// 		];
+		// 		$this->db->insert('db_nilai', $a);
+		// 	};
+		// };
 	}
 
 	public function edit($id)

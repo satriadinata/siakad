@@ -86,9 +86,9 @@
 								<tbody>
 									<?php foreach ($item as $value):?>
 									<tr>
-										<td><?php echo $value->kd_mk; ?></td>
-										<td><?php echo $value->kd_mk; ?></td>
-										<td><?php echo $value->kd_dosen; ?></td>
+										<td><?php echo $value->kode_mk; ?></td>
+										<td><?php echo $value->kode_mk; ?></td>
+										<td><?php echo $value->kode_dosen; ?></td>
 									</tr>
 									<?php endforeach ?>
 								</tbody>
