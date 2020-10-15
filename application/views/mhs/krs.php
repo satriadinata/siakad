@@ -67,7 +67,7 @@
 									</div>
 
 									<div class="form-group">
-										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >Nama Mahasiswa</label>
+										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >NIM</label>
 										<div class="col-sm-10">
 											<h4><?php echo $mhs['nim']; ?></h4>
 										</div>
@@ -77,19 +77,37 @@
 							</div>
 
 							
-							<table class="table table-striped" >
+							<table class="table table-striped table-bordered" >
 								<thead>
+									<th><input type="checkbox" id="selectAll" name=""></th>
 									<th>Kode MK</th>
 									<th>Mata Kuliah</th>
+									<th>SKS</th>
 									<th>Dosen</th>
 								</thead>
 								<tbody>
 									<?php foreach ($item as $value):?>
-									<tr>
-										<td><?php echo $value->kode_mk; ?></td>
-										<td><?php echo $value->kode_mk; ?></td>
-										<td><?php echo $value->kode_dosen; ?></td>
-									</tr>
+										<tr>
+											<td>
+												<input type="checkbox" class="check" value="<?php echo $value->id_item_krs ?>" name="">
+											</td>
+											<td><?php echo $value->kode_mk; ?></td>
+											<td><?php foreach ($makul as $v) {
+												if ($v->kode_mk==$value->kode_mk) {
+													echo $v->nama_mk;
+												}
+											} ?></td>
+											<td><?php foreach ($makul as $v) {
+												if ($v->kode_mk==$value->kode_mk) {
+													echo $v->sks;
+												}
+											} ?></td>
+											<td><?php foreach ($dosen as $v) {
+												if ($v->id_dosen==$value->id_dosen) {
+													echo $v->nama_dosen;
+												}
+											} ?></td>
+										</tr>
 									<?php endforeach ?>
 								</tbody>
 
@@ -100,7 +118,8 @@
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
-							Footer
+							<button onclick="simpan()" class="btn btn-primary" >Simpan</button>
+							<button class="btn btn-danger" >Batal</button>
 						</div>
 						<!-- /.card-footer-->
 					</div>
@@ -109,4 +128,31 @@
 				</section>
 				<!-- /.content -->
 			</div>
+			<script>
+				$('#selectAll').click(function(){
+					if (this.checked) {
+						$(".check").prop("checked", true);
+					}else{
+						$(".check").prop("checked", false);
+					};
+				});
+				function simpan(){
+					var store=[];
+					var i=0;
+					$(".check:checked").each(function(){
+						store[i]=$(this).val();
+						i++;
+					});
+					// console.log(store);
+					$.ajax({
+						url: '<?php echo site_url('mhs/krs/simpan') ?>',
+						type: "POST",
+						data: {store},
+						success: function(response){
+				console.log(response);
+				// alert('Success');
+			},
+		});
+				};
+			</script>
 			<?php $this->load->view('template/script') ?>

@@ -29,5 +29,10 @@ class Krs extends CI_Controller {
 		};
 		$this->load->view('mhs/krs',$data);
 	}
+	public function simpan()
+	{
+		$p=$this->input->post();
+		print_r($p);
+	}
 }
 ?>
