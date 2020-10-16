@@ -123,7 +123,7 @@
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
-							<button onclick="simpan()" class="btn btn-primary" >Simpan</button>
+							<button id="simpan" onclick="simpan()" class="btn btn-primary ">Simpan</button>
 						</div>
 						<!-- /.card-footer-->
 						<?php elseif ($krs!=null && $nilai!=null): ?>
@@ -213,7 +213,7 @@
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
-							<button onclick="batal()" class="btn btn-danger" >Batal</button>
+							<button id="batal" onclick="batal()" class="btn btn-danger" >Batal</button>
 						</div>
 
 						<?php else: ?>
@@ -251,8 +251,10 @@
 						nim:'<?php echo $mhs['nim']; ?>',
 						store
 					},
+					beforeSend:function(){
+						$('#simpan').html('Simpan<i class="fas fa-sync-alt fa-spin" ></i>');
+					},
 					success: function(response){
-						alert('success');
 						location.reload();
 					},
 					error:function(data){
@@ -275,8 +277,10 @@
 						nim:'<?php echo $mhs['nim']; ?>',
 						store
 					},
+					beforeSend:function(){
+						$('#batal').html('Batal<i class="fas fa-sync-alt fa-spin" ></i>');
+					},
 					success: function(response){
-						alert('success');
 						location.reload();
 					},
 					error:function(data){

@@ -147,7 +147,7 @@
 <!-- modal -->
 
 <div class="modal fade" id="modal-edit-jur">
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title">Detail KRS</h4>

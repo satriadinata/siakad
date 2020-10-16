@@ -113,7 +113,7 @@
 				"type": "POST"
 			},
 			"deferRender": true,
-			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]],
+			"aLengthMenu": [[10, 50,100,500],[10, 50,100,500]],
 			"select": {
 				"style":    'multi',
 				"selector": 'td:first-child'
@@ -160,9 +160,14 @@
 			url: '<?php echo site_url('semester/update') ?>',
 			type: "POST",
 			data: {fix},
+			beforeSend:function(){
+				$('#updateSemester').html('Update ke Semester Berikutnya<i class="fas fa-sync-alt fa-spin" ></i>');
+			},
+			complete: function(){
+				$('#updateSemester').html('Update ke Semester Berikutnya');
+			},
 			success: function(response){
 				// console.log(response);
-				alert('Success');
 				tabel.ajax.reload();
 			},
 		});
