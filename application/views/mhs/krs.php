@@ -27,7 +27,7 @@
 						</div>
 					</div>
 					<div class="card-body">
-						<?php if ($krs!=null):?>
+						<?php if ($krs!=null && $nilai==null ):?>
 							<div class="row">
 								<div class="col-sm-6">
 
@@ -53,6 +53,13 @@
 													<h4><?php echo $v->nama_jurusan; ?></h4>
 												<?php endif ?>
 											<?php endforeach ?>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >PA</label>
+										<div class="col-sm-10">
+											<h4><?php echo $pa['nama_dosen']; ?></h4>
 										</div>
 									</div>
 
@@ -112,47 +119,170 @@
 								</tbody>
 
 							</table>
-							<?php else: ?>
-								Tidak Ada Data
-							<?php endif ?>
+
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
 							<button onclick="simpan()" class="btn btn-primary" >Simpan</button>
-							<button class="btn btn-danger" >Batal</button>
 						</div>
 						<!-- /.card-footer-->
+						<?php elseif ($krs!=null && $nilai!=null): ?>
+
+							<div class="row">
+								<div class="col-sm-6">
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >Tahun Ajar</label>
+										<div class="col-sm-10">
+											<h4><?php echo $krs['ta']; ?></h4>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >Semester</label>
+										<div class="col-sm-10">
+											<h4><?php echo $krs['semester']; ?></h4>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >Jurusan</label>
+										<div class="col-sm-10">
+											<?php foreach ($jurusan as $v):?>
+												<?php if ($v->id_jur==$krs['id_jurusan']):?>
+													<h4><?php echo $v->nama_jurusan; ?></h4>
+												<?php endif ?>
+											<?php endforeach ?>
+										</div>
+									</div>
+
+								</div>
+								<div class="col-sm-6">
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >Nama Mahasiswa</label>
+										<div class="col-sm-10">
+											<h4><?php echo $mhs['nama_mhs']; ?></h4>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >NIM</label>
+										<div class="col-sm-10">
+											<h4><?php echo $mhs['nim']; ?></h4>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							
+							<table class="table table-striped table-bordered" >
+								<thead>
+									<th>Kode MK</th>
+									<th>Mata Kuliah</th>
+									<th>SKS</th>
+									<th>Dosen</th>
+								</thead>
+								<tbody>
+									<?php foreach ($nilai as $value):?>
+										<tr>
+											<input type="hidden" class="id_nilai" value="<?php echo $value->id_nilai ?>" >
+											<td><?php echo $value->kd_mk; ?></td>
+											<td><?php foreach ($makul as $v) {
+												if ($v->kode_mk==$value->kd_mk) {
+													echo $v->nama_mk;
+												}
+											} ?></td>
+											<td><?php foreach ($makul as $v) {
+												if ($v->kode_mk==$value->kd_mk) {
+													echo $v->sks;
+												}
+											} ?></td>
+											<td><?php foreach ($dosen as $v) {
+												if ($v->kd_dosen==$value->kd_dosen) {
+													echo $v->nama_dosen;
+												}
+											} ?></td>
+										</tr>
+									<?php endforeach ?>
+								</tbody>
+
+							</table>
+
+						</div>
+						<!-- /.card-body -->
+						<div class="card-footer">
+							<button onclick="batal()" class="btn btn-danger" >Batal</button>
+						</div>
+
+						<?php else: ?>
+							Tidak Ada Data
+						<?php endif ?>
 					</div>
 					<!-- /.card -->
-
-				</section>
-				<!-- /.content -->
-			</div>
-			<script>
-				$('#selectAll').click(function(){
-					if (this.checked) {
-						$(".check").prop("checked", true);
-					}else{
-						$(".check").prop("checked", false);
-					};
-				});
-				function simpan(){
-					var store=[];
-					var i=0;
-					$(".check:checked").each(function(){
-						store[i]=$(this).val();
-						i++;
-					});
-					// console.log(store);
-					$.ajax({
-						url: '<?php echo site_url('mhs/krs/simpan') ?>',
-						type: "POST",
-						data: {store},
-						success: function(response){
-				console.log(response);
-				// alert('Success');
-			},
-		});
+				</div>
+				<!-- /.card-body -->
+				<div class="card-footer">
+				</div>
+			</section>
+			<!-- /.content -->
+		</div>
+		<script>
+			$('#selectAll').click(function(){
+				if (this.checked) {
+					$(".check").prop("checked", true);
+				}else{
+					$(".check").prop("checked", false);
 				};
-			</script>
-			<?php $this->load->view('template/script') ?>
+			});
+			function simpan(){
+				var store=[];
+				var i=0;
+				$(".check:checked").each(function(){
+					store[i]=$(this).val();
+					i++;
+				});
+					// console.log(store);
+				$.ajax({
+					url: '<?php echo site_url('mhs/krs/simpan') ?>',
+					type: "POST",
+					data: {
+						nim:'<?php echo $mhs['nim']; ?>',
+						store
+					},
+					success: function(response){
+						alert('success');
+						location.reload();
+					},
+					error:function(data){
+        				alert("error occured"); //===Show Error Message====
+    				},
+				});
+			};
+			function batal(){
+				var store=[];
+				var i=0;
+				$(".id_nilai").each(function(){
+					store[i]=$(this).val();
+					i++;
+				});
+				console.log(store);
+				$.ajax({
+					url: '<?php echo site_url('mhs/krs/batal') ?>',
+					type: "POST",
+					data: {
+						nim:'<?php echo $mhs['nim']; ?>',
+						store
+					},
+					success: function(response){
+						alert('success');
+						location.reload();
+					},
+					error:function(data){
+        				alert("error occured"); //===Show Error Message====
+    				},
+				});
+			};
+		</script>
+		<?php $this->load->view('template/script') ?>

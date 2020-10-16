@@ -150,7 +150,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Edit Data</h4>
+				<h4 class="modal-title">Detail KRS</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -212,7 +212,7 @@
 	}
 	function edit(id){
 		$.ajax({
-			url: "<?php echo site_url('jurusan/edit/') ?>"+id,
+			url: "<?php echo site_url('krs/detail/') ?>"+id,
 			success: function(result){
 				$("#modalData").html(result);
 			}

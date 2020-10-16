@@ -70,7 +70,7 @@ class Krs extends CI_Controller {
 			$itemInput=[
 				'id_krs'=>$insert_id,
 				'kode_mk'=>$v[0],
-				'kode_dosen'=>$v[1],
+				'id_dosen'=>$v[1],
 			];
 			$this->db->insert('db_item_krs', $itemInput);
 		};
@@ -89,23 +89,15 @@ class Krs extends CI_Controller {
 		// };
 	}
 
-	public function edit($id)
+	public function detail($id)
 	{
-		$data['jurusan']=$this->db->get_where('db_jurusan',['id_jur'=>$id])->row_array();
-		$this->load->view('jurusan/edit',$data);
-	}
-
-	public function update()
-	{
-		$data=[
-			'kd_jurusan'=>$this->input->post('kd_jurusan',true),
-			'nama_jurusan'=>$this->input->post('nama_jurusan',true),
-			'ketua_jurusan'=>$this->input->post('ketua_jurusan',true),
-		];
-		$this->db->where('id_jur',$this->input->post('id_jur',true));
-		$this->db->update('db_jurusan', $data);
-		$this->session->set_flashdata('message', 'Data berhasil di update !');
-		redirect(site_url('jurusan'));
+		$data['krs']=$this->db->get_where('db_paket_krs',['id_krs'=>$id])->row_array();
+		$data['item']=$this->db->get_where('db_item_krs',['id_krs'=>$id])->result();
+		$data['jurusan']=$this->db->get_where('db_jurusan',['id_jur'=>$data['krs']['id_jurusan']])->row_array();
+		$data['pa']=$this->db->get_where('db_dosen',['id_dosen'=>$data['krs']['id_pa']])->row_array();
+		$data['makul']=$this->db->get('db_makul')->result();
+		$data['dosen']=$this->db->get('db_dosen')->result();
+		$this->load->view('krs/detail',$data);
 	}
 
 	public function delete($id)
