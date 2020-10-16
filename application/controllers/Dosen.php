@@ -149,6 +149,11 @@ class Dosen extends CI_Controller {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 					redirect(site_url('dosen/edit/'.$data['id_dosen']));
 				}else{
+					$current_file = "uploads/".$dosen['foto_dosen'];
+					if(file_exists($current_file) && $dosen['foto_dosen'] != 'default/male.png'){
+						unlink($current_file);
+					}
+
 					$data['foto_dosen'] = 'foto_dosen/'.$this->upload->data("file_name");
 				}
 			}
@@ -168,6 +173,12 @@ class Dosen extends CI_Controller {
 
 	public function delete($id)
 	{
+		$dosen = $this->db->get_where('db_dosen',['id_dosen'=>$id])->row_array();
+		$current_file = "uploads/".$dosen['foto_dosen'];
+		if(file_exists($current_file) && $dosen['foto_dosen'] != 'default/male.png'){
+			unlink($current_file);
+		}
+
 		$this->db->delete('db_dosen',['id_dosen'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('dosen'));

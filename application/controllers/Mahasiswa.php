@@ -183,6 +183,11 @@ class Mahasiswa extends CI_Controller {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 					redirect(site_url('mahasiswa/edit/'.$data['id_mhs']));
 				}else{
+					
+					$current_file = "uploads/".$mahasiswa['foto_mhs'];
+					if(file_exists($current_file) && $mahasiswa['foto_mhs'] != 'default/male.png'){
+						unlink($current_file);
+					}
 					$data['foto_mhs'] = 'foto_mhs/'.$this->upload->data("file_name");
 				}
 			}
@@ -202,6 +207,12 @@ class Mahasiswa extends CI_Controller {
 
 	public function delete($id)
 	{
+		$mahasiswa = $this->db->get_where('db_mahasiswa',['id_mhs'=>$id])->row_array();
+		$current_file = "uploads/".$mahasiswa['foto_mhs'];
+		if(file_exists($current_file) && $mahasiswa['foto_mhs'] != 'default/male.png'){
+			unlink($current_file);
+		}
+
 		$user=$this->db->get_where('db_mahasiswa',['id_mhs'=>$id])->row_array();
 		$this->db->delete('db_user',['username'=>$user['nim']]);
 		$this->db->delete('db_mahasiswa',['id_mhs'=>$id]);
