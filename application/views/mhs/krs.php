@@ -59,7 +59,11 @@
 									<div class="form-group">
 										<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >PA</label>
 										<div class="col-sm-10">
-											<h4><?php echo $pa['nama_dosen']; ?></h4>
+											<h4><?php foreach ($pa as $value) {
+												if ($value->id_dosen==$krs['id_pa']) {
+													echo $value->nama_dosen;
+												}
+											} ?></h4>
 										</div>
 									</div>
 
@@ -91,29 +95,33 @@
 									<th>Mata Kuliah</th>
 									<th>SKS</th>
 									<th>Dosen</th>
+									<th>Hari</th>
+									<th>Jam</th>
 								</thead>
 								<tbody>
-									<?php foreach ($item as $value):?>
+									<?php foreach ($items as $value):?>
 										<tr>
 											<td>
 												<input type="checkbox" class="check" value="<?php echo $value->id_item_krs ?>" name="">
 											</td>
-											<td><?php echo $value->kode_mk; ?></td>
+											<td><?php echo $value->kd_mk; ?></td>
 											<td><?php foreach ($makul as $v) {
-												if ($v->kode_mk==$value->kode_mk) {
+												if ($v->kode_mk==$value->kd_mk) {
 													echo $v->nama_mk;
 												}
 											} ?></td>
 											<td><?php foreach ($makul as $v) {
-												if ($v->kode_mk==$value->kode_mk) {
+												if ($v->kode_mk==$value->kd_mk) {
 													echo $v->sks;
 												}
 											} ?></td>
-											<td><?php foreach ($dosen as $v) {
-												if ($v->id_dosen==$value->id_dosen) {
+											<td><?php foreach ($pa as $v) {
+												if ($v->kd_dosen==$value->kd_dosen) {
 													echo $v->nama_dosen;
 												}
 											} ?></td>
+											<td><?php echo $value->hari; ?></td>
+											<td><?php echo $value->jam; ?></td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
@@ -183,6 +191,8 @@
 									<th>Mata Kuliah</th>
 									<th>SKS</th>
 									<th>Dosen</th>
+									<th>Hari</th>
+									<th>Jam</th>
 								</thead>
 								<tbody>
 									<?php foreach ($nilai as $value):?>
@@ -199,11 +209,13 @@
 													echo $v->sks;
 												}
 											} ?></td>
-											<td><?php foreach ($dosen as $v) {
+											<td><?php foreach ($pa as $v) {
 												if ($v->kd_dosen==$value->kd_dosen) {
 													echo $v->nama_dosen;
 												}
 											} ?></td>
+											<td><?php echo $value->hari; ?></td>
+											<td><?php echo $value->jam; ?></td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
@@ -252,7 +264,7 @@
 						store
 					},
 					beforeSend:function(){
-						$('#simpan').html('Simpan<i class="fas fa-sync-alt fa-spin" ></i>');
+						$('#simpan').html('Simpan <i class="fas fa-sync-alt fa-spin" ></i>');
 					},
 					success: function(response){
 						location.reload();

@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Ta extends CI_Controller {
+class Jadwal extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->model('Ta_model');
+		$this->load->model('Jadwal_model');
 		$user = $this->session->userdata('user_logged');
 		if ($user==null) {
 			redirect(site_url('auth'));
@@ -17,9 +17,11 @@ class Ta extends CI_Controller {
 	public function index()
 	{
 		$data['user']= $this->session->userdata('user_logged');
-		$data['title']="Tahun Ajar";
+		$data['title']="Jadwal";
+		$data['dosen']=$this->db->get('db_dosen')->result();
+		$data['makul']=$this->db->get('db_makul')->result();
 		if ($data['user']['level']=='admin') {
-			$this->load->view('ta/index', $data);
+			$this->load->view('jadwal/index', $data);
 		}else{
 			echo $data['user']['level'];
 		};
@@ -33,9 +35,9 @@ class Ta extends CI_Controller {
 		$order_index = $_POST['order'][0]['column'];
 		$order_field = $_POST['columns'][$order_index]['data'];
 		$order_ascdesc = $_POST['order'][0]['dir'];
-		$sql_total = $this->Ta_model->count_all();
-		$sql_data = $this->Ta_model->filter($search, $limit, $start, $order_field, $order_ascdesc);
-		$sql_filter = $this->Ta_model->count_filter($search);
+		$sql_total = $this->Jadwal_model->count_all();
+		$sql_data = $this->Jadwal_model->filter($search, $limit, $start, $order_field, $order_ascdesc);
+		$sql_filter = $this->Jadwal_model->count_filter($search);
 		$callback = array(
 			'draw'=>$_POST['draw'],
 			'recordsTotal'=>$sql_total,
@@ -48,52 +50,40 @@ class Ta extends CI_Controller {
 
 	public function store()
 	{
-		$data=[
-			'ta'=>$this->input->post('ta'),
-			'status'=>'deactive',
-		];
-		$this->db->insert('db_ta', $data);
+		$data=$this->input->post();
+		$this->db->insert('db_jadwal', $data);
 		$this->session->set_flashdata('message', 'Data berhasil di input !');
-		redirect(site_url('ta'));
+		redirect(site_url('jadwal'));
 	}
 
 	public function edit($id)
 	{
-		$data['ta']=$this->db->get_where('db_ta',['id_ta'=>$id])->row_array();
-		$this->load->view('ta/edit',$data);
+		$data['dosen']=$this->db->get('db_dosen')->result();
+		$data['makul']=$this->db->get('db_makul')->result();
+		$data['jadwal']=$this->db->get_where('db_jadwal',['id_jadwal'=>$id])->row_array();
+		$this->load->view('jadwal/edit',$data);
 	}
 
 	public function update()
 	{
+		$post=$this->input->post();
 		$data=[
-			'ta'=>$this->input->post('ta',true),
+			'kd_mk'=>$post['kd_mk'],
+			'kd_dosen'=>$post['kd_dosen'],
+			'hari'=>$post['hari'],
+			'jam'=>$post['jam'],
 		];
-		$this->db->where('id_ta',$this->input->post('id_ta',true));
-		$this->db->update('db_ta', $data);
+		$this->db->where('id_jadwal',$this->input->post('id_jadwal',true));
+		$this->db->update('db_jadwal', $data);
 		$this->session->set_flashdata('message', 'Data berhasil di update !');
-		redirect(site_url('ta'));
+		redirect(site_url('jadwal'));
 	}
 
 	public function delete($id)
 	{
-		$this->db->delete('db_ta',['id_ta'=>$id]);
+		$this->db->delete('db_jadwal',['id_jadwal'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
-		redirect(site_url('ta'));
-	}
-	public function active()
-	{
-		$data=$this->input->post();
-		$aktif=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
-		if ($aktif!=null) {
-			$this->db->where('id_ta',$aktif['id_ta']);
-			$this->db->update('db_ta', ['status'=>'deactive']);
-
-			$this->db->where('id_ta',$data['id']);
-			$this->db->update('db_ta', ['status'=>'active']);
-		}else{
-			$this->db->where('id_ta',$data['id']);
-			$this->db->update('db_ta', ['status'=>'active']);
-		};
+		redirect(site_url('jadwal'));
 	}
 
 }

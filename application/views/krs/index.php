@@ -76,11 +76,26 @@
 							<a style="color: white;" class="btn btn-primary" onclick="tambahInput()" >Tambah Makul</a><br><br>
 							<table class="table table-bordered table-striped" >
 								<thead>
-									<th>Kode MK-Nama Makul-SKS</th>
-									<th>Dosen Pengampu</th>
+									<th>Kode MK - Nama Makul - SKS - Dosen - Hari - Jam</th>
 									<th>Aksi</th>
 								</thead>
 								<tbody id="addInput" >
+									<!-- <tr>
+										<td>
+											<select class='custom-select'>
+												<?php foreach ($jadwal as $value):?>
+												<option value='<?php echo $value->id_jadwal.'|'.$value->kd_mk.'|'.$value->kd_dosen.'|'.$value->hari.'|'.$value->jam ?>' >
+													<?php
+														echo $value->kd_mk.' - '.$value->nama_mk.' - '.$value->sks.' - '.$value->nama_dosen.' - '.$value->hari.' - '.$value->jam;
+													?>
+												</option>
+												<?php endforeach ?>
+											</select>
+										</td>
+										<td>
+											<button class='btn btn-danger'>Remove</button>
+										</td>
+									</tr> -->
 								</tbody>
 							</table>
 						</div>
@@ -89,7 +104,7 @@
 					<!-- /.card-body -->
 
 					<div class="card-footer">
-						<button onclick="simpan()" class="btn btn-primary">Submit</button>
+						<button id="simpan" onclick="simpan()" class="btn btn-primary">Submit</button>
 					</div>
 					<!-- </form> -->
 				</div>
@@ -221,20 +236,18 @@
 	var idName=0;
 	function tambahInput(){
 		idName++;
-		// console.log(idName);
-		var html="<tr id='baris"+idName+"' ><td><select id='kode_mk"+idName+"' name='kode_mk-"+idName+"' class='custom-select' value='<?= old('kode_mk') ;?>'><?php foreach ($makul as $value):?><option value='<?php echo $value->kode_mk ?>' ><?php echo $value->kode_mk.'-'.$value->nama_mk.'-'.$value->sks; ?></option><?php endforeach ?></select></td><td><select id='id_dosen"+idName+"' name='id_dosen-"+idName+"' class='custom-select' value='<?= old('dosen') ;?>'><?php foreach ($dosen as $value):?><option value='<?php echo $value->id_dosen ?>' ><?php echo $value->nama_dosen; ?></option><?php endforeach ?></select></td><td><button class='btn btn-danger' onclick='removeList("+idName+")' >Remove</button></td></tr>";
-		$("#addInput").append(html);
+		var aa="<tr id='baris"+idName+"' ><td><select id='kode_mk"+idName+"' class='custom-select'><?php foreach ($jadwal as $value):?><option value='<?php echo $value->id_jadwal.'|'.$value->kd_mk.'|'.$value->kd_dosen.'|'.$value->hari.'|'.$value->jam ?>' ><?php echo $value->kd_mk.' - '.$value->nama_mk.' - '.$value->sks.' - '.$value->nama_dosen.' - '.$value->hari.' - '.$value->jam;?></option><?php endforeach ?></select></td><td><button onclick='removeList("+idName+")' class='btn btn-danger'>Remove</button></td></tr>";
+		$("#addInput").append(aa);
 		$("#jmlhKrs").val(idName);
 	}
 	function removeList(id){
 		idName--;
 		$('#baris'+id).remove();
-		// console.log(idName);
 	}
 	function simpan(){
 		var krs=[];
 		for (var i = idName; i > 0; i--) {
-			var a=$('#kode_mk'+i).val()+'|'+$('#id_dosen'+i).val();
+			var a=$('#kode_mk'+i).val();
 			krs.push(a);
 		};
 		var postData={
@@ -250,8 +263,15 @@
 			url:'<?php echo site_url('krs/store') ?>',
 			type:'post',
 			data:postData,
+			beforeSend:function(){
+				$('#simpan').html('Processing <i class="fas fa-sync-alt fa-spin" ></i>');
+			},
+			complete: function(){
+				$('#simpan').html('Simpan');
+			},
 			success: function(data){
-				alert('Data berhasil di input');
+				// console.log(data);
+				// alert('Data berhasil di input');
 				tabel.ajax.reload();
 			}
 		});

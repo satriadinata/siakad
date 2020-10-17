@@ -30,22 +30,8 @@
           <a href="<?php echo site_url('home') ?>" class="nav-link">Home</a>
         </li>
 
-        <li class="nav-item dropdown">
-          <a style="cursor: pointer;" class="nav-link" data-toggle="dropdown">
-            KRS
-            <i class="fas fa-angle-down right"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <!-- <span class="dropdown-item dropdown-header">15 Notifications</span> -->
-            <?php foreach ($ta as $v):?>
-              <div class="dropdown-divider"></div>
-              <a href="<?php echo site_url('mhs/krs/get/').$v->id_ta ?>" class="dropdown-item">
-                <i class="fas fa-child mr-2"></i><?php echo $v->ta; ?>
-                <span class="float-right text-muted text-sm"></span>
-              </a>
-            <?php endforeach ?>
-            <div class="dropdown-divider"></div>
-          </div>
+        <li class="nav-item d-sm-inline-block">
+          <a href="<?php echo site_url('mhs/krs/get') ?>" class="nav-link">KRS</a>
         </li>
 
       </ul>

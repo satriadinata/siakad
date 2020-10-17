@@ -52,8 +52,11 @@
 
       <div class="info-box-content">
         <span class="info-box-text">Tahun Ajar</span>
-        <?php $t=count($ta) ?>
-        <span class="info-box-number"><?php echo $ta[$t-1]->ta; ?></span>
+        <span class="info-box-number"><?php if ($ta!=null) {
+          echo $ta['ta'];
+        }else{
+          echo "None";
+        } ?></span>
       </div>
       <!-- /.info-box-content -->
     </div>

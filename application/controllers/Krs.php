@@ -6,6 +6,7 @@ class Krs extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('Krs_model');
+		$this->load->model('Jadwal_model');
 		$user = $this->session->userdata('user_logged');
 		if ($user==null) {
 			redirect(site_url('auth'));
@@ -22,6 +23,8 @@ class Krs extends CI_Controller {
 		$data['jurusan']=$this->db->get('db_jurusan')->result();
 		$data['dosen']=$this->db->get('db_dosen')->result();
 		$data['makul']=$this->db->get('db_makul')->result();
+		// $data['jadwal']=$this->db->get('db_jadwal')->result();
+		$data['jadwal']=$this->Jadwal_model->getJadwal();
 		if ($data['user']['level']=='admin') {
 			$this->load->view('krs/index',$data);
 		}else{
@@ -69,24 +72,14 @@ class Krs extends CI_Controller {
 			$v=explode('|',$value);
 			$itemInput=[
 				'id_krs'=>$insert_id,
-				'kode_mk'=>$v[0],
-				'id_dosen'=>$v[1],
+				'id_jadwal'=>$v[0],
+				'kd_mk'=>$v[1],
+				'kd_dosen'=>$v[2],
+				'hari'=>$v[3],
+				'jam'=>$v[4],
 			];
 			$this->db->insert('db_item_krs', $itemInput);
 		};
-		// foreach ($mhs as $m) {
-		// 	foreach ($item as $value) {
-		// 		$v=explode('|',$value);
-		// 		$a=[
-		// 			'id_krs'=>$insert_id,
-		// 			'ta'=>$ta['ta'],
-		// 			'nim'=>$m->nim,
-		// 			'kd_mk'=>$v[0],
-		// 			'kd_dosen'=>$v[1],
-		// 		];
-		// 		$this->db->insert('db_nilai', $a);
-		// 	};
-		// };
 	}
 
 	public function detail($id)
@@ -96,7 +89,7 @@ class Krs extends CI_Controller {
 		$data['jurusan']=$this->db->get_where('db_jurusan',['id_jur'=>$data['krs']['id_jurusan']])->row_array();
 		$data['pa']=$this->db->get_where('db_dosen',['id_dosen'=>$data['krs']['id_pa']])->row_array();
 		$data['makul']=$this->db->get('db_makul')->result();
-		$data['dosen']=$this->db->get('db_dosen')->result();
+		$data['dosen']=$this->db->get('db_dosen')->result();	
 		$this->load->view('krs/detail',$data);
 	}
 

@@ -18,7 +18,7 @@
 	<!-- Default box -->
 	<div class="card collapsed-card">
 		<div class="card-header">
-			<h3 class="card-title">Tambah Tahun Ajar</h3>
+			<h3 class="card-title">Tambah Jadwal</h3>
 
 			<div class="card-tools">
 				<button type="button" class="btn btn-primary" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -34,12 +34,43 @@
 				</div>
 				<!-- /.card-header -->
 				<!-- form start -->
-				<form role="form" action="<?php echo site_url('ta/store') ?>" method="post" >
+				<form role="form" action="<?php echo site_url('jadwal/store') ?>" method="post" >
 					<div class="card-body">
 
 						<div class="form-group">
-							<label for="ta">Tahun Ajar</label>
-							<input required="" name="ta" type="text" class="form-control" id="ta" placeholder="Tahun Ajar">
+							<label for="kd_mk">Mata Kuliah</label>
+							<select class="custom-select" name="kd_mk" >
+								<?php foreach ($makul as $v):?>
+									<option value="<?php echo $v->kode_mk ?>" ><?php echo $v->kode_mk.' '.$v->nama_mk ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="kd_dosen">Dosen</label>
+							<select class="custom-select" name="kd_dosen" >
+								<?php foreach ($dosen as $v):?>
+									<option value="<?php echo $v->kd_dosen ?>" ><?php echo $v->kd_dosen.' '.$v->nama_dosen ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="hari">Hari</label>
+							<select class="custom-select" name="hari" >
+								<option value="Senin" >Senin</option>
+								<option value="Selasa" >Selasa</option>
+								<option value="Rabu" >Rabu</option>
+								<option value="Kamis" >Kamis</option>
+								<option value="Jum'at" >Jum'at</option>
+								<option value="Sabtu" >Sabtu</option>
+								<option value="Minggu" >Minggu</option>
+							</select>
+						</div>
+
+						<div class="form-group">
+							<label for="jam">Jam</label>
+							<input class="form-control" type="time" name="jam">
 						</div>
 
 					</div>
@@ -79,8 +110,11 @@
 			<table id="tableTa" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Tahun Ajar</th>
-						<th>Status</th>
+						<th>Kode Mata Kuliah</th>
+						<th>Mata Kuliah</th>
+						<th>Dosen</th>
+						<th>Hari</th>
+						<th>Jam</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -131,29 +165,24 @@
 			"processing": true,
 			"serverSide": true,
 			"ordering": true, // Set true agar bisa di sorting
-			"order": [[ 0, 'desc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
+			"order": [[ 0, 'asc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
 			"ajax":
 			{
-				"url": "<?php echo site_url('ta/getAll') ?>", // URL file untuk proses select datanya
+				"url": "<?php echo site_url('jadwal/getAll') ?>", // URL file untuk proses select datanya
 				"type": "POST"
 			},
 			"deferRender": true,
 			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]], // Combobox Limit
 			"columns": [
-				 // Tampilkan nama
-				{ "data": "ta" }, // Tampilkan alamat
-				{"render":function(data, type, row){
-					if (row.status=='active') {
-						var a='<button class="btn btn-warning" >Actived</button>'
-					}else{
-						var a='<button id="aktif" onclick="setActive('+row.id_ta+')" class="btn btn-success" >Set Active</button>';
-					}
-					return a;
-				}},
+				{ "data": "kd_mk" }, // Tampilkan alamat
+				{ "data": "nama_mk" }, // Tampilkan alamat
+				{ "data": "nama_dosen" }, // Tampilkan alamat
+				{ "data": "hari" }, // Tampilkan alamat
+				{ "data": "jam" }, // Tampilkan alamat
 				{ "render": function ( data, type, row )
 					{ // Tampilkan kolom aksi
-						var id=row.id_ta;
-						var idi=row.id_ta;
+						var id=row.id_jadwal;
+						var idi=row.id_jadwal;
 						var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Edit</button> | <button class='btn btn-danger' onclick=hapusTa('"+id+"')>Delete</button>";
 						return html;
 					}
@@ -164,35 +193,16 @@
 	function hapusTa(id){
 		var confirm=window.confirm('Yakin ?');
 		if (confirm) {
-			window.location.href='<?php echo site_url('ta/delete/') ?>'+id;
+			window.location.href='<?php echo site_url('jadwal/delete/') ?>'+id;
 		}
-	}
+	};
 	function edit(id){
 		$.ajax({
-			url: "<?php echo site_url('ta/edit/') ?>"+id,
+			url: "<?php echo site_url('jadwal/edit/') ?>"+id,
 			success: function(result){
 				$("#modalData").html(result);
 			}
 		});
-	}
-	function setActive(id){
-		$.ajax({
-			url: '<?php echo site_url('ta/active') ?>',
-			type: "POST",
-			data: {
-				'id':id,
-			},
-			beforeSend:function(){
-				$('#aktif').html('Processing <i class="fas fa-sync-alt fa-spin" ></i>');
-			},
-			success: function(response){
-				// location.reload();
-				tabel.ajax.reload();
-			},
-			error:function(data){
-        		alert("error occured"); //===Show Error Message====
-        	},
-        });
 	}
 </script>
 <?php $this->load->view('template/footer') ?>

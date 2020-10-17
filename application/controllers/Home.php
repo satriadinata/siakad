@@ -18,7 +18,7 @@ class Home extends CI_Controller {
 		$data['jumlah_mhs']=$this->db->count_all_results('db_mahasiswa');
 		$data['jmlh_dosen']=$this->db->count_all_results('db_dosen');
 		$data['jmlh_makul']=$this->db->count_all_results('db_makul');
-		$data['ta']=$this->db->get('db_ta')->result();
+		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
 		if ($data['user']['level']=='admin') {
 			$this->load->view('home', $data);
 		}else{

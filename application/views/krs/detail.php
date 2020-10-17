@@ -35,26 +35,30 @@
 			<th>Mata Kuliah</th>
 			<th>SKS</th>
 			<th>Dosen</th>
+			<th>Hari</th>
+			<th>Jam</th>
 		</thead>
 		<tbody>
 			<?php foreach ($item as $value) :?>
 				<tr>
-					<td><?php echo $value->kode_mk; ?></td>
+					<td><?php echo $value->kd_mk; ?></td>
 					<td><?php foreach ($makul as $v) {
-						if ($value->kode_mk==$v->kode_mk) {
+						if ($value->kd_mk==$v->kode_mk) {
 							echo $v->nama_mk;
 						}
 					} ?></td>
 					<td><?php foreach ($makul as $v) {
-						if ($value->kode_mk==$v->kode_mk) {
+						if ($value->kd_mk==$v->kode_mk) {
 							echo $v->sks;
 						}
 					} ?></td>
 					<td><?php foreach ($dosen as $v) {
-						if ($value->id_dosen==$v->id_dosen) {
+						if ($value->kd_dosen==$v->kd_dosen) {
 							echo $v->nama_dosen;
 						}
 					} ?></td>
+					<td><?php echo $value->hari; ?></td>
+					<td><?php echo $value->jam; ?></td>
 				</tr>
 			<?php endforeach ?>
 		</tbody>
