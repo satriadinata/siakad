@@ -63,27 +63,8 @@ class Dosen extends CI_Controller {
 
 	public function store()
 	{
-		// $data = $this->input->post();
-
-		// $config['upload_path']          = './uploads/foto_dosen/';
-		// $config['file_name']            = 'dosen_'.date('YmdHis').'_'.uniqid();
-		// $config['allowed_types']        = 'jpg|png';
-		// $config['max_size']             = 1024;
-		// $this->load->library('upload', $config);
-
-		// if ($this->upload->do_upload('foto')) {
-		// 	$data['foto_dosen'] = 'foto_dosen/'.$this->upload->data("file_name");
-		// 	$this->db->insert('db_dosen', $data);
-		// 	$this->session->set_flashdata('message', 'Data berhasil di input !');
-		// 	redirect(site_url('dosen'));
-		// }else{
-		// 	$this->session->set_flashdata('error', $this->upload->display_errors());
-		// 	$this->session->set_flashdata('input', $data);
-		// 	redirect(site_url('dosen/create'));
-		// }
 
 		$data = $this->input->post();
-		// $this->form_validation->set_rules('nim','NIM','required|is_unique[db_mahasiswa.nim]');
 		$data['foto_dosen'] = 'default/male.png';
 
 		
@@ -183,4 +164,15 @@ class Dosen extends CI_Controller {
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('dosen'));
 	}
+	// public function user()
+	// {
+	// 	$dosen=$this->db->get('db_dosen')->result();
+	// 	foreach ($dosen as $value) {
+	// 		$this->db->insert('db_user',[
+	// 			'username'=>$value->kd_dosen,
+	// 			'level'=>'dosen',
+	// 			'password'=>password_hash('dosendosen', PASSWORD_DEFAULT),
+	// 		]);
+	// 	}
+	// }
 }

@@ -21,8 +21,10 @@ class Home extends CI_Controller {
 		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
 		if ($data['user']['level']=='admin') {
 			$this->load->view('home', $data);
-		}else{
+		}elseif($data['user']['level']=='mhs'){
 			$this->load->view('mhs/index',$data);
+		}else{
+			$this->load->view('dsn/index',$data);
 		};
 	}
 	public function krs()

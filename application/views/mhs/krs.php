@@ -1,4 +1,4 @@
-<?php $this->load->view('template/style') ?>
+<?php $this->load->view('template/head_mhs') ?>
 <div class="content-wrapper" style="min-height: 1365.2px;">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
