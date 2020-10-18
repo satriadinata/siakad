@@ -22,10 +22,12 @@ class User_model extends CI_Model
                 return true;
             }else{
                 $this->session->set_flashdata('errP','Wrong Password');
-                $err['pass']='Wrong Password';
-                $this->load->view('auth/login');
-                return false;
+                redirect('/'); 
             }
+        }else{
+            $this->session->set_flashdata('errP','Wrong Username');
+            $this->load->view('auth/login');
+            redirect('/'); 
         }
     }
 

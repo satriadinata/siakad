@@ -6,19 +6,20 @@
 		</div>
 		<!-- /.card-header -->
 		<!-- form start -->
-		<form role="form" action="<?php echo site_url('nilai/update') ?>" method="post" >
+		<div>
 			<div class="card-body">
-				<input type="hidden" name="id_nilai" value="<?php echo $nilai['id_nilai'] ?>">
+				<input type="hidden" name="id_nilai" value="<?php echo $nilai['id_nilai'] ?>" id="id-nilai">
 
 				<div class="form-group">
 					<label for="nilai">Nilai</label>
-					<input value="<?php echo $nilai['nilai'] ?>" class="form-control" type="number" name="nilai">
+					<input value="<?php echo $nilai['nilai'] ?>" class="form-control" type="number" name="nilai" id="input-nilai">
+					<div class="text-danger" id="error-nilai"></div>
 				</div>
 			</div>
 			<!-- /.card-body -->
 
 			<div class="card-footer">
-				<button type="submit"  class="btn btn-primary">Submit</button>
+				<button id="btn-nilai" class="btn btn-primary">Submit</button>
 			</div>
-		</form>
+		</div>
 	</div>
