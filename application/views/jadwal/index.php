@@ -36,12 +36,21 @@
 				<!-- form start -->
 				<form role="form" action="<?php echo site_url('jadwal/store') ?>" method="post" >
 					<div class="card-body">
+						<?php if ($this->session->flashdata('error')!=null):?>
+							<div class="alert alert-danger">
+								<?php print_r($this->session->flashdata('error')); ?>
+							</div>
+						<?php endif; ?>
 
 						<div class="form-group">
 							<label for="kd_mk">Mata Kuliah</label>
 							<select class="custom-select" name="kd_mk" >
 								<?php foreach ($makul as $v):?>
-									<option value="<?php echo $v->kode_mk ?>" ><?php echo $v->kode_mk.' '.$v->nama_mk ?></option>
+									<option value="<?php echo $v->kode_mk ?>" ><?php echo $v->kode_mk.' '.$v->nama_mk.' - Semester '.$v->semester;foreach ($jurusan as $k) {
+										if ($v->kd_jurusan==$k->kd_jurusan) {
+											echo ' - '.$k->nama_jurusan;
+										}
+									} ?></option>
 								<?php endforeach ?>
 							</select>
 						</div>
@@ -94,7 +103,7 @@
 	<!-- Default box -->
 	<div class="card">
 		<div class="card-header">
-			<h3 class="card-title">Data Tahun Ajar</h3>
+			<h3 class="card-title">Data Jadwal</h3>
 
 			<div class="card-tools">
 				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -110,8 +119,11 @@
 			<table id="tableTa" class="table table-bordered table-striped">
 				<thead>
 					<tr>
+						<th>TA</th>
 						<th>Kode Mata Kuliah</th>
 						<th>Mata Kuliah</th>
+						<th>Semester</th>
+						<th>Jurusan</th>
 						<th>Dosen</th>
 						<th>Hari</th>
 						<th>Jam</th>
@@ -172,10 +184,13 @@
 				"type": "POST"
 			},
 			"deferRender": true,
-			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]], // Combobox Limit
+			"aLengthMenu": [[10, 50, 100],[ 10, 50, 100]], // Combobox Limit
 			"columns": [
+				{ "data": "ta" }, // Tampilkan alamat
 				{ "data": "kd_mk" }, // Tampilkan alamat
 				{ "data": "nama_mk" }, // Tampilkan alamat
+				{ "data": "semester" }, // Tampilkan alamat
+				{ "data": "nama_jurusan" }, // Tampilkan alamat
 				{ "data": "nama_dosen" }, // Tampilkan alamat
 				{ "data": "hari" }, // Tampilkan alamat
 				{ "data": "jam" }, // Tampilkan alamat

@@ -30,8 +30,13 @@
           <a href="<?php echo site_url('home') ?>" class="nav-link">Home</a>
         </li>
 
-        <li class="nav-item d-sm-inline-block">
-          <a href="<?php echo site_url('nilai') ?>" class="nav-link">Input Nilai</a>
+        <li class="nav-item dropdown">
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Input Nilai</a>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+            <?php foreach ($menu as $value):?>
+              <li><a href="<?php echo site_url('nilai/semester/').$value->semester ?>" class="dropdown-item">Semester <?php echo $value->semester; ?></a></li>
+            <?php endforeach ?>
+          </ul>
         </li>
 
       </ul>
@@ -59,5 +64,5 @@
             <div class="dropdown-divider"></div>
           </div>
         </li>
-        </ul>
-      </nav>
+      </ul>
+    </nav>

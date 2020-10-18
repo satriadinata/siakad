@@ -104,24 +104,48 @@
 											<td>
 												<input type="checkbox" class="check" value="<?php echo $value->id_item_krs ?>" name="">
 											</td>
-											<td><?php echo $value->kd_mk; ?></td>
-											<td><?php foreach ($makul as $v) {
-												if ($v->kode_mk==$value->kd_mk) {
-													echo $v->nama_mk;
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													echo $k->kd_mk;
 												}
 											} ?></td>
-											<td><?php foreach ($makul as $v) {
-												if ($v->kode_mk==$value->kd_mk) {
-													echo $v->sks;
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													foreach ($makul as $v) {
+														if ($k->kd_mk==$v->kode_mk) {
+															echo $v->nama_mk;
+														}
+													}
 												}
 											} ?></td>
-											<td><?php foreach ($pa as $v) {
-												if ($v->kd_dosen==$value->kd_dosen) {
-													echo $v->nama_dosen;
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													foreach ($makul as $v) {
+														if ($k->kd_mk==$v->kode_mk) {
+															echo $v->sks;
+														}
+													}
 												}
 											} ?></td>
-											<td><?php echo $value->hari; ?></td>
-											<td><?php echo $value->jam; ?></td>
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													foreach ($pa as $v) {
+														if ($k->kd_dosen==$v->kd_dosen) {
+															echo $v->nama_dosen;
+														}
+													}
+												}
+											} ?></td>
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													echo $k->hari;
+												}
+											} ?></td>
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													echo $k->jam;
+												}
+											} ?></td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
@@ -198,24 +222,48 @@
 									<?php foreach ($nilai as $value):?>
 										<tr>
 											<input type="hidden" class="id_nilai" value="<?php echo $value->id_nilai ?>" >
-											<td><?php echo $value->kd_mk; ?></td>
-											<td><?php foreach ($makul as $v) {
-												if ($v->kode_mk==$value->kd_mk) {
-													echo $v->nama_mk;
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													echo $k->kd_mk;
 												}
 											} ?></td>
-											<td><?php foreach ($makul as $v) {
-												if ($v->kode_mk==$value->kd_mk) {
-													echo $v->sks;
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													foreach ($makul as $v) {
+														if ($k->kd_mk==$v->kode_mk) {
+															echo $v->nama_mk;
+														}
+													}
 												}
 											} ?></td>
-											<td><?php foreach ($pa as $v) {
-												if ($v->kd_dosen==$value->kd_dosen) {
-													echo $v->nama_dosen;
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													foreach ($makul as $v) {
+														if ($k->kd_mk==$v->kode_mk) {
+															echo $v->sks;
+														}
+													}
 												}
 											} ?></td>
-											<td><?php echo $value->hari; ?></td>
-											<td><?php echo $value->jam; ?></td>
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													foreach ($pa as $v) {
+														if ($k->kd_dosen==$v->kd_dosen) {
+															echo $v->nama_dosen;
+														}
+													}
+												}
+											} ?></td>
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													echo $k->hari;
+												}
+											} ?></td>
+											<td><?php foreach ($jadwal as $k) {
+												if ($value->id_jadwal==$k->id_jadwal) {
+													echo $k->jam;
+												}
+											} ?></td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
@@ -256,49 +304,49 @@
 					i++;
 				});
 					// console.log(store);
-				$.ajax({
-					url: '<?php echo site_url('mhs/krs/simpan') ?>',
-					type: "POST",
-					data: {
-						nim:'<?php echo $mhs['nim']; ?>',
-						store
-					},
-					beforeSend:function(){
-						$('#simpan').html('Simpan <i class="fas fa-sync-alt fa-spin" ></i>');
-					},
-					success: function(response){
-						location.reload();
-					},
-					error:function(data){
+					$.ajax({
+						url: '<?php echo site_url('mhs/krs/simpan') ?>',
+						type: "POST",
+						data: {
+							nim:'<?php echo $mhs['nim']; ?>',
+							store
+						},
+						beforeSend:function(){
+							$('#simpan').html('Simpan <i class="fas fa-sync-alt fa-spin" ></i>');
+						},
+						success: function(response){
+							location.reload();
+						},
+						error:function(data){
         				alert("error occured"); //===Show Error Message====
-    				},
-				});
-			};
-			function batal(){
-				var store=[];
-				var i=0;
-				$(".id_nilai").each(function(){
-					store[i]=$(this).val();
-					i++;
-				});
-				console.log(store);
-				$.ajax({
-					url: '<?php echo site_url('mhs/krs/batal') ?>',
-					type: "POST",
-					data: {
-						nim:'<?php echo $mhs['nim']; ?>',
-						store
-					},
-					beforeSend:function(){
-						$('#batal').html('Batal<i class="fas fa-sync-alt fa-spin" ></i>');
-					},
-					success: function(response){
-						location.reload();
-					},
-					error:function(data){
+        			},
+        		});
+				};
+				function batal(){
+					var store=[];
+					var i=0;
+					$(".id_nilai").each(function(){
+						store[i]=$(this).val();
+						i++;
+					});
+					console.log(store);
+					$.ajax({
+						url: '<?php echo site_url('mhs/krs/batal') ?>',
+						type: "POST",
+						data: {
+							nim:'<?php echo $mhs['nim']; ?>',
+							store
+						},
+						beforeSend:function(){
+							$('#batal').html('Batal <i class="fas fa-sync-alt fa-spin" ></i>');
+						},
+						success: function(response){
+							location.reload();
+						},
+						error:function(data){
         				alert("error occured"); //===Show Error Message====
-    				},
-				});
-			};
-		</script>
-		<?php $this->load->view('template/script') ?>
+        			},
+        		});
+				};
+			</script>
+			<?php $this->load->view('template/script') ?>

@@ -41,24 +41,48 @@
 		<tbody>
 			<?php foreach ($item as $value) :?>
 				<tr>
-					<td><?php echo $value->kd_mk; ?></td>
-					<td><?php foreach ($makul as $v) {
-						if ($value->kd_mk==$v->kode_mk) {
-							echo $v->nama_mk;
+					<td><?php foreach ($jadwal as $k) {
+						if ($value->id_jadwal==$k->id_jadwal) {
+							echo $k->kd_mk;
 						}
 					} ?></td>
-					<td><?php foreach ($makul as $v) {
-						if ($value->kd_mk==$v->kode_mk) {
-							echo $v->sks;
+					<td><?php foreach ($jadwal as $k) {
+						if ($value->id_jadwal==$k->id_jadwal) {
+							foreach ($makul as $v) {
+								if ($k->kd_mk==$v->kode_mk) {
+									echo $v->nama_mk;
+								}
+							}
 						}
 					} ?></td>
-					<td><?php foreach ($dosen as $v) {
-						if ($value->kd_dosen==$v->kd_dosen) {
-							echo $v->nama_dosen;
+					<td><?php foreach ($jadwal as $k) {
+						if ($value->id_jadwal==$k->id_jadwal) {
+							foreach ($makul as $v) {
+								if ($k->kd_mk==$v->kode_mk) {
+									echo $v->sks;
+								}
+							}
 						}
 					} ?></td>
-					<td><?php echo $value->hari; ?></td>
-					<td><?php echo $value->jam; ?></td>
+					<td><?php foreach ($jadwal as $k) {
+						if ($value->id_jadwal==$k->id_jadwal) {
+							foreach ($dosen as $v) {
+								if ($k->kd_dosen==$v->kd_dosen) {
+									echo $v->nama_dosen;
+								}
+							}
+						}
+					} ?></td>
+					<td><?php foreach ($jadwal as $k) {
+						if ($value->id_jadwal==$k->id_jadwal) {
+							echo $k->hari;
+						}
+					} ?></td>
+					<td><?php foreach ($jadwal as $k) {
+						if ($value->id_jadwal==$k->id_jadwal) {
+							echo $k->jam;
+						}
+					} ?></td>
 				</tr>
 			<?php endforeach ?>
 		</tbody>

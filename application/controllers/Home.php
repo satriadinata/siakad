@@ -24,7 +24,7 @@ class Home extends CI_Controller {
 		}elseif($data['user']['level']=='mhs'){
 			$this->load->view('mhs/index',$data);
 		}else{
-			$this->load->view('dsn/index',$data);
+			redirect(site_url('nilai'));
 		};
 	}
 	public function krs()

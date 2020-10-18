@@ -31,13 +31,13 @@
 				<div class="form-group">
 					<label for="hari">Hari</label>
 					<select class="custom-select" name="hari" >
-						<option <?php if($jadwal['hari']=='senin'): ?> selected <?php endif ?> value="senin" >Senin</option>
-						<option <?php if($jadwal['hari']=='selasa'): ?> selected <?php endif ?> value="selasa" >Selasa</option>
-						<option <?php if($jadwal['hari']=='rabu'): ?> selected <?php endif ?> value="rabu" >Rabu</option>
-						<option <?php if($jadwal['hari']=='kamis'): ?> selected <?php endif ?> value="kamis" >Kamis</option>
-						<option <?php if($jadwal['hari']=='jumat'): ?> selected <?php endif ?> value="jumat" >Jum'at</option>
-						<option <?php if($jadwal['hari']=='sabtu'): ?> selected <?php endif ?> value="sabtu" >Sabtu</option>
-						<option <?php if($jadwal['hari']=='minggu'): ?> selected <?php endif ?> value="minggu" >Minggu</option>
+						<option <?php if($jadwal['hari']=='Senin'): ?> selected <?php endif ?> value="Senin" >Senin</option>
+						<option <?php if($jadwal['hari']=='Selasa'): ?> selected <?php endif ?> value="Selasa" >Selasa</option>
+						<option <?php if($jadwal['hari']=='Rabu'): ?> selected <?php endif ?> value="Rabu" >Rabu</option>
+						<option <?php if($jadwal['hari']=='Kamis'): ?> selected <?php endif ?> value="Kamis" >Kamis</option>
+						<option <?php if($jadwal['hari']=="Jum'at"): ?> selected <?php endif ?> value="Jum'at" >Jum'at</option>
+						<option <?php if($jadwal['hari']=='Sabtu'): ?> selected <?php endif ?> value="Sabtu" >Sabtu</option>
+						<option <?php if($jadwal['hari']=='Minggu'): ?> selected <?php endif ?> value="Minggu" >Minggu</option>
 					</select>
 				</div>
 

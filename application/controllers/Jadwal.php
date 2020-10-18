@@ -20,6 +20,7 @@ class Jadwal extends CI_Controller {
 		$data['title']="Jadwal";
 		$data['dosen']=$this->db->get('db_dosen')->result();
 		$data['makul']=$this->db->get('db_makul')->result();
+		$data['jurusan']=$this->db->get('db_jurusan')->result();
 		if ($data['user']['level']=='admin') {
 			$this->load->view('jadwal/index', $data);
 		}else{
@@ -51,8 +52,14 @@ class Jadwal extends CI_Controller {
 	public function store()
 	{
 		$data=$this->input->post();
-		$this->db->insert('db_jadwal', $data);
-		$this->session->set_flashdata('message', 'Data berhasil di input !');
+		$ta=$this->db->get_where('db_ta',['status'=>'active'])->row_array()['ta'];
+		if ($ta!=null) {
+			$this->session->set_flashdata('message', 'Data berhasil di input !');
+			$data['ta']=$ta;
+			$this->db->insert('db_jadwal', $data);
+		}else{
+			$this->session->set_flashdata('error', 'Pastikan ada TA aktif !');
+		};
 		redirect(site_url('jadwal'));
 	}
 
@@ -70,6 +77,7 @@ class Jadwal extends CI_Controller {
 		$data=[
 			'kd_mk'=>$post['kd_mk'],
 			'kd_dosen'=>$post['kd_dosen'],
+			'ta'=>$this->db->get_where('db_ta',['status'=>'active'])->row_array()['ta'],
 			'hari'=>$post['hari'],
 			'jam'=>$post['jam'],
 		];

@@ -16,9 +16,48 @@ class Nilai extends CI_Controller {
 
 	public function index()
 	{
-		echo "string";
+		$data['user']= $this->session->userdata('user_logged');
+		$data['title']='Home';
+		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
+		$data['menu']=$this->getSemester($data['user']['username']);
+		$this->load->view('dsn/index',$data);
 	}
-
+	public function getSemester($kd_dosen)
+	{
+		$ta=$this->db->get_where('db_ta',['status'=>'active'])->row_array()['ta'];
+		$this->db->select('*');
+		$this->db->from('db_jadwal');
+		$this->db->join('db_makul','db_makul.kode_mk=db_jadwal.kd_mk',);
+		$this->db->where('db_jadwal.ta', $ta);
+		$this->db->where('db_jadwal.kd_dosen', $kd_dosen);
+		$this->db->group_by('semester');
+		$query=$this->db->get()->result();
+		return $query;
+	}
+	public function getList($kd_dosen,$semester)
+	{
+		$ta=$this->db->get_where('db_ta',['status'=>'active'])->row_array()['ta'];
+		$this->db->select('*');
+		$this->db->from('db_jadwal');
+		$this->db->join('db_makul','db_makul.kode_mk=db_jadwal.kd_mk',);
+		$this->db->where('db_jadwal.ta', $ta);
+		$this->db->where('db_jadwal.kd_dosen', $kd_dosen);
+		$this->db->where('db_makul.semester', $semester);
+		$query=$this->db->get()->result();
+		return $query;
+	}
+	public function semester($id)
+	{
+		$data['user']= $this->session->userdata('user_logged');
+		$data['title']='Nilai';
+		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
+		$data['menu']=$this->getSemester($data['user']['username']);
+		$data['mk']=$this->getList($data['user']['username'],$id);
+		// echo "<pre>";
+		// print_r($data['mk']);
+		// echo "</pre>";
+		$this->load->view('dsn/nilai',$data);
+	}
 	public function getAll()
 	{
 		$search = $_POST['search']['value'];

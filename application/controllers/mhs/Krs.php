@@ -19,6 +19,7 @@ class Krs extends CI_Controller {
 		$data['user']= $this->session->userdata('user_logged');
 		$data['makul']=$this->db->get('db_makul')->result();
 		$data['jurusan']=$this->db->get('db_jurusan')->result();
+		$data['jadwal']=$this->db->get('db_jadwal')->result();
 		$data['pa']=$this->db->get('db_dosen')->result();
 		$data['mhs']=$this->db->get_where('db_mahasiswa',['nim'=>$data['user']['username']])->row_array();
 		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
@@ -46,12 +47,8 @@ class Krs extends CI_Controller {
 			$this->db->insert('db_nilai',[
 				'id_krs'=>$item['id_krs'],
 				'id_jadwal'=>$item['id_jadwal'],
-				'hari'=>$item['hari'],
-				'jam'=>$item['jam'],
 				'ta'=>$krs['ta'],
 				'nim'=>$post['nim'],
-				'kd_mk'=>$item['kd_mk'],
-				'kd_dosen'=>$item['kd_dosen'],
 			]);
 		};
 	}

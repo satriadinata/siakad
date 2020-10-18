@@ -72,11 +72,11 @@
 						</div>
 
 						<div class="form-group">
-							<label>Mata Kuliah</label><br>
-							<a style="color: white;" class="btn btn-primary" onclick="tambahInput()" >Tambah Makul</a><br><br>
+							<label>Jadwal</label><br>
+							<a style="color: white;" class="btn btn-primary" onclick="tambahInput()" >Tambah Jadwal</a><br><br>
 							<table class="table table-bordered table-striped" >
 								<thead>
-									<th>Kode MK - Nama Makul - SKS - Dosen - Hari - Jam</th>
+									<th>Kode MK - Nama Makul - Semester - SKS - Dosen - Hari - Jam</th>
 									<th>Aksi</th>
 								</thead>
 								<tbody id="addInput" >
@@ -236,7 +236,7 @@
 	var idName=0;
 	function tambahInput(){
 		idName++;
-		var aa="<tr id='baris"+idName+"' ><td><select id='kode_mk"+idName+"' class='custom-select'><?php foreach ($jadwal as $value):?><option value='<?php echo $value->id_jadwal.'|'.$value->kd_mk.'|'.$value->kd_dosen.'|'.$value->hari.'|'.$value->jam ?>' ><?php echo $value->kd_mk.' - '.$value->nama_mk.' - '.$value->sks.' - '.$value->nama_dosen.' - '.$value->hari.' - '.$value->jam;?></option><?php endforeach ?></select></td><td><button onclick='removeList("+idName+")' class='btn btn-danger'>Remove</button></td></tr>";
+		var aa="<tr id='baris"+idName+"' ><td><select id='kode_mk"+idName+"' class='custom-select'><?php foreach ($jadwal as $value):?><option value='<?php echo $value->id_jadwal.'|'.$value->kd_mk.'|'.$value->kd_dosen.'|'.$value->hari.'|'.$value->jam ?>' ><?php echo $value->kd_mk.' - '.$value->nama_mk.' - '.'Semester '.$value->semester.' - '.$value->nama_jurusan.' - '.$value->sks.' SKS'.' - '.$value->nama_dosen.' - '.$value->hari.' - '.$value->jam;?></option><?php endforeach ?></select></td><td><button onclick='removeList("+idName+")' class='btn btn-danger'>Remove</button></td></tr>";
 		$("#addInput").append(aa);
 		$("#jmlhKrs").val(idName);
 	}

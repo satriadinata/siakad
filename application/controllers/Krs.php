@@ -19,12 +19,13 @@ class Krs extends CI_Controller {
 	{
 		$data['user']= $this->session->userdata('user_logged');
 		$data['title']='KRS';
-		$data['ta']=$this->db->get('db_ta')->result();
+		$ta=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
+		$data['ta']=$this->db->get_where('db_ta',['ta'=>$ta['ta']])->result();
 		$data['jurusan']=$this->db->get('db_jurusan')->result();
 		$data['dosen']=$this->db->get('db_dosen')->result();
 		$data['makul']=$this->db->get('db_makul')->result();
 		// $data['jadwal']=$this->db->get('db_jadwal')->result();
-		$data['jadwal']=$this->Jadwal_model->getJadwal();
+		$data['jadwal']=$this->Jadwal_model->getJadwal($ta['ta']);
 		if ($data['user']['level']=='admin') {
 			$this->load->view('krs/index',$data);
 		}else{
@@ -73,10 +74,6 @@ class Krs extends CI_Controller {
 			$itemInput=[
 				'id_krs'=>$insert_id,
 				'id_jadwal'=>$v[0],
-				'kd_mk'=>$v[1],
-				'kd_dosen'=>$v[2],
-				'hari'=>$v[3],
-				'jam'=>$v[4],
 			];
 			$this->db->insert('db_item_krs', $itemInput);
 		};
@@ -90,6 +87,7 @@ class Krs extends CI_Controller {
 		$data['pa']=$this->db->get_where('db_dosen',['id_dosen'=>$data['krs']['id_pa']])->row_array();
 		$data['makul']=$this->db->get('db_makul')->result();
 		$data['dosen']=$this->db->get('db_dosen')->result();	
+		$data['jadwal']=$this->db->get('db_jadwal')->result();	
 		$this->load->view('krs/detail',$data);
 	}
 
