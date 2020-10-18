@@ -12,9 +12,7 @@
 	</section>
 
 	<!-- Main content -->
-	<pre>
-		<?php print_r($mk) ?>
-	</pre>
+
 	<section class="content">
 
 		<!-- Default box -->
@@ -32,7 +30,7 @@
 						<div class="card-body">
 							<?php foreach ($mk as $value) :?>
 								<div class="form-group">
-									<button class="btn btn-block btn-danger btn-lg" ><?php echo $value->nama_mk; ?></button>
+									<button id="makul<?php echo $value->id_jadwal ?> " onclick="change(<?php echo $value->id_jadwal; ?>)" class="btn btn-block btn-danger btn-lg" ><?php echo $value->nama_mk; ?></button>
 								</div>
 							<?php endforeach ?>
 						</div>
@@ -43,22 +41,15 @@
 				<div class="col-md-6">
 					<div class="card card-secondary table-responsive ">
 						<div class="card-header">
-							<h3 class="card-title">Mahasiswa</h3>
+							<h3 id="load" class="card-title">Mahasiswa</h3>
 
 							<div class="card-tools">
 								<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
 									<i class="fas fa-minus"></i></button>
 								</div>
 							</div>
-							<div class="card-body">
-								<table id="table" class="table table-striped table-bordered" >
-									<thead>
-										<th>NIM</th>
-										<th>Nama</th>
-										<th>Semester</th>
-										<th>Nilai</th>
-									</thead>
-								</table>
+							<div id="mhs" class="card-body">
+								
 							</div>
 							<!-- /.card-body -->
 						</div>
@@ -69,4 +60,22 @@
 			</section>
 			<!-- /.content -->
 		</div>
+		<script>
+			function change(id){
+				// alert(id);
+				$.ajax({
+					url: '<?php echo site_url('nilai/getMhs/') ?>'+id,
+					type: "get",
+					beforeSend:function(){
+						$('#load').html('<i class="fas fa-sync-alt fa-spin" ></i>');
+					},
+					complete: function(){
+						$('#load').html('Mahasiswa');
+					},
+					success: function(response){
+						$('#mhs').html(response);
+					},
+				});
+			}
+		</script>
 		<?php $this->load->view('template/script') ?>

@@ -6,6 +6,7 @@ class Nilai extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('Ta_model');
+		$this->load->model('Nilai_model');
 		$user = $this->session->userdata('user_logged');
 		if ($user==null) {
 			redirect(site_url('auth'));
@@ -58,53 +59,58 @@ class Nilai extends CI_Controller {
 		// echo "</pre>";
 		$this->load->view('dsn/nilai',$data);
 	}
-	public function getAll()
+	public function getMhs($id_jadwal)
 	{
-		$search = $_POST['search']['value'];
-		$limit = $_POST['length'];
-		$start = $_POST['start'];
-		$order_index = $_POST['order'][0]['column'];
-		$order_field = $_POST['columns'][$order_index]['data'];
-		$order_ascdesc = $_POST['order'][0]['dir'];
-		$sql_total = $this->Ta_model->count_all();
-		$sql_data = $this->Ta_model->filter($search, $limit, $start, $order_field, $order_ascdesc);
-		$sql_filter = $this->Ta_model->count_filter($search);
-		$callback = array(
-			'draw'=>$_POST['draw'],
-			'recordsTotal'=>$sql_total,
-			'recordsFiltered'=>$sql_filter,
-			'data'=>$sql_data
+		$data['id_jadwal']=$id_jadwal;
+		$this->load->view('dsn/tabel',$data);
+	}
+	public function getAll($id_jadwal)
+	{
+		// Datatables Variables
+		$draw = intval($this->input->get("draw"));
+		$start = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+
+
+		$nilais = $this->Nilai_model->get_nilai($id_jadwal);
+
+		$data = array();
+
+		foreach($nilais->result() as $r) {
+
+			$data[] = array(
+				$r->nim,
+				$r->nama_mhs,
+				$r->nilai,
+				"<button class='btn btn-success' data-toggle='modal' data-target='#modal-edit-jur' onclick='ehe($r->id_nilai)'>Nilai</button>"
+			);
+		}
+
+		$output = array(
+			"draw" => $draw,
+			"recordsTotal" => $nilais->num_rows(),
+			"recordsFiltered" => $nilais->num_rows(),
+			"data" => $data
 		);
-		header('Content-Type: application/json');
-		echo json_encode($callback);
+		echo json_encode($output);
+		exit();
 	}
-
-	public function store()
-	{
-		$data=[
-			'ta'=>$this->input->post('ta'),
-			'status'=>'deactive',
-		];
-		$this->db->insert('db_ta', $data);
-		$this->session->set_flashdata('message', 'Data berhasil di input !');
-		redirect(site_url('ta'));
-	}
-
 	public function edit($id)
 	{
-		$data['ta']=$this->db->get_where('db_ta',['id_ta'=>$id])->row_array();
-		$this->load->view('ta/edit',$data);
+		$data['nilai']=$this->db->get_where('db_nilai',['id_nilai'=>$id])->row_array();
+		$this->load->view('dsn/edit',$data);
 	}
 
 	public function update()
 	{
+		$nilai=$this->db->get_where('db_nilai',['id_nilai'=>$this->input->post('id_nilai')])->row_array();
+		$mhs=$this->db->get_where('db_mahasiswa',['nim'=>$nilai['nim']])->row_array()['semester'];
 		$data=[
-			'ta'=>$this->input->post('ta',true),
+			'nilai'=>$this->input->post('nilai',true),
 		];
-		$this->db->where('id_ta',$this->input->post('id_ta',true));
-		$this->db->update('db_ta', $data);
-		$this->session->set_flashdata('message', 'Data berhasil di update !');
-		redirect(site_url('ta'));
+		$this->db->where('id_nilai',$this->input->post('id_nilai',true));
+		$this->db->update('db_nilai', $data);
+		redirect(site_url("nilai/semester/$mhs"));
 	}
 
 	public function delete($id)
@@ -112,21 +118,6 @@ class Nilai extends CI_Controller {
 		$this->db->delete('db_ta',['id_ta'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('ta'));
-	}
-	public function active()
-	{
-		$data=$this->input->post();
-		$aktif=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
-		if ($aktif!=null) {
-			$this->db->where('id_ta',$aktif['id_ta']);
-			$this->db->update('db_ta', ['status'=>'deactive']);
-
-			$this->db->where('id_ta',$data['id']);
-			$this->db->update('db_ta', ['status'=>'active']);
-		}else{
-			$this->db->where('id_ta',$data['id']);
-			$this->db->update('db_ta', ['status'=>'active']);
-		};
 	}
 
 }
