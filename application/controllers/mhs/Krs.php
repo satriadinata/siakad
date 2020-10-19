@@ -60,5 +60,12 @@ class Krs extends CI_Controller {
 			$this->db->delete('db_nilai',['id_nilai'=>$value]);
 		};
 	}
+	public function print()
+	{
+		$data['krs']=$this->db->get('db_mahasiswa')->result();
+		$this->load->library('pdf');
+		$html=$this->load->view('mhs/print', $data,true);
+		$this->pdf->generate($html,'contoh');
+	}
 }
 ?>

@@ -144,7 +144,6 @@
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
-							<button id="batal" onclick="" class="btn btn-danger" >Cetak</button>
 						</div>
 
 						<?php else: ?>

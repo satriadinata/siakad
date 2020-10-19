@@ -352,5 +352,8 @@
         			},
         		});
 				};
+				function cetak(){
+					window.location.href='<?php echo site_url('mhs/krs/print') ?>'
+				}
 			</script>
 			<?php $this->load->view('template/script') ?>
