@@ -13,6 +13,7 @@ class Krs_model extends CI_Model
     $this->db->or_like('nama_dosen', $search);
     $this->db->or_like('nama_jurusan', $search);
     $this->db->or_like('ketua_jurusan', $search);
+    $this->db->or_like('status', $search);
     $this->db->order_by($order_field, $order_ascdesc);
     $this->db->limit($limit, $start);
     return $this->db->get($this->_table)->result_array();
@@ -29,6 +30,7 @@ class Krs_model extends CI_Model
     $this->db->or_like('nama_dosen', $search);
     $this->db->or_like('nama_jurusan', $search);
     $this->db->or_like('ketua_jurusan', $search);
+    $this->db->or_like('status', $search);
     return $this->db->get($this->_table)->num_rows();
   }
 

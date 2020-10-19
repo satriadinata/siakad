@@ -26,13 +26,13 @@ class Khs extends CI_Controller {
 		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
 		$data['krs']=$this->db->get_where('db_paket_krs',['ta'=>$data['ta']['ta'], 'semester'=>$data['mhs']['semester'], 'id_jurusan'=>$getIdJur['id_jur']])->row_array();
 		if ($data['krs']!=null) {
-			$data['items']=$this->db->get_where('db_item_krs',['id_krs'=>$data['krs']['id_krs']])->result();
+			// $data['items']=$this->db->get_where('db_item_krs',['id_krs'=>$data['krs']['id_krs']])->result();
 			$data['nilai']=$this->db->get_where('db_nilai',['id_krs'=>$data['krs']['id_krs'], 'nim'=>$data['mhs']['nim']])->result();
 		}else{
-			$data['items']=null;
+			// $data['items']=null;
 			$data['nilai']=null;
 		};
-		$this->load->view('mhs/krs',$data);
+		$this->load->view('mhs/khs',$data);
 	}
 	public function simpan()
 	{

@@ -141,6 +141,7 @@
 						<th>Semester</th>
 						<th>Jurusan</th>
 						<th>PA</th>
+						<th>Status</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -206,11 +207,18 @@
 				{ "data": "semester" },  // Tampilkan nama
 				{ "data": "nama_jurusan" }, // Tampilkan alamat
 				{ "data": "nama_dosen" }, // Tampilkan alamat
+				{ "data": "status" }, // Tampilkan alamat
 				{ "render": function ( data, type, row )
 					{ // Tampilkan kolom aksi
-						var id=row.id_krs;
-						var idi=row.id_krs;
-						var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Detail</button> | <button class='btn btn-danger' onclick=hapusJurusan('"+id+"')>Delete</button>";
+						if (row.status=='lock') {
+							var id=row.id_krs;
+							var idi=row.id_krs;
+							var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Detail</button> | <button id='unlock"+id+"' class='btn btn-warning' onclick=unlock('"+id+"')>Unlock</button>";
+						}else{
+							var id=row.id_krs;
+							var idi=row.id_krs;
+							var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Detail</button> | <button class='btn btn-danger' onclick=hapusJurusan('"+id+"')>Delete</button> | <button id='lock"+id+"' class='btn btn-success' onclick=lock('"+id+"')>Lock</button>";
+						};
 						return html;
 					}
 				},
@@ -268,6 +276,36 @@
 			},
 			complete: function(){
 				$('#simpan').html('Simpan');
+			},
+			success: function(data){
+				// console.log(data);
+				// alert('Data berhasil di input');
+				tabel.ajax.reload();
+			}
+		});
+	}
+	function lock(id){
+		$.ajax({
+			url:'<?php echo site_url('krs/lock') ?>',
+			type:'post',
+			data:{id:id},
+			beforeSend:function(){
+				$('#lock'+id).html('Processing <i class="fas fa-sync-alt fa-spin" ></i>');
+			},
+			success: function(data){
+				// console.log(data);
+				// alert('Data berhasil di input');
+				tabel.ajax.reload();
+			}
+		});
+	}
+	function unlock(id){
+		$.ajax({
+			url:'<?php echo site_url('krs/unlock') ?>',
+			type:'post',
+			data:{id:id},
+			beforeSend:function(){
+				$('#unlock'+id).html('Processing <i class="fas fa-sync-alt fa-spin" ></i>');
 			},
 			success: function(data){
 				// console.log(data);

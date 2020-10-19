@@ -97,4 +97,20 @@ class Krs extends CI_Controller {
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('krs'));
 	}
+	public function lock()
+	{
+		$data=[
+			'status'=>'lock',
+		];
+		$this->db->where('id_krs',$this->input->post('id'));
+		$this->db->update('db_paket_krs', $data);
+	}
+	public function unlock()
+	{
+		$data=[
+			'status'=>'unlock',
+		];
+		$this->db->where('id_krs',$this->input->post('id'));
+		$this->db->update('db_paket_krs', $data);	
+	}
 }

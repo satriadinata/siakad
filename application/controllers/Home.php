@@ -22,6 +22,7 @@ class Home extends CI_Controller {
 		if ($data['user']['level']=='admin') {
 			$this->load->view('home', $data);
 		}elseif($data['user']['level']=='mhs'){
+			$data['pa']=$this->db->get('db_mahasiswa')->result();
 			$this->load->view('mhs/index',$data);
 		}else{
 			redirect(site_url('nilai'));

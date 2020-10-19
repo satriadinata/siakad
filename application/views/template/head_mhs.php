@@ -35,7 +35,7 @@
         </li>
 
         <li class="nav-item d-sm-inline-block">
-          <a href="<?php echo site_url('mhs/krs/get') ?>" class="nav-link">KHS</a>
+          <a href="<?php echo site_url('mhs/khs/get') ?>" class="nav-link">KHS</a>
         </li>
 
       </ul>
