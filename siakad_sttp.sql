@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2020 at 03:33 PM
+-- Generation Time: Oct 20, 2020 at 11:09 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -150,7 +150,7 @@ CREATE TABLE `db_mahasiswa` (
 INSERT INTO `db_mahasiswa` (`id_mhs`, `nim`, `semester`, `nik_mhs`, `kd_jurusan`, `nama_mhs`, `alamat`, `telp`, `tempat_lahir`, `tgl_lahir`, `agama_mhs`, `kewarganegaraan`, `nama_ortu`, `alamat_ortu`, `telp_ortu`, `foto_mhs`) VALUES
 (20, 201811001, 2, 728472387, '0001', 'ANINDITO SATYA RAMAHDHAN', 'asdjsadj', 374298329, 'PATI', '2020-10-10', 'Islam', 'WNI', 'SDJALDJ', 'KDDFJSLKFJ', 2147483647, 'default/male.png'),
 (21, 201811002, 2, 2147483647, '0001', 'ARY AKHYAR', 'SIDJKSDFJLK', 342349238, 'PATI', '2020-10-10', 'Islam', 'WNI', 'ASJDSJH', 'SAJHFSDHDJS', 2147483647, 'default/male.png'),
-(22, 201812009, 1, 2147483647, '002', 'TAUFIK HIDAYAT', 'DAJDLADJ', 2147483647, 'SKLFJLSKAJKF', '2020-10-10', 'Islam', 'WNI', 'FKLASJDFKLASDF', 'ADSFASDFADSF', 569748324, 'default/male.png'),
+(22, 201812009, 2, 2147483647, '002', 'TAUFIK HIDAYAT', 'DAJDLADJ', 2147483647, 'SKLFJLSKAJKF', '2020-10-10', 'Islam', 'WNI', 'FKLASJDFKLASDF', 'ADSFASDFADSF', 569748324, 'default/male.png'),
 (23, 201911001, 3, 2147483647, '0001', ' ADITYA HERA PRATAMA', 'SDJSLKDASKJ', 2147483647, 'JKSDFHSDJ', '2020-10-10', 'Islam', 'WNI', 'ASDJLKASJ', 'LKASJDASJ', 2147483647, 'default/male.png'),
 (24, 201911002, 6, 247238479, '0001', 'AYU NOVITA SARI', 'ADSSDJKADJALKJ', 83472937, 'SFJSFSD', '2020-10-10', 'Islam', 'ASFSAFSAD', 'SAFASFSAD', 'SADFASDFASDF', 234324324, 'default/male.png'),
 (25, 201911003, 3, 2839137, '0001', 'BINTANG TRI YOGA', 'SKJDALJDASKLJ', 2147483647, 'LSKDJSAKJ', '2020-10-10', 'Islam', 'WNI', 'SKJDLAKSJD', 'ASDJKKALSJD', 874923793, 'default/male.png'),
@@ -205,7 +205,11 @@ CREATE TABLE `db_nilai` (
 
 INSERT INTO `db_nilai` (`id_nilai`, `id_krs`, `id_jadwal`, `ta`, `nim`, `nilai`) VALUES
 (62, 39, 11, '2020/2021', 2020110001, NULL),
-(63, 39, 10, '2020/2021', 2020110001, NULL);
+(63, 39, 10, '2020/2021', 2020110001, '90'),
+(64, 50, 13, '2020/2021', 201812009, NULL),
+(65, 50, 12, '2020/2021', 201812009, '87.5'),
+(66, 39, 11, '2020/2021', 201811002, NULL),
+(67, 39, 10, '2020/2021', 201811002, '90');
 
 -- --------------------------------------------------------
 
@@ -219,16 +223,17 @@ CREATE TABLE `db_paket_krs` (
   `ta` varchar(255) NOT NULL,
   `semester` int(3) NOT NULL,
   `id_jurusan` int(11) NOT NULL,
-  `id_pa` int(22) NOT NULL
+  `id_pa` int(22) NOT NULL,
+  `status` enum('unlock','lock') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `db_paket_krs`
 --
 
-INSERT INTO `db_paket_krs` (`id_krs`, `id_ta`, `ta`, `semester`, `id_jurusan`, `id_pa`) VALUES
-(39, 14, '2020/2021', 2, 9, 4),
-(50, 14, '2020/2021', 2, 10, 5);
+INSERT INTO `db_paket_krs` (`id_krs`, `id_ta`, `ta`, `semester`, `id_jurusan`, `id_pa`, `status`) VALUES
+(39, 14, '2020/2021', 2, 9, 4, 'lock'),
+(50, 14, '2020/2021', 2, 10, 5, 'lock');
 
 -- --------------------------------------------------------
 
@@ -409,7 +414,7 @@ ALTER TABLE `db_makul`
 -- AUTO_INCREMENT for table `db_nilai`
 --
 ALTER TABLE `db_nilai`
-  MODIFY `id_nilai` int(22) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id_nilai` int(22) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `db_paket_krs`
