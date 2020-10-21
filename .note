@@ -1,0 +1,4 @@
+## add this to your application/config/config.php
+
+$config['composer_autoload'] = "vendor/autoload.php";
+composer install

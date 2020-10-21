@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class Auth extends CI_Controller {
 
 	public function __construct() {
@@ -29,5 +32,23 @@ class Auth extends CI_Controller {
 	{
 		$this->session->sess_destroy();
 		redirect(site_url('auth'));
+	}
+
+	public function pdf(){
+
+		$data = array(
+			"dataku" => array(
+				"nama" => "Petani Kode",
+				"url" => "http://petanikode.com"
+			)
+		);
+
+		$this->load->library('pdf');
+
+		$this->pdf->setPaper('A4', 'potrait');
+		$this->pdf->filename = "laporan-petanikode.pdf";
+		$this->pdf->load_view('pdf', $data);
+
+
 	}
 }
