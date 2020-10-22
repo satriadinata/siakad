@@ -1,6 +1,4 @@
 <?php $this->load->view('template/head_mhs') ?>
-<img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/siakad/head_krs.jpg'?>">
-<img src="<?php echo base_url('assets/head_krs.jpg') ?>">
 
 <div class="content-wrapper" style="min-height: 1365.2px;">
 	<!-- Content Header (Page header) -->
