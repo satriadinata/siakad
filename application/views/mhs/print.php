@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>KRS STT</title>
+	<title>KRS STTP</title>
 	<style type="text/css">
 		body{
 			font-family: Arial, sans-serif;
