@@ -209,6 +209,16 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="<?php echo site_url('user_manage') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="user_manage") ? 'active' : '' ;?>">
+              <i class="fas fa-vote-yea mr-2"></i>
+              <p>
+                User Management
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li>
           
         </ul>
       </nav>

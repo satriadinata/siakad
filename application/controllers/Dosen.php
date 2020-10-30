@@ -87,6 +87,11 @@ class Dosen extends CI_Controller {
 			}
 		}
 		$this->db->insert('db_dosen', $data);
+		$this->db->insert('db_user', [
+			'username'=>$data['kd_dosen'],
+			'password'=>password_hash('dosendosen', PASSWORD_DEFAULT),
+			'level'=>'dosen'
+		]);
 		$this->session->set_flashdata('message', 'Data berhasil di input !');
 		redirect(site_url('dosen'));
 	}
@@ -161,18 +166,8 @@ class Dosen extends CI_Controller {
 		}
 
 		$this->db->delete('db_dosen',['id_dosen'=>$id]);
+		$this->db->delete('db_user',['username'=>$dosen['kd_dosen']]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('dosen'));
 	}
-	// public function user()
-	// {
-	// 	$dosen=$this->db->get('db_dosen')->result();
-	// 	foreach ($dosen as $value) {
-	// 		$this->db->insert('db_user',[
-	// 			'username'=>$value->kd_dosen,
-	// 			'level'=>'dosen',
-	// 			'password'=>password_hash('dosendosen', PASSWORD_DEFAULT),
-	// 		]);
-	// 	}
-	// }
 }
