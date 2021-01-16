@@ -34,8 +34,13 @@
           <a href="<?php echo site_url('mhs/krs/get') ?>" class="nav-link">KRS</a>
         </li>
 
-        <li class="nav-item d-sm-inline-block">
-          <a href="<?php echo site_url('mhs/khs/get') ?>" class="nav-link">KHS</a>
+        <li class="nav-item dropdown">
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">KHS</a>
+          <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow" style="left: 0px; right: inherit;">
+            <?php for ($i=1; $i <= $mhs['semester']; $i++):?>
+              <li><a href="<?php echo site_url('mhs/khs/get/').$i ?>" class="dropdown-item">Semester <?php echo $i; ?></a></li>
+            <?php endfor ?>
+          </ul>
         </li>
 
       </ul>

@@ -81,7 +81,7 @@ class Krs extends CI_Controller {
 		};
 		$this->pdf->setPaper('A4', 'potrait');
 		$this->pdf->filename = "KRS.pdf";
-		$this->pdf->load_view('mhs/print', $data);
+		$this->pdf->load_view('mhs/print_krs', $data);
 
 
 	}

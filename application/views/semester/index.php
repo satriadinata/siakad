@@ -66,7 +66,8 @@
 		</div>
 		<!-- /.card-body -->
 		<div class="card-footer">
-			<button class="btn btn-primary" id="updateSemester" >Update ke Semester Berikutnya</button>
+			<!-- <button class="btn btn-primary" id="updateSemester" >Update ke Semester Berikutnya</button> -->
+			<button class="btn btn-success" id="updateSemesterSemua" >Update Semua ke Semester Berikutnya</button>
 		</div>
 		<!-- /.card-footer-->
 	</div>
@@ -161,7 +162,7 @@
 			type: "POST",
 			data: {fix},
 			beforeSend:function(){
-				$('#updateSemester').html('Update ke Semester Berikutnya<i class="fas fa-sync-alt fa-spin" ></i>');
+				$('#updateSemester').html('Update ke Semester Berikutnya <i class="fas fa-sync-alt fa-spin" ></i>');
 			},
 			complete: function(){
 				$('#updateSemester').html('Update ke Semester Berikutnya');
@@ -173,6 +174,21 @@
 		});
 		
 	});
+	 $('#updateSemesterSemua').on('click', function(e){
+	 	e.preventDefault();
+	 	$.ajax({
+	 		url: '<?php echo site_url('semester/updateSemua') ?>',
+	 		type:'POST',
+	 		beforeSend:function(){
+	 			$('#updateSemesterSemua').html('Update Semua ke Semester Berikutnya <i class="fas fa-sync-alt fa-spin" ></i>')
+	 		},
+	 		success:function(response){
+	 			console.log(response)
+	 			tabel.ajax.reload()
+				$('#updateSemesterSemua').html('Update Semua ke Semester Berikutnya');
+	 		}
+	 	})
+	 })
 
 	function hapusMhs(id){
 		var confirm=window.confirm('Yakin ?');

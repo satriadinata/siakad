@@ -50,6 +50,23 @@ class Semester extends CI_Controller {
 		};
 	}
 
+	public function updateSemua()
+	{
+		$data=$this->db->get('db_mahasiswa')->result();
+		$data_fix=[];
+		// print_r($data);
+		foreach ($data as $key => $value) {
+			$p=array(
+				'id_mhs'=>$value->id_mhs,
+				'semester'=>$value->semester+1,
+			);
+			array_push($data_fix, $p);
+			// echo $key;
+		};
+		// print_r($data_fix);
+		$this->db->update_batch('db_mahasiswa', $data_fix, 'id_mhs');
+	}
+
 	public function getAll()
 	{
 		$search = $_POST['search']['value'];
@@ -88,7 +105,7 @@ class Semester extends CI_Controller {
 	}
 	public function det()
 	{
-		// $mhs=$this->db->get_where('db_mahasiswa',['id_mhs'=>$val])->row_array();
+		// post edit
 		$up=[
 			'semester'=>$this->input->post()['semester'],
 		];
@@ -96,24 +113,6 @@ class Semester extends CI_Controller {
 		$this->db->update('db_mahasiswa', $up);
 		$this->session->set_flashdata('message', 'Data berhasil di update !');
 		redirect(site_url('semester'));
-	}
-
-	// public function update()
-	// {
-	// 	$data=[
-	// 		'ta'=>$this->input->post('ta',true),
-	// 	];
-	// 	$this->db->where('id_ta',$this->input->post('id_ta',true));
-	// 	$this->db->update('db_ta', $data);
-	// 	$this->session->set_flashdata('message', 'Data berhasil di update !');
-	// 	redirect(site_url('ta'));
-	// }
-
-	public function delete($id)
-	{
-		$this->db->delete('db_ta',['id_ta'=>$id]);
-		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
-		redirect(site_url('ta'));
 	}
 
 }

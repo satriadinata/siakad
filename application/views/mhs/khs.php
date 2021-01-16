@@ -144,6 +144,7 @@
 						</div>
 						<!-- /.card-body -->
 						<div class="card-footer">
+							<button id="batal" onclick="cetak()" class="btn btn-warning" >Cetak</button>
 						</div>
 
 						<?php else: ?>
@@ -159,64 +160,8 @@
 			<!-- /.content -->
 		</div>
 		<script>
-			$('#selectAll').click(function(){
-				if (this.checked) {
-					$(".check").prop("checked", true);
-				}else{
-					$(".check").prop("checked", false);
-				};
-			});
-			function simpan(){
-				var store=[];
-				var i=0;
-				$(".check:checked").each(function(){
-					store[i]=$(this).val();
-					i++;
-				});
-					// console.log(store);
-					$.ajax({
-						url: '<?php echo site_url('mhs/krs/simpan') ?>',
-						type: "POST",
-						data: {
-							nim:'<?php echo $mhs['nim']; ?>',
-							store
-						},
-						beforeSend:function(){
-							$('#simpan').html('Simpan <i class="fas fa-sync-alt fa-spin" ></i>');
-						},
-						success: function(response){
-							location.reload();
-						},
-						error:function(data){
-        				alert("error occured"); //===Show Error Message====
-        			},
-        		});
-				};
-				function batal(){
-					var store=[];
-					var i=0;
-					$(".id_nilai").each(function(){
-						store[i]=$(this).val();
-						i++;
-					});
-					console.log(store);
-					$.ajax({
-						url: '<?php echo site_url('mhs/krs/batal') ?>',
-						type: "POST",
-						data: {
-							nim:'<?php echo $mhs['nim']; ?>',
-							store
-						},
-						beforeSend:function(){
-							$('#batal').html('Batal <i class="fas fa-sync-alt fa-spin" ></i>');
-						},
-						success: function(response){
-							location.reload();
-						},
-						error:function(data){
-        				alert("error occured"); //===Show Error Message====
-        			},
-        		});
-				};
-			</script>
-			<?php $this->load->view('template/script') ?>
+			function cetak(){
+				window.location.href='<?php echo site_url('mhs/khs/print/').$smster ?>';
+			}
+		</script>
+		<?php $this->load->view('template/script') ?>
