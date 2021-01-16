@@ -41,7 +41,7 @@ class Semester extends CI_Controller {
 		$data=$this->input->post();
 			// $getSemester=$this->db->get_where('')
 		foreach ($data['fix'] as $val) {
-			$mhs=$this->db->get_where('db_mahasiswa',['id_mhs'=>$val])->row_array();
+			$mhs=$this->db->get_where('db_mahasiswa',['id_mhs'=>$val,'status'=>'aktif'])->row_array();
 			$up=[
 				'semester'=>$mhs['semester']+1,
 			];

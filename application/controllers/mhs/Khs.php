@@ -25,7 +25,14 @@ class Khs extends CI_Controller {
 		$data['mhs']=$this->db->get_where('db_mahasiswa',['nim'=>$data['user']['username']])->row_array();
 		$getIdJur=$this->db->get_where('db_jurusan',['kd_jurusan'=>$data['mhs']['kd_jurusan']])->row_array();
 		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
-		$data['krs']=$this->db->get_where('db_paket_krs',['semester'=>$smster, 'id_jurusan'=>$getIdJur['id_jur']])->row_array();
+		// cari taun ajar yang tepat dengan nim
+		$ta=substr($data['mhs']['nim'], 0, 4)+floor((($smster/2)-0.5));
+		$ta1=$ta+1;
+		strval($ta);
+		strval($ta1);
+		$ta_fix=$ta.'/'.$ta1;
+		// end
+		$data['krs']=$this->db->get_where('db_paket_krs',['semester'=>$smster,'ta'=>$ta_fix,'id_jurusan'=>$getIdJur['id_jur']])->row_array();
 		if ($data['krs']!=null) {
 			// $data['items']=$this->db->get_where('db_item_krs',['id_krs'=>$data['krs']['id_krs']])->result();
 			$data['nilai']=$this->db->get_where('db_nilai',['id_krs'=>$data['krs']['id_krs'], 'nim'=>$data['mhs']['nim']])->result();

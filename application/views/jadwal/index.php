@@ -206,7 +206,7 @@
 			});
 	});
 	function hapusTa(id){
-		var confirm=window.confirm('Yakin ?');
+		var confirm=window.confirm('Yakin? Penghapusan jadwal akan berpengaruh pada KRS, KHS untuk arsip');
 		if (confirm) {
 			window.location.href='<?php echo site_url('jadwal/delete/') ?>'+id;
 		}

@@ -53,7 +53,7 @@ class Khs extends CI_Controller {
 				$r->nama_mhs,
 				$r->nama_jurusan,
 				$r->semester,
-				"<button class='btn btn-success' data-toggle='modal' data-target='#modal-edit-jur' onclick='ehe($r->nim)'>Detail</button>"
+				"<button class='btn btn-success' data-toggle='modal' data-target='#modal-edit-jur' onclick='detail($r->nim)'>Detail</button>"
 			);
 		}
 
@@ -66,63 +66,51 @@ class Khs extends CI_Controller {
 		echo json_encode($output);
 		exit();
 	}
-
-	public function store()
+	public function detail($nim)
 	{
-		$ta=$this->db->get_where('db_ta',['id_ta'=>$this->input->post('ta')])->row_array();
-		$mhs=$this->db->get_where('db_mahasiswa',['semester'=>$this->input->post('semester')])->result();
-		$data=[
-			'id_ta'=>$this->input->post('ta'),
-			'ta'=>$ta['ta'],
-			'semester'=>$this->input->post('semester'),
-			'id_jurusan'=>$this->input->post('id_jur'),
-			'id_pa'=>$this->input->post('pa'),
-		];
-		$this->db->insert('db_paket_krs', $data);
-		$insert_id=$this->db->insert_id();
-		$item=$this->input->post('krs');
-		foreach ($item as $value) {
-			$v=explode('|',$value);
-			$itemInput=[
-				'id_krs'=>$insert_id,
-				'id_jadwal'=>$v[0],
-			];
-			$this->db->insert('db_item_krs', $itemInput);
+		$mhs=$this->db->get_where('db_mahasiswa',['nim'=>$nim])->row_array();
+		$get_jur=$this->db->get_where('db_jurusan',['kd_jurusan'=>$mhs['kd_jurusan']])->row_array();
+		$collect=[];
+		for ($i=1; $i <= $mhs['semester']; $i++) { 
+			// cari taun ajar yang tepat dengan nim
+			$ta=substr($nim, 0, 4)+floor((($i/2)-0.5));
+			$ta1=$ta+1;
+			strval($ta);
+			strval($ta1);
+			$ta_fix=$ta.'/'.$ta1;
+			// end
+
+
+			$krs=$this->db->get_where('db_paket_krs',['ta'=>$ta_fix,'id_jurusan'=>$get_jur['id_jur']])->row_array();
+			if ($krs!=null) {	
+				$this->db->select('*');
+				$this->db->from('db_nilai');
+				$this->db->where(['id_krs'=>$krs['id_krs'],'nim'=>$nim]);
+				$this->db->join('db_jadwal','db_jadwal.id_jadwal=db_nilai.id_jadwal');
+				$items=$this->db->get()->result();
+			// $items=$this->db->get_where('db_nilai',['id_krs'=>$krs['id_krs'],'nim'=>$nim])->result();
+			}else{
+				$krs=['null'];
+				$items=['null'];
+			}
+			$collect[$i]=$krs;
+			array_push($collect[$i], $items);
 		};
-	}
-
-	public function detail($id)
-	{
-		$data['krs']=$this->db->get_where('db_paket_krs',['id_krs'=>$id])->row_array();
-		$data['item']=$this->db->get_where('db_item_krs',['id_krs'=>$id])->result();
-		$data['jurusan']=$this->db->get_where('db_jurusan',['id_jur'=>$data['krs']['id_jurusan']])->row_array();
-		$data['pa']=$this->db->get_where('db_dosen',['id_dosen'=>$data['krs']['id_pa']])->row_array();
+		$data['collect']=$collect;
+		$data['mhs']=$mhs;
+		$data['jadwal']=$this->db->get('db_jadwal')->result();
 		$data['makul']=$this->db->get('db_makul')->result();
-		$data['dosen']=$this->db->get('db_dosen')->result();	
-		$data['jadwal']=$this->db->get('db_jadwal')->result();	
-		$this->load->view('krs/detail',$data);
-	}
-
-	public function delete($id)
-	{
-		$this->db->delete('db_paket_krs',['id_krs'=>$id]);
-		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
-		redirect(site_url('krs'));
-	}
-	public function lock()
-	{
-		$data=[
-			'status'=>'lock',
-		];
-		$this->db->where('id_krs',$this->input->post('id'));
-		$this->db->update('db_paket_krs', $data);
-	}
-	public function unlock()
-	{
-		$data=[
-			'status'=>'unlock',
-		];
-		$this->db->where('id_krs',$this->input->post('id'));
-		$this->db->update('db_paket_krs', $data);	
+		$data['dosen']=$this->db->get('db_dosen')->result();
+		$data['jurusan']=$get_jur;
+		// print_r($data['collect']);
+		$this->load->view('khs/detail',$data);
+		// $this->db->select('*');
+		// $this->db->from('db_nilai');
+		// $this->db->join('db_paket_krs','db_paket_krs.id_krs=db_nilai.id_krs');
+		// $this->db->group_by('id_krs'); 
+		// $this->db->order_by('id_krs', 'asc'); 
+		// $this->db->where('db_nilai.nim',$nim);
+		// $data=$this->db->get()->result();
+		// print_r($data);
 	}
 }

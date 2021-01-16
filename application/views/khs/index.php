@@ -159,5 +159,13 @@
 			},
 		});
 	});
+	function detail(nim){
+		$.ajax({
+			url: "<?php echo site_url('khs/detail/') ?>"+nim,
+			success: function(result){
+				$("#modalData").html(result);
+			}
+		});
+	}
 </script>
 <?php $this->load->view('template/footer') ?>
