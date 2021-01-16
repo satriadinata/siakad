@@ -228,7 +228,7 @@
 </script>
 <script type="text/javascript">
 	function hapusJurusan(a){
-		var confirm=window.confirm('Yakin ?');
+		var confirm=window.confirm('Yakin? Jika anda menghapus paket KRS ini, maka akan menghapus KHS yang berhubungan!');
 		if (confirm) {
 			window.location.href='<?php echo site_url('krs/delete/') ?>'+a;
 		};
