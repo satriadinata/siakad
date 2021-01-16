@@ -81,7 +81,7 @@ class Khs extends CI_Controller {
 			// end
 
 
-			$krs=$this->db->get_where('db_paket_krs',['ta'=>$ta_fix,'id_jurusan'=>$get_jur['id_jur']])->row_array();
+			$krs=$this->db->get_where('db_paket_krs',['semester'=>$i,'ta'=>$ta_fix,'id_jurusan'=>$get_jur['id_jur']])->row_array();
 			if ($krs!=null) {	
 				$this->db->select('*');
 				$this->db->from('db_nilai');
