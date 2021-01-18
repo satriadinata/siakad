@@ -9,6 +9,7 @@
 		<form role="form" action="<?php echo site_url('jadwal/update') ?>" method="post" >
 			<div class="card-body">
 				<input type="hidden" name="id_jadwal" value="<?php echo $jadwal['id_jadwal'] ?>">
+				<input type="hidden" name="updated_at" value="<?php echo date('Y-m-d H:i:j') ?>">
 
 				<div class="form-group">
 					<label for="kd_mk">Mata Kuliah</label>

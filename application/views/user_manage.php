@@ -39,6 +39,7 @@
 				<thead>
 					<tr>
 						<th>Username</th>
+						<th>Password</th>
 						<th>Level</th>
 						<th>Email</th>
 						<th>Blokir</th>
@@ -72,9 +73,10 @@
 				"type": "POST"
 			},
 			"deferRender": true,
-			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]], // Combobox Limit
+			"aLengthMenu": [[10, 50, 100],[ 10, 50, 100]], // Combobox Limit
 			"columns": [
 				{ "data": "username" }, // Tampilkan nis
+				{ "data": "password" }, // Tampilkan nis
 				{ "data": "level" }, // Tampilkan nis
 				{ "data": "email" },  // Tampilkan nama
 				{ "render": function ( data, type, row )

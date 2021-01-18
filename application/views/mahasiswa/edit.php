@@ -38,6 +38,7 @@
 						<?php endif; ?>
 
 						<input type="hidden" name="id_mhs" value="<?php echo $mahasiswa['id_mhs'] ?>">
+						<input type="hidden" name="updated_at" value="<?php echo date('Y-m-d H:i:j') ?>">
 
 						<div class="form-group">
 							<label for="nim">NIM</label>

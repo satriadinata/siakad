@@ -16,6 +16,7 @@ class Jadwal_model extends CI_Model
     $this->db->or_like('nama_dosen', $search);
     $this->db->or_like('hari', $search);
     $this->db->or_like('jam', $search);
+    $this->db->or_like('created_at', $search);
     $this->db->order_by($order_field, $order_ascdesc);
     $this->db->limit($limit, $start);
     return $this->db->get($this->_table)->result_array();
@@ -36,6 +37,7 @@ class Jadwal_model extends CI_Model
     $this->db->or_like('nama_dosen', $search);
     $this->db->or_like('hari', $search);
     $this->db->or_like('jam', $search);
+    $this->db->or_like('created_at', $search);
     return $this->db->get($this->_table)->num_rows();
   }
   public function getJadwal($ta)

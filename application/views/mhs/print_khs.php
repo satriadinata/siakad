@@ -45,7 +45,7 @@
 					<?php endif ?>
 				</tr>
 				<tr>
-					<td style="padding-bottom: 10px" width="20%">Jenjang / Jurusan</td>
+					<td style="padding-bottom: 10px" width="20%">Jurusan</td>
 					<td style="padding-bottom: 10px" width="5%">:</td>
 					<td style="padding-bottom: 10px" width="25%"><?php foreach ($jurusan as $v):?>
 					<?php if ($v->id_jur==$krs['id_jurusan']):?>
@@ -65,18 +65,25 @@
 
 		<table class="bordered" style="margin-top: 30px">
 			<thead>
-				<th>Kode MK</th>
-				<th>Mata Kuliah</th>
-				<th>SKS</th>
-				<th>Dosen</th>
-				<th>Hari</th>
-				<th>Jam</th>
+				<th rowspan="2">No</th>
+				<th rowspan="2">Kode MK</th>
+				<th rowspan="2">Mata Kuliah</th>
+				<th rowspan="2">SKS</th>
+				<th colspan="2" >Nilai</th>
+				<th rowspan="2">SKSN</th>
+			</thead>
+			<thead>
+				<th>Angka</th>
 				<th>Nilai</th>
 			</thead>
 			<tbody>
-				<?php foreach ($nilai as $value):?>
+				<?php
+				$no=1;
+				$totalSKSN=0;
+				$totalSKS=0;
+				foreach ($nilai as $value):?>
 					<tr>
-						<input type="hidden" class="id_nilai" value="<?php echo $value->id_nilai ?>" >
+						<td><?php echo $no; ?></td>
 						<td><?php foreach ($jadwal as $k) {
 							if ($value->id_jadwal==$k->id_jadwal) {
 								echo $k->kd_mk;
@@ -91,65 +98,101 @@
 								}
 							}
 						} ?></td>
-						<td><?php foreach ($jadwal as $k) {
+						<td style="text-align: center;" ><?php foreach ($jadwal as $k) {
 							if ($value->id_jadwal==$k->id_jadwal) {
 								foreach ($makul as $v) {
 									if ($k->kd_mk==$v->kode_mk) {
 										echo $v->sks;
+										$totalSKS+=$v->sks;
 									}
 								}
 							}
 						} ?></td>
-						<td><?php foreach ($jadwal as $k) {
-							if ($value->id_jadwal==$k->id_jadwal) {
-								foreach ($pa as $v) {
-									if ($k->kd_dosen==$v->kd_dosen) {
-										echo $v->nama_dosen;
+						<td style="text-align: center;" ><?php echo $value->nilai; ?></td>
+						<td style="text-align: center;" >
+							<?php
+							if ($value->nilai<55) {
+								echo "E";
+							}elseif ($value->nilai<65) {
+								echo "D";
+							}elseif ($value->nilai<70) {
+								echo "C";
+							}elseif ($value->nilai<75) {
+								echo "C+";
+							}elseif ($value->nilai<80) {
+								echo "B";
+							}elseif ($value->nilai<85) {
+								echo "B+";
+							}elseif ($value->nilai<90) {
+								echo "A-";
+							}else{
+								echo "A";
+							}
+							?>
+						</td>
+						<td style="text-align: center;">
+							<?php
+							if ($value->nilai<55) {
+								$huruf=0;
+							}elseif ($value->nilai<65) {
+								$huruf=1;
+							}elseif ($value->nilai<70) {
+								$huruf=2;
+							}elseif ($value->nilai<75) {
+								$huruf=2.33;
+							}elseif ($value->nilai<80) {
+								$huruf=3;
+							}elseif ($value->nilai<85) {
+								$huruf=3.33;
+							}elseif ($value->nilai<90) {
+								$huruf=3.67;
+							}else{
+								$huruf=4;
+							};
+							foreach ($jadwal as $k) {
+								if ($value->id_jadwal==$k->id_jadwal) {
+									foreach ($makul as $v) {
+										if ($k->kd_mk==$v->kode_mk) {
+											echo $huruf*$v->sks;
+											$totalSKSN+=$huruf*$v->sks;
+										}
 									}
 								}
 							}
-						} ?></td>
-						<td><?php foreach ($jadwal as $k) {
-							if ($value->id_jadwal==$k->id_jadwal) {
-								echo $k->hari;
-							}
-						} ?></td>
-						<td><?php foreach ($jadwal as $k) {
-							if ($value->id_jadwal==$k->id_jadwal) {
-								echo $k->jam;
-							}
-						} ?></td>
-						<td><?php echo $value->nilai; ?></td>
-					</tr>
-				<?php endforeach ?>
+							?>
+						</td>
+				<?php $no++; endforeach ?>
+				<tr style="text-align: center;font-weight: bold;">
+					<td colspan="3">Total Jumlah</td>
+					<td><?= $totalSKS;  ?></td>
+					<td></td>
+					<td></td>
+					<td><?php echo $totalSKSN; ?></td>
+				</tr>
 			</tbody>
 		</table>
-
+		<br>
 		<table>
 			<tbody>
 				<tr>
 					<td width="50%" style="font-size: 12px;">
-						<br><br><br><br><br><br><br><br><br><br>
-						<p>
-							<b><u>KHS dicetak 3 (Tiga) Rangkap,</u></b>
-						</p>
-						<ul style="padding-left: 17px;">
-							<li>Mahasiswa</li>
-							<li>Pembimbing Akademik</li>
-							<li>B A A K</li>
-						</ul>
+						<img src="<?php echo base_url('assets/rumus_ipk.jpg') ?>">
 					</td>
-					<td width="50%" style="text-align: center;">
-						<p>Pati, ____________ 20 ____</p>
-						<p>Mahasiswa</p>
-						<br><br><br>
-						<p>( ________________ )</p>
+					<td width="50%" style="text-align: left;padding-left: 50px;">
+						<p>Pati, <?php echo date('d').' ' ?><?php $bulan=['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']; echo $bulan[intval(date('m'))-1].' '.date('Y'); ?></p>
+						<p>Ketua Jurusan</p>
+						<br><br><br>	
+						<p>(<?php foreach ($jurusan as $v):?>
+						<?php if ($v->id_jur==$krs['id_jurusan']):?>
+							<?php echo $v->ketua_jurusan; ?>
+						<?php endif ?>
+						<?php endforeach ?>)</p>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<table>
+		<!-- <table>
 			<tbody>
 				<tr>
 					<td width="33%"></td>
@@ -167,7 +210,7 @@
 					</td>
 				</tr>
 			</tbody>
-		</table>
+		</table> -->
 
 	</body>
 	</html>

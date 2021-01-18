@@ -111,7 +111,7 @@ class Nilai extends CI_Controller {
 		$this->db->where('id_nilai',$this->input->post('id_nilai',true));
 		$this->db->update('db_nilai', $data);
 
-		echo "ok";
+		// echo "ok";
 	}
 
 	public function delete($id)
@@ -119,6 +119,44 @@ class Nilai extends CI_Controller {
 		$this->db->delete('db_ta',['id_ta'=>$id]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('ta'));
+	}
+	public function changePassword()
+	{
+		$data['user']= $this->session->userdata('user_logged');
+		$data['title']='Change Password';
+		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
+		$data['menu']=$this->getSemester($data['user']['username']);
+		$this->load->view('change_password', $data);
+	}
+	public function changePass()
+	{
+		$this->load->library('form_validation');
+		$data['iden']=$this->input->post();
+		$user= $this->session->userdata('user_logged');
+		$pass_get=$this->db->get_where('db_user',['username'=>$user['username']])->row_array()['password'];
+
+		if ($pass_get==$data['iden']['password_lama']) {
+			
+			$this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('confirm_password', 'Password Confirmation', 'required|matches[password]');
+
+			if ($this->form_validation->run()) {
+				$up=[
+					'password'=>$this->input->post('password'),
+				];
+				$this->db->where('username',$user['username']);
+				$this->db->update('db_user', $up);
+				echo "Success";
+			}else{
+				$this->session->set_flashdata('error', validation_errors());
+				redirect(site_url('nilai/changePassword'));
+			};
+
+		}else{
+
+			$this->session->set_flashdata('error', 'Wrong Last Password');
+			redirect(site_url('nilai/changePassword'));
+		}
 	}
 
 }

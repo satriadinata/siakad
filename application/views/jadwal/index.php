@@ -35,6 +35,8 @@
 				<!-- /.card-header -->
 				<!-- form start -->
 				<form role="form" action="<?php echo site_url('jadwal/store') ?>" method="post" >
+					<input type="hidden" name="created_at" value="<?php echo date('Y-m-d H:i:j') ?>">
+					<input type="hidden" name="updated_at" value="<?php echo date('Y-m-d H:i:j') ?>">
 					<div class="card-body">
 						<?php if ($this->session->flashdata('error')!=null):?>
 							<div class="alert alert-danger">
@@ -128,6 +130,7 @@
 						<th>Hari</th>
 						<th>Jam</th>
 						<th>Action</th>
+						<th>Waktu Dibuat</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -202,6 +205,7 @@
 						return html;
 					}
 				},
+				{ "data": "created_at" }, // Tampilkan alamat
 				],
 			});
 	});

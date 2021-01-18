@@ -48,7 +48,6 @@
 			<table id="tableDosen" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>No</th>
 						<th>KD Dosen</th>
 						<th>NIDN</th>
 						<th>KD Jurusan</th>
@@ -113,9 +112,6 @@
 			"deferRender": true,
 			"aLengthMenu": [[5, 10, 50],[ 5, 10, 50]],
 			"columns": [
-			{"render":function(data,type,row){
-				return no++
-			}},
 			{ "data": "kd_dosen" },
 			{ "data": "nidn" },
 			{ "render": function(data, type, row){

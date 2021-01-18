@@ -34,6 +34,13 @@ class Khs extends CI_Controller {
 		};
 	}
 
+	public function cari()
+	{
+		$data['angkatan']=$this->input->post()['angkatan'];
+		$data['jurusan']=$this->input->post()['jurusan'];
+		$this->load->view('khs/hasilCari', $data);
+	}
+
 	public function getAll()
 	{
 		// Datatables Variables
@@ -66,6 +73,44 @@ class Khs extends CI_Controller {
 		echo json_encode($output);
 		exit();
 	}
+
+	public function getCustom($a, $jurusan)
+	{
+		$angkatan=$this->db->get_where('db_ta',['id_ta'=>$a])->row_array()['ta'];
+		// $jurusan=$this->db->get_where('db_jurusan',['id_jur'=>$j])->row_array()['id_jur'];
+		// echo $angkatan;
+		// echo $jurusan;
+		// die();
+		$draw = intval($this->input->get("draw"));
+		$start = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+
+
+		$mhs = $this->Khs_model->get_mhsCustom($angkatan, $jurusan);
+
+		$data = array();
+
+		foreach($mhs->result() as $r) {
+
+			$data[] = array(
+				$r->nim,
+				$r->nama_mhs,
+				$r->nama_jurusan,
+				$r->semester,
+				"<button class='btn btn-success' data-toggle='modal' data-target='#modal-edit-jur' onclick='detail($r->nim)'>Detail</button>"
+			);
+		}
+
+		$output = array(
+			"draw" => $draw,
+			"recordsTotal" => $mhs->num_rows(),
+			"recordsFiltered" => $mhs->num_rows(),
+			"data" => $data
+		);
+		echo json_encode($output);
+		exit();
+	}
+
 	public function detail($nim)
 	{
 		$mhs=$this->db->get_where('db_mahasiswa',['nim'=>$nim])->row_array();

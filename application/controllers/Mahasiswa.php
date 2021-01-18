@@ -97,7 +97,7 @@ class Mahasiswa extends CI_Controller {
 		$this->db->insert('db_mahasiswa', $data);
 		$this->db->insert('db_user', [
 			'username'=>$data['nim'],
-			'password'=>password_hash(date("dmY",strtotime($data['tgl_lahir'])), PASSWORD_DEFAULT),
+			'password'=>date("dmY",strtotime($data['tgl_lahir'])),
 			'level'=>'mhs'
 		]);
 		$this->session->set_flashdata('message', 'Data dan foto berhasil di input !');

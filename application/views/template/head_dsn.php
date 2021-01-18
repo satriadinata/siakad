@@ -52,8 +52,8 @@
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <!-- <span class="dropdown-item dropdown-header">15 Notifications</span> -->
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-child mr-2"></i> Profile
+            <a href="<?= site_url('nilai/changePassword') ?>" class="dropdown-item">
+              <i class="fas fa-child mr-2"></i> Change Password
               <span class="float-right text-muted text-sm"></span>
             </a>
             <div class="dropdown-divider"></div>

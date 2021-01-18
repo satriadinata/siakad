@@ -89,7 +89,7 @@ class Dosen extends CI_Controller {
 		$this->db->insert('db_dosen', $data);
 		$this->db->insert('db_user', [
 			'username'=>$data['kd_dosen'],
-			'password'=>password_hash('dosendosen', PASSWORD_DEFAULT),
+			'password'=>'dosendosen',
 			'level'=>'dosen'
 		]);
 		$this->session->set_flashdata('message', 'Data berhasil di input !');
@@ -169,5 +169,13 @@ class Dosen extends CI_Controller {
 		$this->db->delete('db_user',['username'=>$dosen['kd_dosen']]);
 		$this->session->set_flashdata('message', 'Data berhasil dihapus !');
 		redirect(site_url('dosen'));
+	}
+	public function changePassword()
+	{
+		$data['user']= $this->session->userdata('user_logged');
+		$data['title']='Change Password';
+		$data['ta']=$this->db->get_where('db_ta',['status'=>'active'])->row_array();
+		$data['menu']=$this->getSemester($data['user']['username']);
+		$this->load->view('change_password', $data);
 	}
 }

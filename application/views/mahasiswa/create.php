@@ -37,6 +37,8 @@
 							</div>
 						<?php endif; ?>
 						<input type="hidden" name="semester" value="1">
+						<input type="hidden" name="created_at" value="<?php echo date('Y-m-d H:i:j') ?>">
+						<input type="hidden" name="updated_at" value="<?php echo date('Y-m-d H:i:j') ?>">
 
 						<div class="form-group">
 							<label for="nim">NIM</label>

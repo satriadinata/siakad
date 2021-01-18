@@ -33,63 +33,59 @@
 				<div class="card-header">
 					<h3 class="card-title">Input Data</h3>
 				</div>
-				<!-- /.card-header -->
-				<!-- form start -->
-				<!-- <form role="form" action="<?php echo site_url('krs/store') ?>" method="post" > -->
-					<div class="card-body">
-						<input type="hidden" id="jmlhKrs" name="jmlhKrs" value="" >
 
-						<div class="form-group">
-							<label for="ta">Angkatan</label>
-							<select id="ta" name="ta" class="custom-select" value="<?= old('ta') ;?>">
-								<?php foreach ($ta as $value):?>
-									<option value="<?php echo $value->id_ta ?>" ><?php echo $value->ta; ?></option>
-								<?php endforeach ?>
-							</select>
-						</div>
+				<div class="card-body">
 
-
-						<div class="form-group">
-							<label for="id_jur">Jurusan</label>
-							<select id="id_jur" name="id_jur" class="custom-select" value="<?= old('id_jur') ;?>">
-								<?php foreach ($jurusan as $value):?>
-									<option value="<?php echo $value->id_jur ?>" ><?php echo $value->nama_jurusan; ?></option>
-								<?php endforeach ?>
-							</select>
-						</div>
-
-						<div class="form-group">	
-							<label for="semester">Semester</label>
-							<input id="semester" required="" name="semester" type="text" class="form-control" id="semester" placeholder="Semester">
-						</div>
-
+					<div class="form-group">
+						<label for="angkatan">Angkatan</label>
+						<select id="angkatan" name="ta" class="custom-select" value="<?= old('ta') ;?>">
+							<?php foreach ($ta as $value):?>
+								<option value="<?php echo $value->id_ta ?>" ><?php echo $value->ta; ?></option>
+							<?php endforeach ?>
+						</select>
 					</div>
-					<!-- /.card-body -->
 
-					<div class="card-footer">
-						<button id="simpan" onclick="cari()" class="btn btn-primary">Cari</button>
+
+					<div class="form-group">
+						<label for="jurusan">Jurusan</label>
+						<select id="jurusan" name="id_jur" class="custom-select" value="<?= old('id_jur') ;?>">
+							<?php foreach ($jurusan as $value):?>
+								<option value="<?php echo $value->id_jur ?>" ><?php echo $value->nama_jurusan; ?></option>
+							<?php endforeach ?>
+						</select>
 					</div>
-					<!-- </form> -->
+
 				</div>
+				<!-- /.card-body -->
 
+				<div class="card-footer">
+					<button id="cari" onclick="cari()" class="btn btn-primary">Cari</button>
+				</div>
+				<!-- </form> -->
 			</div>
-			<!-- /.card-body -->
-			<div class="card-footer">
 
+			<div id='hasilCari' class="card-body">
+				
 			</div>
-			<!-- /.card-footer-->
+
 		</div>
-		<!-- /.card -->
+		<!-- /.card-body -->
+		<div class="card-footer">
 
-		<!-- Default box -->
-		<div class="card">
-			<div class="card-header">
-				<h3 class="card-title">Cari KHS dengan Satu Spesifik Kategori</h3>
+		</div>
+		<!-- /.card-footer-->
+	</div>
+	<!-- /.card -->
 
-				<div class="card-tools">
-					<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-						<i class="fas fa-minus"></i>
-					</button>
+	<!-- Default box -->
+	<div class="card">
+		<div class="card-header">
+			<h3 class="card-title">Cari KHS dengan Satu Spesifik Kategori</h3>
+
+			<div class="card-tools">
+				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+					<i class="fas fa-minus"></i>
+				</button>
 
 				<!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
 					<i class="fas fa-times"></i>
@@ -166,6 +162,24 @@
 				$("#modalData").html(result);
 			}
 		});
+	}
+	function cari(){
+		let data={
+			angkatan:$('#angkatan').val(),
+			jurusan:$('#jurusan').val(),
+		};
+		$.ajax({
+			url:'<?php echo site_url('khs/cari') ?>',
+			type:'post',
+			data:data,
+			beforeSend:function(){
+				$('#cari').html('Processing <i class="fas fa-sync-alt fa-spin" ></i>');
+			},
+			success: function(data){
+				$('#cari').html('Simpan');
+				$('#hasilCari').html(data);
+			}
+		})
 	}
 </script>
 <?php $this->load->view('template/footer') ?>
