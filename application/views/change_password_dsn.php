@@ -24,13 +24,18 @@
 					<?php print_r($this->session->flashdata('error')); ?>
 				</div>
 			<?php endif; ?>
+			<?php if ($this->session->flashdata('message')!=null):?>
+				<div class="alert alert-success">
+					<?php print_r($this->session->flashdata('message')); ?>
+				</div>
+			<?php endif ?>
 			<!-- /.card-header -->
 			<!-- form start -->
-			<form method="post" action="<?php echo site_url('nilai/changePass') ?>" >
+			<form method="post" action="<?php echo site_url('change_pass/changePass') ?>" >
 				<div class="card-body">
 					<div class="form-group">
 						<label for="text">Password Lama</label>
-						<input type="text" name="password_lama" class="form-control" id="text" placeholder="Enter email">
+						<input type="text" name="password_lama" class="form-control" id="text" placeholder="Password Lama">
 					</div>
 
 					<div class="form-group">

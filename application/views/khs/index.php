@@ -176,7 +176,7 @@
 				$('#cari').html('Processing <i class="fas fa-sync-alt fa-spin" ></i>');
 			},
 			success: function(data){
-				$('#cari').html('Simpan');
+				$('#cari').html('Cari');
 				$('#hasilCari').html(data);
 			}
 		})

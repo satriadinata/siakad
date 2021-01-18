@@ -146,7 +146,8 @@ class Nilai extends CI_Controller {
 				];
 				$this->db->where('username',$user['username']);
 				$this->db->update('db_user', $up);
-				echo "Success";
+				$this->session->set_flashdata('message', 'Success');
+				redirect(site_url('nilai/changePassword'));
 			}else{
 				$this->session->set_flashdata('error', validation_errors());
 				redirect(site_url('nilai/changePassword'));

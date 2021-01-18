@@ -9,7 +9,7 @@ class User_model extends CI_Model
         $username=$this->input->post('username');
         $user=$this->db->get_where($this->_table, ['username'=>$username])->row_array();
 
-        if ($user && $user['role']=='admin') {
+        if ($user && $user['username']=='admin') {
             if (password_verify($password, $user['password']) && $user['blokir']=='n') {
                 $data=[
                     'id'=>$user['id'],
