@@ -158,4 +158,20 @@ class Khs extends CI_Controller {
 		// $data=$this->db->get()->result();
 		// print_r($data);
 	}
+	public function cetakLegger($nim)
+	{
+		$this->load->library('pdf');
+		$data['makul']=$this->db->get('db_makul')->result();
+		$data['jurusan']=$this->db->get('db_jurusan')->result();
+		$data['jadwal']=$this->db->get('db_jadwal')->result();
+		$data['pa']=$this->db->get('db_dosen')->result();
+		$data['krs']=$this->db->get('db_paket_krs')->result();
+		$data['mhs']=$this->db->get_where('db_mahasiswa',['nim'=>$nim])->row_array();
+		$data['nilai']=$this->db->get_where('db_nilai',['nim'=>$nim])->result();
+		$getIdJur=$this->db->get_where('db_jurusan',['kd_jurusan'=>$data['mhs']['kd_jurusan']])->row_array();
+		$this->pdf->setPaper('A4', 'potrait');
+		$this->pdf->filename = "Legger_".$data['mhs']['nim'].'_'.$data['mhs']['nama_mhs'].'.pdf';
+		$this->pdf->load_view('print_legger', $data);
+		// $this->load->view('print_legger',$data);
+	}
 }

@@ -16,20 +16,20 @@
 <div class="form-group">
 	<label for="inputEmail3" class="col-sm-3 col-form-label" style="font-weight: normal;" >Angkatan</label>
 	<div class="col-sm-10">
-		<h4><?php echo substr($mhs['nim'],0,4); ?></h4>
+		<h4><?php echo $mhs['angkatan']; ?></h4>
 	</div>
 </div>
 <!-- Default box -->
 <?php foreach ($collect as $value) :?>
-<?php if ($value[0]!='null'):?>
-<div class="card">
-	<div class="card-header">
-		<h3 class="card-title">Semester <?php echo $value['semester']; ?></h3>
+	<?php if ($value[0]!='null'):?>
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Semester <?php echo $value['semester']; ?></h3>
 
-		<div class="card-tools">
-			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-				<i class="fas fa-minus"></i>
-			</button>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+						<i class="fas fa-minus"></i>
+					</button>
 
 				<!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
 					<i class="fas fa-times"></i>
@@ -72,15 +72,15 @@
 		</div>
 		<!-- /.card-footer-->
 	</div>
-<?php else: ?>
-	<div class="card">
-	<div class="card-header">
-		<h3 class="card-title">Semester ...</h3>
+	<?php else: ?>
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Semester ...</h3>
 
-		<div class="card-tools">
-			<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-				<i class="fas fa-minus"></i>
-			</button>
+				<div class="card-tools">
+					<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+						<i class="fas fa-minus"></i>
+					</button>
 
 				<!-- <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
 					<i class="fas fa-times"></i>
@@ -99,4 +99,10 @@
 <?php endif ?>
 
 <?php endforeach ?>
-	<!-- /.card -->
+<button type="button" onclick="print(<?php echo $mhs['nim']; ?>)" class="btn btn-warning">Cetak Legger</button>
+<!-- /.card -->
+<script>
+	function print(nim){
+		window.location.href='<?php echo site_url('khs/cetakLegger/') ?>'+nim;
+	}
+</script>
