@@ -169,9 +169,9 @@ class Khs extends CI_Controller {
 		$data['mhs']=$this->db->get_where('db_mahasiswa',['nim'=>$nim])->row_array();
 		$data['nilai']=$this->db->get_where('db_nilai',['nim'=>$nim])->result();
 		$getIdJur=$this->db->get_where('db_jurusan',['kd_jurusan'=>$data['mhs']['kd_jurusan']])->row_array();
-		$this->pdf->setPaper('A4', 'potrait');
-		$this->pdf->filename = "Legger_".$data['mhs']['nim'].'_'.$data['mhs']['nama_mhs'].'.pdf';
-		$this->pdf->load_view('print_legger', $data);
-		// $this->load->view('print_legger',$data);
+		// $this->pdf->setPaper('A4', 'potrait');
+		// $this->pdf->filename = "Legger_".$data['mhs']['nim'].'_'.$data['mhs']['nama_mhs'].'.pdf';
+		// $this->pdf->load_view('print_legger', $data);
+		$this->load->view('print_legger',$data);
 	}
 }

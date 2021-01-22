@@ -18,10 +18,12 @@
 	</style>
 </head>
 <body>
-
-	<img src="<?= base_url('assets/head_khs.jpg') ;?>" style="width: 100%; height: auto;">
-
-
+	<div style="text-align: center;" >
+		<img src="<?= base_url('assets/head_krs.jpg') ;?>" style="width: 90%; height: auto;">
+		<hr style="margin-top: -10px; border: solid 2px;" >
+		<hr style="margin-top: -5px;" >
+		<h3>KHS (Kartu Hasil Studi)</h3>
+	</div>
 	<table style="margin-top: 25px; font-size: 16px;">
 		<tbody>
 			<tr>
@@ -161,36 +163,40 @@
 							}
 							?>
 						</td>
-				<?php $no++; endforeach ?>
-				<tr style="text-align: center;font-weight: bold;">
-					<td colspan="3">Total Jumlah</td>
-					<td><?= $totalSKS;  ?></td>
-					<td></td>
-					<td></td>
-					<td><?php echo $totalSKSN; ?></td>
-				</tr>
-			</tbody>
-		</table>
-		<br>
-		<table>
-			<tbody>
-				<tr>
-					<td width="50%" style="font-size: 12px;">
-						<img src="<?php echo base_url('assets/rumus_ipk.jpg') ?>">
-					</td>
-					<td width="50%" style="text-align: left;padding-left: 50px;">
-						<p>Pati, <?php echo date('d').' ' ?><?php $bulan=['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']; echo $bulan[intval(date('m'))-1].' '.date('Y'); ?></p>
-						<p>Ketua Jurusan</p>
-						<br><br><br>	
-						<p>(<?php foreach ($jurusan as $v):?>
-						<?php if ($v->id_jur==$krs['id_jurusan']):?>
-							<?php echo $v->ketua_jurusan; ?>
-						<?php endif ?>
-						<?php endforeach ?>)</p>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+						<?php $no++; endforeach ?>
+						<tr style="text-align: center;font-weight: bold;">
+							<td colspan="3">Total Jumlah</td>
+							<td><?= $totalSKS;  ?></td>
+							<td></td>
+							<td></td>
+							<td><?php echo $totalSKSN; ?></td>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+				<table>
+					<tbody>
+						<tr>
+							<td style="font-size: 18px;text-align: center; " >
+								<div style="height: 70px; width: 150px; border: solid 2px 2px; text-align: center;align-items: center;" >
+									<h3>
+										IPK = <?php echo round($totalSKSN/$totalSKS,2); ?>
+									</h3>
+								</div>
+							</td>
+							<td width="50%" style="text-align: left;padding-left: 50px;">
+								<p>Pati, <?php echo date('d').' ' ?><?php $bulan=['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']; echo $bulan[intval(date('m'))-1].' '.date('Y'); ?></p>
+								<p>Ketua Jurusan</p>
+								<br><br><br>	
+								<p><?php foreach ($jurusan as $v):?>
+								<?php if ($v->id_jur==$krs['id_jurusan']):?>
+									<?php echo $v->ketua_jurusan; ?>
+								<?php endif ?>
+								<?php endforeach ?></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 
 		<!-- <table>
 			<tbody>

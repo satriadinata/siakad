@@ -18,11 +18,41 @@
 	</style>
 </head>
 <body>
+	<?php
+	header("Content-type: application/vnd-ms-excel");
+	header("Content-Disposition: attachment; filename=Data TranskirpNilai_".$mhs['nim'].".xls");
+	?>
 
-	<img src="<?= base_url('assets/head_khs.jpg') ;?>" style="width: 100%; height: auto;">
-
-
-	<table style="margin-top: 25px; font-size: 16px;">
+	<table style="font-size: 16px;">
+		<tr></tr>
+		<tr>
+			<td rowspan="4" style="vertical-align: middle; text-align: center;align-items: center;" ><img style="margin: auto;" width="120" src="<?php echo base_url('assets/logo.jpg') ?>"></td>
+			<td colspan="7" style="text-align: center;" >
+				<h1 style="margin-bottom: 0" >SEKOLAH TINGGI TEKNIK PATI</h1>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="7" style="text-align: center; vertical-align: middle;" >
+				<h3>YAYASAN TUNAS HARAPAN BANGSA PATI</h3>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="7" style="text-align: center;" >
+				<p>Jalan Raya Pati-Trangkil Km.4 Telepon (0295)382470 Fax. (0295)382234 Pati</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="7" style="text-align: center;" >
+				<p>http://www.sttp.ac.id email: sttpati@yahoo.com</p>
+			</td>
+		</tr>
+		<tr style="border-bottom: solid 2px" >
+			<td height="20" colspan="8" style="text-align: center;border-bottom: solid 2px;" ></td>
+		</tr>
+		<tr>
+			<td colspan="9" style="text-align: center;vertical-align: middle;" height="15" ><h3>Transkirp Nilai</h3></td>
+		</tr>
+		<tr></tr>
 		<tbody>
 			<tr>
 				<td style="padding-bottom: 10px" width="20%">Nama</td>
@@ -32,7 +62,7 @@
 			<tr>
 				<td style="padding-bottom: 10px" width="20%">NIM</td>
 				<td style="padding-bottom: 10px" width="5%">:</td>
-				<td style="padding-bottom: 10px" width="25%"><?php echo $mhs['nim']; ?></td>
+				<td style="padding-bottom: 10px;text-align: left;" width="25%"><?php echo $mhs['nim']; ?></td>
 			</tr>
 			<tr>
 				<td style="padding-bottom: 10px" width="20%">Th. Angkatan</td>
@@ -53,18 +83,18 @@
 
 	<table class="bordered" style="margin-top: 30px">
 		<thead>
-			<th rowspan="2">No</th>
-			<th rowspan="2">Kode MK</th>
+			<th rowspan="2" style="text-align: center;" >No</th>
+			<th rowspan="2" style="text-align: center;" >Kode MK</th>
 			<th rowspan="2">Mata Kuliah</th>
 			<th rowspan="2">Semester</th>
 			<th rowspan="2">SKS</th>
 			<th colspan="2" >Nilai</th>
 			<th rowspan="2">SKSN</th>
 		</thead>
-		<thead>
+		<tr>
 			<th>Angka</th>
 			<th>Nilai</th>
-		</thead>
+		</tr>
 		<tbody>
 			<?php
 			$no=1;
@@ -72,7 +102,7 @@
 			$totalSKS=0;
 			foreach ($nilai as $value):?>
 				<tr>
-					<td><?php echo $no; ?></td>
+					<td style="text-align: center;" ><?php echo $no; ?></td>
 					<td><?php foreach ($jadwal as $k) {
 						if ($value->id_jadwal==$k->id_jadwal) {
 							echo $k->kd_mk;
@@ -167,22 +197,28 @@
 					</tr>
 				</tbody>
 			</table>
-			<br>
+			<tr></tr>
 			<table>
 				<tbody>
 					<tr>
-						<td width="50%" style="font-size: 12px;">
-							<img src="<?php echo base_url('assets/rumus_ipk.jpg') ?>">
+						<td style="font-size: 18px;text-align: center;vertical-align: middle; " >
+							<div style="text-align: center;" >
+								<h3>
+									IPK = <?php echo round($totalSKSN/$totalSKS,2); ?>
+								</h3>
+							</div>
 						</td>
+						<td></td>
+						<td></td>
 						<td width="50%" style="text-align: left;padding-left: 50px;">
 							<p>Pati, <?php echo date('d').' ' ?><?php $bulan=['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']; echo $bulan[intval(date('m'))-1].' '.date('Y'); ?></p>
 							<p>Ketua Jurusan</p>
 							<br><br><br>	
-							<p>(<?php foreach ($jurusan as $v):?>
+							<p><?php foreach ($jurusan as $v):?>
 							<?php if ($v->kd_jurusan==$mhs['kd_jurusan']):?>
 								<?php echo $v->ketua_jurusan; ?>
 							<?php endif ?>
-							<?php endforeach ?>)</p>
+							<?php endforeach ?></p>
 						</td>
 					</tr>
 				</tbody>
