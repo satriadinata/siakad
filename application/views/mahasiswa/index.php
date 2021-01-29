@@ -133,7 +133,7 @@
 			{ "data": "agama_mhs" },
 			{ "render": function ( data, type, row )
 			{
-				var html  = "<img src='<?= site_url('uploads/');?>/"+row.foto_mhs+"' width='100'/>";
+				var html  = "<img src='<?= site_url('uploads/');?>/"+row.foto_mhs+"' width='80'/>";
 				return html;
 			}
 		},

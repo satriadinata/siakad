@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="shortcut icon" href="<?php echo base_url('assets/logo.jpg') ?>" type="image/x-icon">
+  
 
   <title>Siakad</title>
   <script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery.js"></script>

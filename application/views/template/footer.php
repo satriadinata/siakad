@@ -11,7 +11,7 @@
 <!-- /.control-sidebar -->
 <!-- Main Footer -->
 <footer class="main-footer">
-	<strong>Copyright &copy; 2020 Mfdsix</strong>
+	<strong>Copyright &copy; 2020 STTP</strong>
 	All rights reserved.
 	<div class="float-right d-none d-sm-inline-block">
 		Page rendered in <strong>{elapsed_time}</strong> seconds.
