@@ -183,7 +183,6 @@ class Mahasiswa extends CI_Controller {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 					redirect(site_url('mahasiswa/edit/'.$data['id_mhs']));
 				}else{
-					
 					$current_file = "uploads/".$mahasiswa['foto_mhs'];
 					if(file_exists($current_file) && $mahasiswa['foto_mhs'] != 'default/male.png'){
 						unlink($current_file);
