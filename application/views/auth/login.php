@@ -21,7 +21,7 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href=""><b>STT</b>Pati</a>
+      <a href=""><b>SIAKAD</b><br><P style="font-size: 22px;margin-top: -10px;" >SEKOLAH TINGGI TEKNIK PATI</P></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
