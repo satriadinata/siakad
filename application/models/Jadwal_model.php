@@ -44,8 +44,8 @@ class Jadwal_model extends CI_Model
   {
     $this->db->select('*');
     $this->db->from('db_jadwal');
-    $this->db->join('db_makul','db_makul.kode_mk=db_jadwal.kd_mk',);
-    $this->db->join('db_dosen','db_dosen.kd_dosen=db_jadwal.kd_dosen',);
+    $this->db->join('db_makul','db_makul.kode_mk=db_jadwal.kd_mk');
+    $this->db->join('db_dosen','db_dosen.kd_dosen=db_jadwal.kd_dosen');
     $this->db->join('db_jurusan','db_jurusan.kd_jurusan = db_makul.kd_jurusan');
     $this->db->where('db_jadwal.ta', $ta);
     $query=$this->db->get()->result();
