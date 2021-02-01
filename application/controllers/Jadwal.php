@@ -30,23 +30,38 @@ class Jadwal extends CI_Controller {
 
 	public function getAll()
 	{
-		$search = $_POST['search']['value'];
-		$limit = $_POST['length'];
-		$start = $_POST['start'];
-		$order_index = $_POST['order'][0]['column'];
-		$order_field = $_POST['columns'][$order_index]['data'];
-		$order_ascdesc = $_POST['order'][0]['dir'];
-		$sql_total = $this->Jadwal_model->count_all();
-		$sql_data = $this->Jadwal_model->filter($search, $limit, $start, $order_field, $order_ascdesc);
-		$sql_filter = $this->Jadwal_model->count_filter($search);
-		$callback = array(
-			'draw'=>$_POST['draw'],
-			'recordsTotal'=>$sql_total,
-			'recordsFiltered'=>$sql_filter,
-			'data'=>$sql_data
+		$draw = intval($this->input->get("draw"));
+		$start = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+
+		$jadwals = $this->Jadwal_model->get_jadwal();
+
+		$data = array();
+
+		foreach($jadwals->result() as $r) {
+
+			$data[] = array(
+				$r->ta,
+				$r->kode_mk,
+				$r->nama_mk,				
+				$r->semester,				
+				$r->nama_jurusan,
+				$r->nama_dosen,
+				$r->hari,
+				$r->jam,
+				$r->id_jadwal,
+				$r->created_at,
+			);
+		}
+
+		$output = array(
+			"draw" => $draw,
+			"recordsTotal" => $jadwals->num_rows(),
+			"recordsFiltered" => $jadwals->num_rows(),
+			"data" => $data
 		);
-		header('Content-Type: application/json');
-		echo json_encode($callback);
+		echo json_encode($output);
+		exit();
 	}
 
 	public function store()

@@ -17,7 +17,7 @@ class Ta extends CI_Controller {
 	public function index()
 	{
 		$data['user']= $this->session->userdata('user_logged');
-		$data['title']="Tahun Ajar";
+		$data['title']="Tahun Akademik";
 		if ($data['user']['level']=='admin') {
 			$this->load->view('ta/index', $data);
 		}else{

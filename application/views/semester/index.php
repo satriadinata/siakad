@@ -16,27 +16,6 @@
 <section class="content">
 
 	<!-- Default box -->
-	<div class="card collapsed-card">
-		<div class="card-header">
-			<h3 class="card-title">Tambah Mahasiswa</h3>
-
-			<div class="card-tools">
-				<a href="<?php echo site_url('mahasiswa/create') ?>" class="btn btn-primary">
-					<i class="fas fa-plus"></i>
-				</a>
-				<button class="btn btn-success" data-toggle="modal" data-target="#modalImport">
-					<i class="fas fa-upload"></i>
-				</button>
-			</div>
-		</div>
-		<div class="card-footer">
-			
-		</div>
-		<!-- /.card-footer-->
-	</div>
-	<!-- /.card -->
-
-	<!-- Default box -->
 	<div class="card">
 		<div class="card-header">
 			<h3 class="card-title">Data Mahasiswa</h3>
@@ -51,7 +30,6 @@
 			<table id="tableMhs" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th></th>
 						<th>NIM</th>
 						<th>Nama</th>
 						<th>KD Jurusan</th>
@@ -119,18 +97,7 @@
 				"style":    'multi',
 				"selector": 'td:first-child'
 			},
-			"columnDefs": [ {
-				"orderable": false,
-				"className": 'select-checkbox',
-				"targets":   0,
-				"render": function ( data, type, row ){
-					var html  = "<input type='checkbox' name='"+row.nim+"' value='"+row.id_mhs+"'";
-					return html;
-				}
-
-			} ],
 			"columns": [
-			{ "data": null, defaultContent: '' },
 			{ "data": "nim" },
 			{ "data": "nama_mhs" },
 			{ "render":function  (data, type, row){

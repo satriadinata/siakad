@@ -41,6 +41,15 @@
 						<input type="hidden" name="updated_at" value="<?php echo date('Y-m-d H:i:j') ?>">
 
 						<div class="form-group">
+							<label>Status</label>
+							<select name="status" class="custom-select" value="<?= old('status') ;?>">
+								<option <?php if ($mahasiswa['status']=='aktif'):?> selected <?php endif ?> value="aktif" >Aktif</option>
+								<option <?php if ($mahasiswa['status']=='lulus'):?> selected <?php endif ?> value="lulus" >Lulus</option>
+								<option <?php if ($mahasiswa['status']=='do'):?> selected <?php endif ?> value="do" >DO</option>
+							</select>
+						</div>
+
+						<div class="form-group">
 							<label for="nim">NIM</label>
 							<input required="" name="nim" type="number" class="form-control" id="nim" placeholder="NIM" value="<?= $mahasiswa['nim'] ;?>">
 						</div>

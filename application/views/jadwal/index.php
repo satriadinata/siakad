@@ -177,35 +177,29 @@
 	$(document).ready(function() {
 		var no=1;
 		tabel = $('#tableTa').DataTable({
-			"processing": true,
-			"serverSide": true,
-			"ordering": true, // Set true agar bisa di sorting
-			"order": [[ 0, 'asc' ]], // Default sortingnya berdasarkan kolom / field ke 0 (paling pertama)
 			"ajax":
 			{
 				"url": "<?php echo site_url('jadwal/getAll') ?>", // URL file untuk proses select datanya
-				"type": "POST"
+				"type": "get"
 			},
-			"deferRender": true,
-			"aLengthMenu": [[10, 50, 100],[ 10, 50, 100]], // Combobox Limit
 			"columns": [
-				{ "data": "ta" }, // Tampilkan alamat
-				{ "data": "kd_mk" }, // Tampilkan alamat
-				{ "data": "nama_mk" }, // Tampilkan alamat
-				{ "data": "semester" }, // Tampilkan alamat
-				{ "data": "nama_jurusan" }, // Tampilkan alamat
-				{ "data": "nama_dosen" }, // Tampilkan alamat
-				{ "data": "hari" }, // Tampilkan alamat
-				{ "data": "jam" }, // Tampilkan alamat
+				{ "data": 0 }, // Tampilkan alamat
+				{ "data": 1 }, // Tampilkan alamat
+				{ "data": 2 }, // Tampilkan alamat
+				{ "data": 3 }, // Tampilkan alamat
+				{ "data": 4 }, // Tampilkan alamat
+				{ "data": 5 }, // Tampilkan alamat
+				{ "data": 6 }, // Tampilkan alamat
+				{ "data": 7 }, // Tampilkan alamat
 				{ "render": function ( data, type, row )
 					{ // Tampilkan kolom aksi
-						var id=row.id_jadwal;
-						var idi=row.id_jadwal;
+						var id=row[8];
+						var idi=row[8];
 						var html  = "<button class='btn btn-primary' onclick='edit("+idi+")' data-toggle='modal' data-target='#modal-edit-jur'>Edit</button> | <button class='btn btn-danger' onclick=hapusTa('"+id+"')>Delete</button>";
 						return html;
 					}
 				},
-				{ "data": "created_at" }, // Tampilkan alamat
+				{ "data": 9 }, // Tampilkan alamat
 				],
 			});
 	});
