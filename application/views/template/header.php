@@ -42,10 +42,10 @@
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <!-- <span class="dropdown-item dropdown-header">15 Notifications</span> -->
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
+<!--             <a href="#" class="dropdown-item">
               <i class="fas fa-child mr-2"></i> Profile
               <span class="float-right text-muted text-sm"></span>
-            </a>
+            </a> -->
             <div class="dropdown-divider"></div>
             <a href="<?php echo base_url('auth/logout') ?>" class="dropdown-item">
               <i class="fas fa-sign-out-alt"></i> Logout
@@ -162,20 +162,20 @@
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('matkul') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="matkul") ? 'active' : '' ;?>">
-              <i class="fas fa-book mr-2"></i>
+            <a href="<?php echo site_url('ta') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="ta") ? 'active' : '' ;?>">
+              <i class="fas fa-vote-yea mr-2"></i>
               <p>
-                Mata Kuliah
+                Tahun Akademik
                 <span class="right badge badge-danger"></span>
               </p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="<?php echo site_url('ta') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="ta") ? 'active' : '' ;?>">
-              <i class="fas fa-vote-yea mr-2"></i>
+            <a href="<?php echo site_url('matkul') ?>" class="nav-link <?php echo ($this->uri->segment(1)=="matkul") ? 'active' : '' ;?>">
+              <i class="fas fa-book mr-2"></i>
               <p>
-                Tahun Akademik
+                Mata Kuliah
                 <span class="right badge badge-danger"></span>
               </p>
             </a>

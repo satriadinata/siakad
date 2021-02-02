@@ -30,6 +30,7 @@
 			<table id="tableMhs" class="table table-bordered table-striped">
 				<thead>
 					<tr>
+						<th></th>
 						<th>NIM</th>
 						<th>Nama</th>
 						<th>KD Jurusan</th>
@@ -44,7 +45,7 @@
 		</div>
 		<!-- /.card-body -->
 		<div class="card-footer">
-			<!-- <button class="btn btn-primary" id="updateSemester" >Update ke Semester Berikutnya</button> -->
+			<button class="btn btn-primary" id="updateSemester" >Update yang terpilih ke Semester Berikutnya</button>
 			<button class="btn btn-success" id="updateSemesterSemua" >Update Semua ke Semester Berikutnya</button>
 		</div>
 		<!-- /.card-footer-->
@@ -97,7 +98,18 @@
 				"style":    'multi',
 				"selector": 'td:first-child'
 			},
+			"columnDefs": [ {
+				"orderable": false,
+				"className": 'select-checkbox',
+				"targets":   0,
+				"render": function ( data, type, row ){
+					var html  = "<input type='checkbox' name='"+row.nim+"' value='"+row.id_mhs+"'";
+					return html;
+				}
+
+			} ],
 			"columns": [
+			{ "data": null, defaultContent: '' },
 			{ "data": "nim" },
 			{ "data": "nama_mhs" },
 			{ "render":function  (data, type, row){

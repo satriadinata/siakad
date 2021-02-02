@@ -57,6 +57,26 @@
 		<!-- /.card-footer-->
 	</div>
 	<!-- /.card -->
+	<div class="modal fade" id="modal-edit-jur">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Change Password</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="modalData">
+					<!-- <p>One fine body&hellip;</p> -->
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
 
 </section>
 <script>
@@ -83,10 +103,10 @@
 					{ // Tampilkan kolom aksi
 						if (row.blokir=='y') {
 							var id=row.id;
-							var html  = "<button class='btn btn-primary' id='unlock"+id+"' onclick='unlock("+id+")'>Unlock</button>";
+							var html  = "<button class='btn btn-primary' id='unlock"+id+"' onclick='unlock("+id+")'>Unlock</button> <button data-toggle='modal' data-target='#modal-edit-jur' class='btn btn-success' onclick='edit("+id+")'>Change Password</button>";
 						}else{
 							var idi=row.id;
-							var html  = "<button class='btn btn-warning' id='unlock"+idi+"' onclick='lock("+idi+")'>Lock</button>";
+							var html  = "<button class='btn btn-warning' id='unlock"+idi+"' onclick='lock("+idi+")'>Lock</button> <button data-toggle='modal' data-target='#modal-edit-jur' class='btn btn-success' onclick='edit("+idi+")'>Change Password</button>";
 						};
 						return html;
 					}
@@ -123,6 +143,14 @@
 				// console.log(data);
 				// alert('Data berhasil di input');
 				tabel.ajax.reload();
+			}
+		});
+	}
+	function edit(id){
+		$.ajax({
+			url: "<?php echo site_url('user_manage/changePass/') ?>"+id,
+			success: function(result){
+				$("#modalData").html(result);
 			}
 		});
 	}

@@ -110,8 +110,7 @@ class Nilai extends CI_Controller {
 		];
 		$this->db->where('id_nilai',$this->input->post('id_nilai',true));
 		$this->db->update('db_nilai', $data);
-
-		// echo "ok";
+		echo "ok";
 	}
 
 	public function delete($id)

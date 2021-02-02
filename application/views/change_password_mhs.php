@@ -35,7 +35,7 @@
 				<div class="card-body">
 					<div class="form-group">
 						<label for="text">Password Lama</label>
-						<input type="text" name="password_lama" class="form-control" id="text" placeholder="Enter email">
+						<input type="text" name="password_lama" class="form-control" id="text" placeholder="Password Lama">
 					</div>
 
 					<div class="form-group">
@@ -44,7 +44,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="exampleInputPassword1">Konfirmasi Pssword Baru</label>
+						<label for="exampleInputPassword1">Konfirmasi Password Baru</label>
 						<input type="password" name="confirm_password" class="form-control" id="exampleInputPassword1" placeholder="Password">
 					</div>
 

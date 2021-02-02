@@ -18,7 +18,7 @@
 	<!-- Default box -->
 	<div class="card collapsed-card">
 		<div class="card-header">
-			<h3 class="card-title">Tambah Tahun Ajar</h3>
+			<h3 class="card-title">Tambah Tahun Akademik</h3>
 
 			<div class="card-tools">
 				<button type="button" class="btn btn-primary" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -38,8 +38,8 @@
 					<div class="card-body">
 
 						<div class="form-group">
-							<label for="ta">Tahun Ajar</label>
-							<input required="" name="ta" type="text" class="form-control" id="ta" placeholder="Tahun Ajar">
+							<label for="ta">Tahun Akademik</label>
+							<input required="" name="ta" type="text" class="form-control" id="ta" placeholder="contoh: 2017/2018">
 						</div>
 
 					</div>
@@ -63,7 +63,7 @@
 	<!-- Default box -->
 	<div class="card">
 		<div class="card-header">
-			<h3 class="card-title">Data Tahun Ajar</h3>
+			<h3 class="card-title">Data Tahun Akademik</h3>
 
 			<div class="card-tools">
 				<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -79,7 +79,7 @@
 			<table id="tableTa" class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Tahun Ajar</th>
+						<th>Tahun Akademik</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>

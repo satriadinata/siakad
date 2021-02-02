@@ -62,5 +62,20 @@ class user_manage extends CI_Controller {
 		$this->db->where('id',$this->input->post('id'));
 		$this->db->update('db_user', $data);
 	}
+	public function changePass($id)
+	{
+		$data['pass']=$this->db->get_where('db_user',['id'=>$id])->row_array();
+		$this->load->view('editPass',$data);
+	}
+	public function det()
+	{
+		$up=[
+			'password'=>$this->input->post()['password'],
+		];
+		$this->db->where('id',$this->input->post()['id']);
+		$this->db->update('db_user', $up);
+		$this->session->set_flashdata('message', 'Data berhasil di update !');
+		redirect(site_url('user_manage'));	
+	}
 
 }
